@@ -1,0 +1,17 @@
+{
+  "name": "ishu.fun — Sarkari Result & Govt Jobs",
+  "short_name": "ishu.fun",
+  "description": "India's #1 Student Platform for Sarkari Results, Free PDF Tools & Govt Jobs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080810",
+  "theme_color": "#6C63FF",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/maskable-icon-512x512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "en-IN"
+}

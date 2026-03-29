@@ -1,0 +1,48 @@
+.trustBar {
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: var(--space-6) 0;
+  overflow: hidden;
+}
+.label {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: var(--space-4);
+}
+.track {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+.track:hover { animation-play-state: paused; }
+.orgBadge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+  flex-shrink: 0;
+}
+.orgBadge:hover { opacity: 1; }
+.orgName {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: var(--tracking-wide);
+}
+.orgFull {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}

@@ -1,0 +1,24 @@
+.section { padding: var(--space-24) 0; }
+.header { text-align: center; margin-bottom: var(--space-20); }
+.features { display: flex; flex-direction: column; gap: var(--space-24); }
+.feature { display: flex; align-items: center; gap: var(--space-16); }
+.feature.reversed { flex-direction: row-reverse; }
+.featureContent { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); }
+.featureIcon { width: 60px; height: 60px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; }
+.featureTitle { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 600; color: var(--text-primary); }
+.featureDesc { font-family: var(--font-body); font-size: var(--text-base); color: var(--text-secondary); line-height: var(--leading-normal); max-width: 480px; }
+.featureCta { font-family: var(--font-body); font-weight: 600; font-size: var(--text-base); transition: all 0.2s ease; display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }
+.featureCta:hover { transform: translateX(4px); }
+.featureVisual { flex: 1; display: flex; justify-content: center; }
+.mockupCard { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: 0; overflow: hidden; width: 100%; max-width: 400px; }
+.mockupHeader { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; }
+.mockupDots { display: flex; gap: 6px; }
+.mockupDots span { width: 8px; height: 8px; border-radius: 50%; background: var(--border-medium); }
+.mockupBody { padding: var(--space-6); display: flex; flex-direction: column; gap: var(--space-3); }
+.mockupLine { height: 10px; border-radius: var(--radius-sm); background: var(--glass-hover); }
+@media (max-width: 1023px) {
+  .feature, .feature.reversed { flex-direction: column; gap: var(--space-8); }
+  .featureContent { align-items: center; text-align: center; }
+  .featureDesc { max-width: 100%; }
+}
+@media (max-width: 639px) { .section { padding: var(--space-16) 0; } .features { gap: var(--space-16); } }

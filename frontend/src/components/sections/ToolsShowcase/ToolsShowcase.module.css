@@ -1,0 +1,15 @@
+.section { padding: var(--space-24) 0; }
+.header { text-align: center; margin-bottom: var(--space-12); }
+.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
+.toolCard { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-4); display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; transition: all 0.3s ease; cursor: pointer; text-decoration: none; }
+.toolCard:hover { border-color: var(--tool-color, var(--accent-violet)); box-shadow: 0 0 20px color-mix(in srgb, var(--tool-color, var(--accent-violet)) 30%, transparent); }
+.popularBadge { position: absolute; top: var(--space-2); right: var(--space-2); font-family: var(--font-body); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); background: rgba(255, 215, 0, 0.15); color: var(--accent-gold); display: inline-flex; align-items: center; gap: 3px; }
+.toolIcon { width: 56px; height: 56px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; }
+.toolName { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--text-primary); }
+.tryFree { font-family: var(--font-body); font-size: 11px; color: var(--text-muted); transition: color 0.2s; }
+.toolCard:hover .tryFree { color: var(--tool-color, var(--accent-violet)); }
+.ctaRow { display: flex; justify-content: center; margin-top: var(--space-10); }
+.allToolsBtn { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-body); font-weight: 600; font-size: var(--text-base); color: white; background: var(--grad-button); padding: var(--space-4) var(--space-8); border-radius: var(--radius-full); transition: all 0.2s ease; }
+.allToolsBtn:hover { transform: scale(1.04); box-shadow: var(--shadow-glow-violet); }
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 639px) { .grid { grid-template-columns: repeat(2, 1fr); } .section { padding: var(--space-16) 0; } }

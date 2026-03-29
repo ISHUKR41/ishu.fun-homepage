@@ -1,0 +1,13 @@
+.section { position: relative; padding: var(--space-32) 0; overflow: hidden; }
+.bgGlow { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(108,99,255,0.06) 0%, rgba(0,210,255,0.04) 50%, rgba(0,200,150,0.03) 100%); pointer-events: none; }
+.content { position: relative; z-index: 2; }
+.inner { text-align: center; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: var(--space-6); padding: var(--space-12); background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-2xl); }
+.overline { font-family: var(--font-body); font-size: var(--text-sm); color: var(--accent-cyan); font-weight: 500; }
+.headline { font-family: var(--font-display); font-size: var(--text-5xl); font-weight: 700; color: var(--text-primary); line-height: var(--leading-tight); }
+.quote { font-family: var(--font-body); font-size: var(--text-base); color: var(--text-secondary); font-style: italic; }
+.buttons { display: flex; gap: var(--space-4); flex-wrap: wrap; justify-content: center; }
+.primaryBtn { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--grad-button); color: white; font-family: var(--font-body); font-weight: 600; font-size: var(--text-lg); padding: var(--space-5) var(--space-10); border-radius: var(--radius-full); transition: all 0.2s; text-decoration: none; }
+.primaryBtn:hover { transform: scale(1.04); box-shadow: var(--shadow-glow-violet); }
+.secondaryBtn { display: inline-flex; align-items: center; gap: var(--space-2); border: 1px solid rgba(37,211,102,0.4); background: rgba(37,211,102,0.08); color: #25D366; font-family: var(--font-body); font-weight: 600; font-size: var(--text-lg); padding: var(--space-5) var(--space-10); border-radius: var(--radius-full); transition: all 0.2s; text-decoration: none; }
+.secondaryBtn:hover { background: rgba(37,211,102,0.15); box-shadow: 0 0 20px rgba(37,211,102,0.2); }
+@media (max-width: 639px) { .section { padding: var(--space-16) 0; } .inner { padding: var(--space-8); } .buttons { flex-direction: column; width: 100%; } .primaryBtn, .secondaryBtn { justify-content: center; } }

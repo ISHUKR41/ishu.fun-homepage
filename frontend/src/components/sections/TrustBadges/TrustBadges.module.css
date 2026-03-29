@@ -1,0 +1,4 @@
+.section { padding: var(--space-10) 0; background: var(--bg-elevated); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
+.grid { display: flex; justify-content: center; gap: var(--space-10); flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); padding: var(--space-2) var(--space-4); border-radius: var(--radius-full); background: var(--glass-bg); border: 1px solid var(--glass-border); }
+@media (max-width: 639px) { .grid { gap: var(--space-3); } .badge { font-size: 12px; } }

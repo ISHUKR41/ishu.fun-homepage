@@ -1,0 +1,5 @@
+.nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; padding-bottom: env(safe-area-inset-bottom); background: rgba(8,8,16,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-around; z-index: var(--z-dropdown); }
+.item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 10px; font-weight: 500; color: var(--text-muted); transition: color 0.2s; text-decoration: none; padding: var(--space-2); min-width: 50px; }
+.item:hover, .active { color: var(--accent-violet); }
+.active { position: relative; }
+.active::before { content: ''; position: absolute; top: -2px; width: 20px; height: 3px; border-radius: 2px; background: var(--accent-violet); }

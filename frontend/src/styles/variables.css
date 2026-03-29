@@ -1,0 +1,119 @@
+/* === variables.css === */
+/* ishu.fun Design System — Dark Luxury Meets Indian Digital */
+
+:root {
+  /* ── BACKGROUNDS ─────────────────────────── */
+  --bg-base:            #080810;
+  --bg-surface:         #0E0E1A;
+  --bg-elevated:        #14141F;
+  --bg-overlay:         #1A1A2E;
+
+  /* ── BRAND ACCENT COLORS ─────────────────── */
+  --accent-violet:      #6C63FF;
+  --accent-cyan:        #00D2FF;
+  --accent-saffron:     #FF6B35;
+  --accent-emerald:     #00C896;
+  --accent-gold:        #FFD700;
+  --accent-rose:        #FF4D6D;
+
+  /* ── TEXT ────────────────────────────────── */
+  --text-primary:       #F0F0FF;
+  --text-secondary:     #9090A8;
+  --text-muted:         #55556A;
+  --text-inverse:       #08080F;
+
+  /* ── GLASS / SURFACE ─────────────────────── */
+  --glass-bg:           rgba(255,255,255,0.04);
+  --glass-border:       rgba(255,255,255,0.08);
+  --glass-hover:        rgba(255,255,255,0.07);
+  --glass-active:       rgba(108,99,255,0.12);
+
+  /* ── GRADIENTS ───────────────────────────── */
+  --grad-hero:          linear-gradient(135deg, #6C63FF 0%, #00D2FF 50%, #00C896 100%);
+  --grad-card:          linear-gradient(145deg, rgba(108,99,255,0.08) 0%, rgba(0,210,255,0.04) 100%);
+  --grad-glow-violet:   radial-gradient(ellipse, rgba(108,99,255,0.30) 0%, transparent 70%);
+  --grad-glow-cyan:     radial-gradient(ellipse, rgba(0,210,255,0.25) 0%, transparent 70%);
+  --grad-india:         linear-gradient(180deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+  --grad-button:        linear-gradient(90deg, #6C63FF 0%, #00D2FF 100%);
+  --grad-text:          linear-gradient(90deg, #6C63FF, #00D2FF, #00C896);
+  --grad-mesh:          radial-gradient(at 40% 20%, rgba(108,99,255,0.2) 0px, transparent 50%),
+                        radial-gradient(at 80% 0%, rgba(0,210,255,0.15) 0px, transparent 50%),
+                        radial-gradient(at 0% 50%, rgba(0,200,150,0.15) 0px, transparent 50%);
+
+  /* ── BORDERS ─────────────────────────────── */
+  --border-subtle:      rgba(255,255,255,0.06);
+  --border-medium:      rgba(255,255,255,0.10);
+  --border-strong:      rgba(108,99,255,0.30);
+  --border-glow:        rgba(108,99,255,0.50);
+
+  /* ── SHADOWS ─────────────────────────────── */
+  --shadow-sm:          0 2px 8px rgba(0,0,0,0.3);
+  --shadow-md:          0 8px 32px rgba(0,0,0,0.4);
+  --shadow-lg:          0 16px 64px rgba(0,0,0,0.5);
+  --shadow-glow-violet: 0 0 30px rgba(108,99,255,0.40);
+  --shadow-glow-cyan:   0 0 30px rgba(0,210,255,0.40);
+  --shadow-glow-saffron:0 0 30px rgba(255,107,53,0.40);
+
+  /* ── SPACING SCALE (8px base) ────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ── BORDER RADIUS ───────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-2xl:  32px;
+  --radius-full: 9999px;
+
+  /* ── Z-INDEX ─────────────────────────────── */
+  --z-base:     1;
+  --z-card:     10;
+  --z-dropdown: 100;
+  --z-modal:    200;
+  --z-toast:    300;
+  --z-cursor:   400;
+  --z-loader:   500;
+
+  /* ── FONT FAMILIES ─────────────────────────── */
+  --font-display: 'Clash Display', 'Space Grotesk', 'Inter', sans-serif;
+  --font-body:    'Satoshi', 'Inter', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
+
+  /* ── FLUID TYPE SCALE ──────────────────────── */
+  --text-xs:    clamp(0.70rem, 1.0vw, 0.80rem);
+  --text-sm:    clamp(0.80rem, 1.2vw, 0.90rem);
+  --text-base:  clamp(0.90rem, 1.4vw, 1.00rem);
+  --text-lg:    clamp(1.00rem, 1.6vw, 1.12rem);
+  --text-xl:    clamp(1.12rem, 1.8vw, 1.25rem);
+  --text-2xl:   clamp(1.25rem, 2.0vw, 1.50rem);
+  --text-3xl:   clamp(1.50rem, 2.5vw, 2.00rem);
+  --text-4xl:   clamp(2.00rem, 3.5vw, 2.50rem);
+  --text-5xl:   clamp(2.50rem, 5.0vw, 3.50rem);
+  --text-6xl:   clamp(3.00rem, 7.0vw, 5.00rem);
+  --text-hero:  clamp(3.50rem, 9.0vw, 7.00rem);
+
+  /* ── LINE HEIGHTS ──────────────────────────── */
+  --leading-tight:  1.1;
+  --leading-snug:   1.3;
+  --leading-normal: 1.6;
+  --leading-loose:  1.8;
+
+  /* ── LETTER SPACING ────────────────────────── */
+  --tracking-tight:  -0.04em;
+  --tracking-snug:   -0.02em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.05em;
+  --tracking-widest:  0.15em;
+}

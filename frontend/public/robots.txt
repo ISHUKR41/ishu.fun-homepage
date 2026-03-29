@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ishu.fun/sitemap.xml
+
+# Block crawlers from non-essential paths
+Disallow: /api/
+Disallow: /admin/

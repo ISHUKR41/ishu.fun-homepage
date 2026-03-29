@@ -1,0 +1,18 @@
+.gradient-text-component {
+  background: var(--grad-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-component.animate {
+  animation: gradient-shift 4s ease infinite;
+}
+
+.gradient-text-component.static {
+  background: var(--grad-button);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

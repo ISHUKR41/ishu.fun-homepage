@@ -1,0 +1,3 @@
+.btn { position: fixed; bottom: 80px; right: 24px; width: 48px; height: 48px; border-radius: 50%; background: var(--glass-bg); backdrop-filter: blur(12px); border: 1px solid var(--glass-border); color: var(--text-primary); display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: var(--z-toast); transition: box-shadow 0.2s; }
+.btn:hover { box-shadow: var(--shadow-glow-violet); border-color: var(--accent-violet); }
+@media (max-width: 639px) { .btn { bottom: 80px; right: 16px; } }
