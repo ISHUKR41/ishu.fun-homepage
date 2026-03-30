@@ -1,10 +1,14 @@
 // components/sections/HeroSection/HeroSection.jsx
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { MagnifyingGlass, ArrowRight, WhatsappLogo, CaretDown } from '@phosphor-icons/react';
 import GradientText from '../../ui/GradientText/GradientText';
+import MagneticButton from '../../ui/Button/MagneticButton';
+import ParticlesBackground from '../../ui/ParticlesBackground/ParticlesBackground';
 import { useIsDesktop } from '../../../hooks/useMediaQuery';
 import styles from './HeroSection.module.css';
+
+const HeroCanvas = lazy(() => import('./HeroCanvas'));
 
 const typewriterWords = ['JEE Mains Result', 'NEET 2026', 'SSC CGL', 'Railway Vacancy', 'UPSC Prelims', 'Free PDF Tools'];
 
@@ -49,6 +53,9 @@ export default function HeroSection() {
 
   return (
     <section className={styles.hero} id="hero">
+      {/* tsParticles Background */}
+      <ParticlesBackground density="low" />
+
       {/* Background mesh */}
       <div className={styles.meshBg} />
       <div className={styles.grainOverlay} />
@@ -137,9 +144,11 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 3.4, duration: 0.4 }}
           >
-            <a href="/results" className={styles.primaryBtn}>
-              Explore Results <ArrowRight size={18} weight="bold" />
-            </a>
+            <MagneticButton className={styles.primaryBtn}>
+              <a href="/results" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'inherit', textDecoration: 'none' }}>
+                Explore Results <ArrowRight size={18} weight="bold" />
+              </a>
+            </MagneticButton>
             <a href="#whatsapp-cta" className={styles.whatsappBtn}>
               <WhatsappLogo size={20} weight="fill" /> Get WhatsApp Alerts
             </a>
@@ -167,7 +176,7 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right Side — 3D Canvas placeholder */}
+        {/* Right Side — 3D WebGL Canvas */}
         {isDesktop && (
           <motion.div
             className={styles.right}
@@ -176,45 +185,13 @@ export default function HeroSection() {
             transition={{ delay: 2.5, duration: 1, ease: 'easeOut' }}
           >
             <div className={styles.heroVisual}>
-              <div className={styles.globeContainer}>
-                {/* Animated circles representing data nodes */}
-                <div className={styles.globeRing} />
-                <div className={styles.globeRing2} />
-                <div className={styles.globeRing3} />
-                <div className={styles.globeCenter}>
-                  <span className={styles.globeFlag}>🇮🇳</span>
+              <Suspense fallback={
+                <div className={styles.canvasLoader}>
+                  <div className={styles.loaderSpinner} />
                 </div>
-                {/* Floating data nodes */}
-                {['Delhi', 'Mumbai', 'Chennai', 'Kolkata', 'Bengaluru'].map((city, i) => (
-                  <div
-                    key={city}
-                    className={styles.dataNode}
-                    style={{
-                      '--angle': `${(i * 72) + 10}deg`,
-                      '--delay': `${i * 0.3}s`,
-                      animationDelay: `${i * 0.3}s`,
-                    }}
-                  >
-                    <div className={styles.nodeDot} />
-                    <span className={styles.nodeLabel}>{city}</span>
-                  </div>
-                ))}
-              </div>
-              {/* Floating particles */}
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div
-                  key={i}
-                  className={styles.particle}
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                    width: `${2 + Math.random() * 4}px`,
-                    height: `${2 + Math.random() * 4}px`,
-                    animationDelay: `${Math.random() * 4}s`,
-                    animationDuration: `${3 + Math.random() * 4}s`,
-                  }}
-                />
-              ))}
+              }>
+                <HeroCanvas />
+              </Suspense>
             </div>
           </motion.div>
         )}
