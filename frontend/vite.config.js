@@ -34,7 +34,9 @@ export default defineConfig({
     target: 'es2020',
   },
   server: {
-    port: 3000,
-    open: true,
+    port: 5000,
+    host: '0.0.0.0',
+    allowedHosts: true,
+    open: false,
   },
 });
