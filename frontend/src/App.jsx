@@ -1,14 +1,36 @@
 // App.jsx — Root Application Component
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { useIsDesktop } from './hooks/useMediaQuery';
+import { initAccessibility } from './utils/accessibility';
+import { initPerformanceMonitoring } from './utils/performance';
+import { initScrollAnimations } from './animations/gsap/scrollAnimations';
 
 const CustomCursor = lazy(() => import('./components/ui/CustomCursor/CustomCursor'));
 
 function App() {
   useSmoothScroll();
   const isDesktop = useIsDesktop();
+
+  useEffect(() => {
+    // Initialize accessibility features
+    const a11y = initAccessibility();
+
+    // Initialize performance monitoring
+    const perf = initPerformanceMonitoring();
+    console.log('[App] Performance settings:', perf.adaptiveSettings);
+
+    // Initialize scroll animations after component mount
+    setTimeout(() => {
+      initScrollAnimations();
+    }, 100);
+
+    // Cleanup
+    return () => {
+      // Clean up scroll animations if needed
+    };
+  }, []);
 
   return (
     <>

@@ -1,0 +1,23 @@
+/* MicroInteractions.module.css */
+
+.rippleButton {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+
+.ripple {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.tiltCard {
+  will-change: transform;
+}
