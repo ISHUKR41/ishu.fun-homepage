@@ -6,8 +6,11 @@ import GradientText from '../../ui/GradientText/GradientText';
 import MagneticButton from '../../ui/Button/MagneticButton';
 import ParticlesBackground from '../../ui/ParticlesBackground/ParticlesBackground';
 import { useIsDesktop } from '../../../hooks/useMediaQuery';
+import { useDevicePerformance } from '../../../hooks/useDevicePerformance';
 import styles from './HeroSection.module.css';
 
+// Dynamic import based on device capability
+const HeroCanvas3D = lazy(() => import('./HeroCanvas3D'));
 const HeroCanvas = lazy(() => import('./HeroCanvas'));
 
 const typewriterWords = ['JEE Mains Result', 'NEET 2026', 'SSC CGL', 'Railway Vacancy', 'UPSC Prelims', 'Free PDF Tools'];
@@ -49,6 +52,8 @@ function Typewriter() {
 
 export default function HeroSection() {
   const isDesktop = useIsDesktop();
+  const devicePerformance = useDevicePerformance();
+  const use3D = isDesktop && devicePerformance === 'high';
   const words = "India's Fastest Platform for Sarkari Results & Government Job Alerts".split(' ');
 
   return (
@@ -176,7 +181,7 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right Side — 3D WebGL Canvas */}
+        {/* Right Side — 3D WebGL Canvas or CSS Fallback */}
         {isDesktop && (
           <motion.div
             className={styles.right}
@@ -190,7 +195,7 @@ export default function HeroSection() {
                   <div className={styles.loaderSpinner} />
                 </div>
               }>
-                <HeroCanvas />
+                {use3D ? <HeroCanvas3D /> : <HeroCanvas />}
               </Suspense>
             </div>
           </motion.div>

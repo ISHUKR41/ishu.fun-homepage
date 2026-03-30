@@ -6,6 +6,7 @@ import { useIsDesktop } from './hooks/useMediaQuery';
 import { initAccessibility } from './utils/accessibility';
 import { initPerformanceMonitoring } from './utils/performance';
 import { initScrollAnimations } from './animations/gsap/scrollAnimations';
+import { initAdvancedEffects } from './animations/gsap/advancedEffects';
 
 const CustomCursor = lazy(() => import('./components/ui/CustomCursor/CustomCursor'));
 
@@ -24,6 +25,7 @@ function App() {
     // Initialize scroll animations after component mount
     setTimeout(() => {
       initScrollAnimations();
+      initAdvancedEffects();
     }, 100);
 
     // Cleanup
