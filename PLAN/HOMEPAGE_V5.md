@@ -2947,10 +2947,2621 @@ WhatsApp: +91 8986985813
 | V3.0 | 2025 | Ultra detailed edition, full GSAP specs |
 | V4.0 | 2026 | Added Lenis, split components, API spec |
 | **V5.0** | **2026** | **Complete overhaul. World-class spec. 20 sections. Full code. Full SEO. Full DevOps.** |
+| **V5.5** | **2026-03-30** | **🔥 ULTRA ENHANCED: Advanced micro-interactions, WebGL shaders, scroll storytelling, cursor effects, sound design, haptic feedback, comprehensive animation library, modern loading states, advanced SEO, performance budgets, 3D particle systems, parallax depth, magnetic interactions, and world-class UX patterns from Apple, Tesla, Vercel, Stripe, Framer, Linear, Awwwards winners.** |
 
 ---
 
 *This document represents the complete, final, authoritative specification for the ishu.fun homepage. Every team member, every developer, every designer, every SEO specialist, every DevOps engineer has ONE source of truth — this document.*
+
+---
+
+# 🔥 V5.5 ENHANCEMENTS — ULTRA-MODERN ADDITIONS
+
+## 21. ADVANCED MICRO-INTERACTIONS LIBRARY
+
+### What Are Micro-Interactions?
+Micro-interactions are small, functional animations that guide users and provide feedback. They're the difference between a "good" website and a "world-class" experience. Think: Apple's bouncy buttons, Tesla's smooth toggles, Stripe's card flip animations.
+
+### Core Principles (from Best-in-Class Sites)
+1. **Purposeful** — Every animation serves a function (feedback, guidance, delight)
+2. **Fast** — 200-400ms max for most interactions
+3. **Natural** — Ease curves mimic physics (not linear)
+4. **Responsive** — Immediate visual feedback on user action
+5. **Subtle** — Don't distract, enhance
+
+### Complete Micro-Interaction Catalog for ishu.fun
+
+#### 21.1 Button Interactions
+
+**Primary CTA Button (Get Started, Subscribe, etc.):**
+```css
+/* Base state */
+.btn-primary {
+  background: var(--grad-button);
+  box-shadow: 0 4px 12px rgba(108,99,255,0.3);
+  transform: translateY(0) scale(1);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Hover */
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(108,99,255,0.5);
+}
+
+/* Active (click) */
+.btn-primary:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(108,99,255,0.4);
+}
+
+/* Focus (keyboard) */
+.btn-primary:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
+}
+```
+
+**GSAP Version (with magnetic effect on desktop):**
+```javascript
+// components/ui/Button/MagneticButton.jsx
+import { useRef } from 'react';
+import { gsap } from 'gsap';
+
+export const MagneticButton = ({ children, strength = 0.3 }) => {
+  const btnRef = useRef();
+
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = btnRef.current.getBoundingClientRect();
+    const centerX = left + width / 2;
+    const centerY = top + height / 2;
+    const deltaX = (e.clientX - centerX) * strength;
+    const deltaY = (e.clientY - centerY) * strength;
+
+    gsap.to(btnRef.current, {
+      x: deltaX,
+      y: deltaY,
+      duration: 0.4,
+      ease: 'power2.out'
+    });
+  };
+
+  const handleMouseLeave = () => {
+    gsap.to(btnRef.current, {
+      x: 0,
+      y: 0,
+      duration: 0.6,
+      ease: 'elastic.out(1, 0.5)'
+    });
+  };
+
+  return (
+    <button
+      ref={btnRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="btn-magnetic"
+    >
+      {children}
+    </button>
+  );
+};
+```
+
+**Icon Bounce on Hover (for arrow icons in CTAs):**
+```javascript
+// Auto-triggered on parent button hover
+gsap.to('.btn-icon', {
+  x: 4,
+  repeat: -1,
+  yoyo: true,
+  duration: 0.6,
+  ease: 'power1.inOut',
+  paused: true,
+  id: 'iconBounce'
+});
+
+// In button component:
+onMouseEnter: () => gsap.getById('iconBounce').play(),
+onMouseLeave: () => gsap.getById('iconBounce').pause().progress(0)
+```
+
+#### 21.2 Card Interactions
+
+**Glass Card Hover (for Result Cards, News Cards, Tool Cards):**
+```css
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  transform: translateY(0) rotateX(0deg);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-card:hover {
+  transform: translateY(-8px) rotateX(2deg);
+  border-color: var(--border-glow);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,0.4),
+    0 0 0 1px var(--accent-violet) inset;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--grad-card);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.glass-card:hover::before {
+  opacity: 1;
+}
+```
+
+**3D Tilt Effect (using vanilla-tilt.js):**
+```javascript
+// components/ui/Card/TiltCard.jsx
+import VanillaTilt from 'vanilla-tilt';
+import { useEffect, useRef } from 'react';
+
+export const TiltCard = ({ children, tiltOptions }) => {
+  const tiltRef = useRef();
+
+  useEffect(() => {
+    const node = tiltRef.current;
+    VanillaTilt.init(node, {
+      max: 8,              // Max tilt angle
+      speed: 400,          // Transition speed
+      glare: true,         // Light reflection
+      'max-glare': 0.3,    // Max glare opacity
+      scale: 1.03,         // Scale on hover
+      ...tiltOptions
+    });
+
+    return () => node.vanillaTilt.destroy();
+  }, []);
+
+  return (
+    <div ref={tiltRef} className="tilt-card">
+      {children}
+    </div>
+  );
+};
+```
+
+**Card Stack Effect (for testimonials):**
+```javascript
+// When scrolling through testimonials, cards stack like a deck
+gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+  gsap.to(card, {
+    scrollTrigger: {
+      trigger: card,
+      start: 'top center',
+      end: 'bottom top',
+      scrub: 0.5
+    },
+    y: i * -20,
+    scale: 1 - (i * 0.05),
+    opacity: 1 - (i * 0.15)
+  });
+});
+```
+
+#### 21.3 Input & Form Interactions
+
+**Focus Glow (Search Bar, Phone Input, etc.):**
+```css
+.input {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  border-color: var(--accent-violet);
+  box-shadow:
+    0 0 0 3px rgba(108,99,255,0.1),
+    0 0 20px rgba(108,99,255,0.3);
+  background: rgba(255,255,255,0.06);
+}
+
+.input:focus + .input-label {
+  color: var(--accent-cyan);
+  transform: translateY(-24px) scale(0.85);
+}
+```
+
+**Checkbox Morph Animation:**
+```javascript
+// Custom checkbox that morphs on check
+<motion.div
+  className="checkbox"
+  animate={{
+    scale: isChecked ? [1, 1.2, 1] : 1,
+    rotate: isChecked ? [0, 10, 0] : 0
+  }}
+  transition={{ duration: 0.3 }}
+>
+  {isChecked && (
+    <motion.svg
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+    >
+      <path d="M 5 12 L 10 17 L 20 7" stroke="currentColor" />
+    </motion.svg>
+  )}
+</motion.div>
+```
+
+**Phone Number Input with Country Flag Animation:**
+```javascript
+// WhatsApp subscription form
+const [country, setCountry] = useState('IN');
+
+<motion.div
+  key={country}
+  initial={{ x: -20, opacity: 0 }}
+  animate={{ x: 0, opacity: 1 }}
+  className="flag-icon"
+>
+  <img src={`/flags/${country}.svg`} alt={country} />
+</motion.div>
+```
+
+#### 21.4 Navigation & Menu Interactions
+
+**Mobile Menu Overlay (inspired by Vercel, Linear):**
+```javascript
+// Full-screen menu with staggered items
+import { AnimatePresence, motion } from 'framer-motion';
+
+const menuVariants = {
+  closed: { opacity: 0, x: '100%' },
+  open: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 30
+    }
+  }
+};
+
+const itemVariants = {
+  closed: { x: 50, opacity: 0 },
+  open: i => ({
+    x: 0,
+    opacity: 1,
+    transition: { delay: i * 0.07 }
+  })
+};
+
+<AnimatePresence>
+  {isOpen && (
+    <motion.div
+      className="mobile-menu"
+      variants={menuVariants}
+      initial="closed"
+      animate="open"
+      exit="closed"
+    >
+      {menuItems.map((item, i) => (
+        <motion.a
+          key={item.id}
+          custom={i}
+          variants={itemVariants}
+          href={item.href}
+        >
+          {item.label}
+        </motion.a>
+      ))}
+    </motion.div>
+  )}
+</AnimatePresence>
+```
+
+**Navbar Hide/Show on Scroll (like Apple.com):**
+```javascript
+// hooks/useScrollDirection.js
+import { useEffect, useState } from 'react';
+
+export const useScrollDirection = () => {
+  const [scrollDir, setScrollDir] = useState('up');
+  const [lastScroll, setLastScroll] = useState(0);
+
+  useEffect(() => {
+    const threshold = 10;
+    let ticking = false;
+
+    const updateScrollDir = () => {
+      const scrollY = window.scrollY;
+
+      if (Math.abs(scrollY - lastScroll) < threshold) {
+        ticking = false;
+        return;
+      }
+
+      setScrollDir(scrollY > lastScroll ? 'down' : 'up');
+      setLastScroll(scrollY);
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScrollDir);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [lastScroll]);
+
+  return scrollDir;
+};
+
+// In Navbar component:
+const scrollDir = useScrollDirection();
+
+<motion.nav
+  animate={{ y: scrollDir === 'down' ? '-100%' : '0%' }}
+  transition={{ duration: 0.3, ease: 'easeInOut' }}
+  className="navbar"
+>
+  ...
+</motion.nav>
+```
+
+**Mega Menu Dropdown (with reveal animation):**
+```css
+.mega-menu {
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-item:hover .mega-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.mega-menu-item {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+  transition-delay: calc(var(--index) * 0.05s);
+}
+
+.nav-item:hover .mega-menu-item {
+  opacity: 1;
+  transform: translateX(0);
+}
+```
+
+#### 21.5 Scroll & Page Transitions
+
+**Smooth Scroll with Lenis (already included, but enhanced config):**
+```javascript
+// Enhanced Lenis initialization
+import Lenis from '@studio-freight/lenis';
+
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  orientation: 'vertical',
+  gestureOrientation: 'vertical',
+  smoothWheel: true,
+  smoothTouch: false,  // Native feel on mobile
+  touchMultiplier: 2,
+  infinite: false,
+  wheelMultiplier: 1,
+  normalizeWheel: true,
+});
+
+// RAF loop
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
+
+// Stop Lenis when modal open
+lenis.stop();  // When modal opens
+lenis.start(); // When modal closes
+```
+
+**Parallax Scroll Layers (like Apple product pages):**
+```javascript
+// Different elements scroll at different speeds
+gsap.utils.toArray('.parallax').forEach(layer => {
+  const speed = layer.dataset.speed || 0.5;
+
+  gsap.to(layer, {
+    y: () => window.innerHeight * (1 - speed),
+    ease: 'none',
+    scrollTrigger: {
+      trigger: layer,
+      start: 'top bottom',
+      end: 'bottom top',
+      scrub: 0.5
+    }
+  });
+});
+
+// Usage in HTML:
+<div class="parallax" data-speed="0.3">Slow moving background</div>
+<div class="parallax" data-speed="0.7">Fast moving foreground</div>
+```
+
+**Section Reveal Animation (like Stripe):**
+```javascript
+// Each section fades + scales in as it enters viewport
+gsap.utils.toArray('section').forEach(section => {
+  gsap.from(section, {
+    opacity: 0,
+    y: 60,
+    scale: 0.98,
+    duration: 1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: section,
+      start: 'top 85%',
+      once: true  // Only animate once
+    }
+  });
+});
+```
+
+**Horizontal Scroll Section (for tool showcase):**
+```javascript
+// Scroll horizontally through cards when scrolling vertically
+const horizontalSection = document.querySelector('.horizontal-scroll');
+const cards = gsap.utils.toArray('.tool-card');
+
+gsap.to(cards, {
+  xPercent: -100 * (cards.length - 1),
+  ease: 'none',
+  scrollTrigger: {
+    trigger: horizontalSection,
+    pin: true,
+    scrub: 1,
+    end: () => `+=${horizontalSection.offsetWidth}`
+  }
+});
+```
+
+#### 21.6 Text & Typography Animations
+
+**Split Text Reveal (word-by-word, char-by-char):**
+```javascript
+// Using split-type library
+import SplitType from 'split-type';
+
+const text = new SplitType('.hero-headline', { types: 'words,chars' });
+
+// Animate words
+gsap.from(text.words, {
+  yPercent: 100,
+  opacity: 0,
+  stagger: 0.05,
+  duration: 0.8,
+  ease: 'power3.out'
+});
+
+// Or animate characters
+gsap.from(text.chars, {
+  opacity: 0,
+  y: 20,
+  rotateX: -90,
+  stagger: 0.02,
+  duration: 0.6,
+  ease: 'back.out(1.7)'
+});
+```
+
+**Gradient Text Animation:**
+```css
+.gradient-text {
+  background: linear-gradient(
+    90deg,
+    #6C63FF 0%,
+    #00D2FF 25%,
+    #00C896 50%,
+    #00D2FF 75%,
+    #6C63FF 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-flow 4s linear infinite;
+}
+
+@keyframes gradient-flow {
+  to { background-position: 200% center; }
+}
+```
+
+**Typewriter Effect with Cursor:**
+```javascript
+// components/ui/Typewriter/Typewriter.jsx
+import { useEffect, useState } from 'react';
+
+export const Typewriter = ({ words, delay = 2000 }) => {
+  const [currentWord, setCurrentWord] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const word = words[currentIndex % words.length];
+
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        setCurrentWord(word.slice(0, currentWord.length + 1));
+        if (currentWord === word) {
+          setTimeout(() => setIsDeleting(true), delay);
+        }
+      } else {
+        setCurrentWord(word.slice(0, currentWord.length - 1));
+        if (currentWord === '') {
+          setIsDeleting(false);
+          setCurrentIndex(currentIndex + 1);
+        }
+      }
+    }, isDeleting ? 50 : 100);
+
+    return () => clearTimeout(timer);
+  }, [currentWord, currentIndex, isDeleting, words, delay]);
+
+  return (
+    <span className="typewriter">
+      {currentWord}
+      <span className="cursor">|</span>
+    </span>
+  );
+};
+
+// CSS for blinking cursor
+.cursor {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+```
+
+**Number Counter with Easing:**
+```javascript
+// Enhanced CountUp with custom easing
+import { useCountUp } from 'react-countup';
+import { useInView } from 'react-intersection-observer';
+
+export const AnimatedCounter = ({ end, suffix = '', duration = 2.5 }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
+  const { countUp, start } = useCountUp({
+    end,
+    duration,
+    suffix,
+    separator: ',',
+    useEasing: true,
+    easingFn: (t, b, c, d) => {
+      // Custom easing: easeOutExpo
+      return t === d ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
+    }
+  });
+
+  useEffect(() => {
+    if (inView) start();
+  }, [inView, start]);
+
+  return <span ref={ref}>{countUp}</span>;
+};
+```
+
+#### 21.7 Loading States & Skeleton Screens
+
+**Modern Skeleton Loader:**
+```css
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 0%,
+    var(--bg-elevated) 50%,
+    var(--bg-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+  border-radius: var(--radius-md);
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Skeleton shapes */
+.skeleton-text {
+  height: 1em;
+  margin-bottom: 0.5em;
+}
+
+.skeleton-title {
+  height: 2em;
+  width: 60%;
+  margin-bottom: 1em;
+}
+
+.skeleton-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.skeleton-card {
+  height: 200px;
+  width: 100%;
+}
+```
+
+**Component Usage:**
+```jsx
+// When data is loading
+{isLoading ? (
+  <div className="skeleton-wrapper">
+    <div className="skeleton skeleton-title" />
+    <div className="skeleton skeleton-text" style={{ width: '80%' }} />
+    <div className="skeleton skeleton-text" style={{ width: '90%' }} />
+    <div className="skeleton skeleton-card" />
+  </div>
+) : (
+  <ActualContent data={data} />
+)}
+```
+
+**Shimmer Effect (Facebook-style):**
+```css
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  100% { left: 100%; }
+}
+```
+
+**Progressive Image Loading (blur-up technique):**
+```javascript
+// components/ui/ProgressiveImage.jsx
+import { useState, useEffect } from 'react';
+
+export const ProgressiveImage = ({ lowQualitySrc, highQualitySrc, alt }) => {
+  const [src, setSrc] = useState(lowQualitySrc);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = highQualitySrc;
+    img.onload = () => {
+      setSrc(highQualitySrc);
+      setIsLoaded(true);
+    };
+  }, [highQualitySrc]);
+
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={`progressive-image ${isLoaded ? 'loaded' : 'loading'}`}
+      style={{
+        filter: isLoaded ? 'blur(0)' : 'blur(20px)',
+        transition: 'filter 0.3s ease-out'
+      }}
+    />
+  );
+};
+```
+
+#### 21.8 Toast & Notification Animations
+
+**Modern Toast System (inspired by Sonner):**
+```javascript
+// components/ui/Toast/ToastProvider.jsx
+import { createContext, useContext, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+
+const ToastContext = createContext();
+
+export const ToastProvider = ({ children }) => {
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (message, type = 'info') => {
+    const id = Date.now();
+    setToasts(prev => [...prev, { id, message, type }]);
+    setTimeout(() => removeToast(id), 5000);
+  };
+
+  const removeToast = (id) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  };
+
+  return (
+    <ToastContext.Provider value={{ addToast }}>
+      {children}
+      <div className="toast-container">
+        <AnimatePresence>
+          {toasts.map(toast => (
+            <motion.div
+              key={toast.id}
+              initial={{ opacity: 0, y: -50, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 300 }}
+              className={`toast toast-${toast.type}`}
+            >
+              {toast.message}
+              <button onClick={() => removeToast(toast.id)}>×</button>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </ToastContext.Provider>
+  );
+};
+
+export const useToast = () => useContext(ToastContext);
+```
+
+---
+
+## 22. ADVANCED 3D & WEBGL EFFECTS
+
+### 22.1 Enhanced Three.js Hero Scene
+
+**Advanced Particle System with Custom Shaders:**
+```javascript
+// animations/three/advancedParticles.js
+import * as THREE from 'three';
+
+export class AdvancedParticleSystem {
+  constructor(scene) {
+    this.scene = scene;
+    this.init();
+  }
+
+  init() {
+    const particleCount = 5000;
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+
+    // Create particles in a sphere around India globe
+    for (let i = 0; i < particleCount; i++) {
+      const i3 = i * 3;
+
+      // Spherical distribution
+      const radius = 2 + Math.random() * 3;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+
+      positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i3 + 2] = radius * Math.cos(phi);
+
+      // Color gradient (violet to cyan)
+      const mixRatio = i / particleCount;
+      colors[i3] = 0.42 + (mixRatio * 0.18);      // R
+      colors[i3 + 1] = 0.39 + (mixRatio * 0.43);  // G
+      colors[i3 + 2] = 1.0;                        // B
+
+      sizes[i] = Math.random() * 3 + 1;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    // Custom shader material
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 0 },
+        pixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
+      },
+      vertexShader: `
+        uniform float time;
+        uniform float pixelRatio;
+        attribute float size;
+        varying vec3 vColor;
+
+        void main() {
+          vColor = color;
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+
+          // Floating animation
+          mvPosition.y += sin(time + position.x * 0.5) * 0.1;
+          mvPosition.x += cos(time + position.z * 0.5) * 0.1;
+
+          gl_Position = projectionMatrix * mvPosition;
+          gl_PointSize = size * pixelRatio * (300.0 / -mvPosition.z);
+        }
+      `,
+      fragmentShader: `
+        varying vec3 vColor;
+
+        void main() {
+          // Circular particles
+          vec2 center = gl_PointCoord - vec2(0.5);
+          float dist = length(center);
+          if (dist > 0.5) discard;
+
+          // Soft edges
+          float alpha = 1.0 - smoothstep(0.3, 0.5, dist);
+
+          gl_FragColor = vec4(vColor, alpha);
+        }
+      `,
+      transparent: true,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+
+    this.particles = new THREE.Points(geometry, material);
+    this.scene.add(this.particles);
+  }
+
+  update(time) {
+    this.particles.material.uniforms.time.value = time * 0.001;
+    this.particles.rotation.y = time * 0.0002;
+  }
+}
+```
+
+**India Globe with Pulsing City Markers:**
+```javascript
+// animations/three/indiaGlobe.js
+import * as THREE from 'three';
+
+export class IndiaGlobe {
+  constructor(scene) {
+    this.scene = scene;
+    this.cities = [
+      { name: 'Delhi', lat: 28.6139, lon: 77.2090 },
+      { name: 'Mumbai', lat: 19.0760, lon: 72.8777 },
+      { name: 'Bengaluru', lat: 12.9716, lon: 77.5946 },
+      { name: 'Kolkata', lat: 22.5726, lon: 88.3639 },
+      { name: 'Chennai', lat: 13.0827, lon: 80.2707 },
+      { name: 'Hyderabad', lat: 17.3850, lon: 78.4867 }
+    ];
+    this.init();
+  }
+
+  init() {
+    // Create sphere with India texture
+    const geometry = new THREE.SphereGeometry(1.5, 64, 64);
+
+    // Tricolor gradient shader
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 0 },
+        colorTop: { value: new THREE.Color('#FF9933') },    // Saffron
+        colorMiddle: { value: new THREE.Color('#FFFFFF') }, // White
+        colorBottom: { value: new THREE.Color('#138808') }  // Green
+      },
+      vertexShader: `
+        varying vec2 vUv;
+        varying vec3 vPosition;
+
+        void main() {
+          vUv = uv;
+          vPosition = position;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 colorTop;
+        uniform vec3 colorMiddle;
+        uniform vec3 colorBottom;
+        uniform float time;
+        varying vec2 vUv;
+        varying vec3 vPosition;
+
+        void main() {
+          // Tricolor gradient based on sphere Y position
+          vec3 color;
+          if (vPosition.y > 0.0) {
+            color = mix(colorMiddle, colorTop, vPosition.y);
+          } else {
+            color = mix(colorMiddle, colorBottom, -vPosition.y);
+          }
+
+          // Subtle glow pulse
+          float glow = 0.1 * (1.0 + sin(time * 2.0)) * 0.5;
+
+          gl_FragColor = vec4(color + glow, 0.9);
+        }
+      `,
+      transparent: true
+    });
+
+    this.globe = new THREE.Mesh(geometry, material);
+    this.scene.add(this.globe);
+
+    // Add city markers
+    this.addCityMarkers();
+  }
+
+  addCityMarkers() {
+    this.cities.forEach(city => {
+      // Convert lat/lon to sphere coordinates
+      const phi = (90 - city.lat) * (Math.PI / 180);
+      const theta = (city.lon + 180) * (Math.PI / 180);
+      const radius = 1.52; // Slightly above globe surface
+
+      const x = -(radius * Math.sin(phi) * Math.cos(theta));
+      const y = radius * Math.cos(phi);
+      const z = radius * Math.sin(phi) * Math.sin(theta);
+
+      // Create pulsing marker
+      const markerGeometry = new THREE.SphereGeometry(0.03, 16, 16);
+      const markerMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00D2FF,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+      marker.position.set(x, y, z);
+      marker.userData = { city: city.name, baseScale: 1 };
+
+      this.globe.add(marker);
+
+      // Glow ring around marker
+      const ringGeometry = new THREE.RingGeometry(0.04, 0.06, 32);
+      const ringMaterial = new THREE.MeshBasicMaterial({
+        color: 0x6C63FF,
+        transparent: true,
+        opacity: 0.5,
+        side: THREE.DoubleSide
+      });
+
+      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+      ring.position.set(x, y, z);
+      ring.lookAt(0, 0, 0);
+
+      this.globe.add(ring);
+    });
+  }
+
+  update(time) {
+    this.globe.material.uniforms.time.value = time * 0.001;
+    this.globe.rotation.y = time * 0.0003;
+
+    // Pulse city markers
+    this.globe.children.forEach(child => {
+      if (child.userData.city) {
+        const scale = 1 + Math.sin(time * 0.003) * 0.3;
+        child.scale.set(scale, scale, scale);
+      }
+    });
+  }
+}
+```
+
+**Mouse Parallax Camera Movement:**
+```javascript
+// animations/three/cameraParallax.js
+export class CameraParallax {
+  constructor(camera) {
+    this.camera = camera;
+    this.mouse = { x: 0, y: 0 };
+    this.target = { x: 0, y: 0 };
+    this.init();
+  }
+
+  init() {
+    window.addEventListener('mousemove', (e) => {
+      this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+      this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
+  }
+
+  update() {
+    // Smooth lerp to target
+    this.target.x += (this.mouse.x - this.target.x) * 0.05;
+    this.target.y += (this.mouse.y - this.target.y) * 0.05;
+
+    // Apply subtle camera movement
+    this.camera.position.x = this.target.x * 0.3;
+    this.camera.position.y = this.target.y * 0.2;
+    this.camera.lookAt(0, 0, 0);
+  }
+}
+```
+
+### 22.2 WebGL Background Effects
+
+**Animated Mesh Gradient (like Stripe):**
+```javascript
+// components/sections/HeroSection/MeshGradient.jsx
+import { useEffect, useRef } from 'react';
+
+export const MeshGradient = () => {
+  const canvasRef = useRef();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const gl = canvas.getContext('webgl');
+
+    // Vertex shader
+    const vertexShaderSource = `
+      attribute vec2 position;
+      void main() {
+        gl_Position = vec4(position, 0.0, 1.0);
+      }
+    `;
+
+    // Fragment shader (animated gradient)
+    const fragmentShaderSource = `
+      precision mediump float;
+      uniform float time;
+      uniform vec2 resolution;
+
+      void main() {
+        vec2 uv = gl_FragCoord.xy / resolution;
+
+        // Create moving gradient blobs
+        float blob1 = length(uv - vec2(0.4 + sin(time * 0.5) * 0.2, 0.5));
+        float blob2 = length(uv - vec2(0.6 + cos(time * 0.3) * 0.2, 0.5));
+        float blob3 = length(uv - vec2(0.5, 0.5 + sin(time * 0.4) * 0.2));
+
+        // Color mixing
+        vec3 color1 = vec3(0.42, 0.39, 1.0);  // Violet
+        vec3 color2 = vec3(0.0, 0.82, 1.0);   // Cyan
+        vec3 color3 = vec3(0.0, 0.78, 0.59);  // Emerald
+
+        vec3 finalColor = mix(color1, color2, smoothstep(0.3, 0.7, blob1));
+        finalColor = mix(finalColor, color3, smoothstep(0.3, 0.7, blob2));
+
+        gl_FragColor = vec4(finalColor * 0.15, 1.0);
+      }
+    `;
+
+    // Compile shaders and create program
+    // ... (shader compilation code)
+
+    // Animation loop
+    let time = 0;
+    const animate = () => {
+      time += 0.01;
+      // Update uniform time
+      gl.uniform1f(timeLocation, time);
+      gl.drawArrays(gl.TRIANGLES, 0, 6);
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+  }, []);
+
+  return <canvas ref={canvasRef} className="mesh-gradient-canvas" />;
+};
+```
+
+**Grain Texture Overlay (adds premium feel):**
+```css
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg...>'); /* Noise SVG */
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1000;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 10%); }
+  90% { transform: translate(-10%, 5%); }
+}
+```
+
+---
+
+## 23. CUSTOM CURSOR & POINTER INTERACTIONS
+
+### Modern Custom Cursor (like Awwwards winners)
+
+**Cursor with Following Trail:**
+```javascript
+// components/ui/CustomCursor/CustomCursor.jsx
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+
+export const CustomCursor = () => {
+  const cursorRef = useRef();
+  const followerRef = useRef();
+  const [isHovering, setIsHovering] = useState(false);
+
+  useEffect(() => {
+    const cursor = cursorRef.current;
+    const follower = followerRef.current;
+
+    // Mouse move
+    const moveCursor = (e) => {
+      gsap.to(cursor, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.1,
+        ease: 'power2.out'
+      });
+
+      gsap.to(follower, {
+        x: e.clientX,
+        y: e.clientY,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
+    };
+
+    window.addEventListener('mousemove', moveCursor);
+
+    // Hover effects on interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, [data-cursor="pointer"]');
+
+    interactiveElements.forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        setIsHovering(true);
+        gsap.to(follower, { scale: 2, duration: 0.3 });
+      });
+
+      el.addEventListener('mouseleave', () => {
+        setIsHovering(false);
+        gsap.to(follower, { scale: 1, duration: 0.3 });
+      });
+    });
+
+    return () => {
+      window.removeEventListener('mousemove', moveCursor);
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={cursorRef} className="custom-cursor-dot" />
+      <div ref={followerRef} className={`custom-cursor-follower ${isHovering ? 'hovering' : ''}`} />
+    </>
+  );
+};
+```
+
+**Cursor Styles:**
+```css
+.custom-cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--accent-cyan);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.custom-cursor-follower {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 2px solid var(--accent-violet);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+}
+
+.custom-cursor-follower.hovering {
+  background: rgba(108,99,255,0.1);
+  backdrop-filter: blur(8px);
+}
+
+/* Hide default cursor */
+body {
+  cursor: none;
+}
+
+a, button {
+  cursor: none;
+}
+```
+
+**Text Reveal on Cursor Hover:**
+```javascript
+// Text reveals/highlights as cursor moves over it
+const revealTextOnHover = () => {
+  const text = document.querySelectorAll('[data-cursor-reveal]');
+
+  text.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const progress = x / rect.width;
+
+      el.style.setProperty('--reveal-progress', progress);
+    });
+  });
+};
+
+// CSS
+[data-cursor-reveal] {
+  background: linear-gradient(
+    to right,
+    var(--accent-violet) 0%,
+    var(--accent-violet) var(--reveal-progress, 0%),
+    var(--text-secondary) var(--reveal-progress, 0%),
+    var(--text-secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: --reveal-progress 0.3s ease;
+}
+```
+
+---
+
+## 24. SOUND DESIGN & HAPTIC FEEDBACK
+
+### Subtle UI Sounds (inspired by Apple, Tesla)
+
+**Sound System Implementation:**
+```javascript
+// utils/soundSystem.js
+class SoundSystem {
+  constructor() {
+    this.sounds = {};
+    this.enabled = localStorage.getItem('soundEnabled') !== 'false';
+    this.init();
+  }
+
+  init() {
+    // Load sound files
+    this.sounds = {
+      click: new Audio('/sounds/click.mp3'),
+      hover: new Audio('/sounds/hover.mp3'),
+      success: new Audio('/sounds/success.mp3'),
+      error: new Audio('/sounds/error.mp3'),
+      notification: new Audio('/sounds/notification.mp3'),
+      swoosh: new Audio('/sounds/swoosh.mp3')
+    };
+
+    // Set volumes
+    Object.values(this.sounds).forEach(sound => {
+      sound.volume = 0.3;
+    });
+  }
+
+  play(soundName) {
+    if (!this.enabled) return;
+
+    const sound = this.sounds[soundName];
+    if (sound) {
+      sound.currentTime = 0;
+      sound.play().catch(() => {}); // Ignore errors
+    }
+  }
+
+  toggle() {
+    this.enabled = !this.enabled;
+    localStorage.setItem('soundEnabled', this.enabled);
+  }
+}
+
+export const soundSystem = new SoundSystem();
+
+// Usage:
+import { soundSystem } from '@/utils/soundSystem';
+
+<button onClick={() => {
+  soundSystem.play('click');
+  handleClick();
+}}>
+  Click Me
+</button>
+```
+
+**Haptic Feedback (Mobile):**
+```javascript
+// utils/haptics.js
+export const haptics = {
+  light: () => {
+    if (navigator.vibrate) {
+      navigator.vibrate(10);
+    }
+  },
+
+  medium: () => {
+    if (navigator.vibrate) {
+      navigator.vibrate(20);
+    }
+  },
+
+  heavy: () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([30, 10, 30]);
+    }
+  },
+
+  success: () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([10, 50, 10]);
+    }
+  },
+
+  error: () => {
+    if (navigator.vibrate) {
+      navigator.vibrate([50, 30, 50, 30, 50]);
+    }
+  }
+};
+
+// Usage:
+import { haptics } from '@/utils/haptics';
+
+<button onClick={() => {
+  haptics.light();
+  handleClick();
+}}>
+  Tap Me
+</button>
+```
+
+**Sound Toggle Component:**
+```jsx
+// components/ui/SoundToggle.jsx
+import { useState } from 'react';
+import { soundSystem } from '@/utils/soundSystem';
+
+export const SoundToggle = () => {
+  const [enabled, setEnabled] = useState(soundSystem.enabled);
+
+  const toggle = () => {
+    soundSystem.toggle();
+    setEnabled(soundSystem.enabled);
+
+    if (soundSystem.enabled) {
+      soundSystem.play('success');
+    }
+  };
+
+  return (
+    <button onClick={toggle} className="sound-toggle" aria-label="Toggle sound">
+      {enabled ? '🔊' : '🔇'}
+    </button>
+  );
+};
+```
+
+---
+
+## 25. SCROLL-BASED STORYTELLING PATTERNS
+
+### Horizontal Scroll Sections (like Apple product pages)
+
+**Tool Showcase with Horizontal Scroll:**
+```javascript
+// components/sections/ToolsShowcase/HorizontalScroll.jsx
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+export const HorizontalToolsScroll = ({ tools }) => {
+  const sectionRef = useRef();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const scroll = scrollRef.current;
+
+    const scrollWidth = scroll.scrollWidth - window.innerWidth;
+
+    gsap.to(scroll, {
+      x: -scrollWidth,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: section,
+        pin: true,
+        scrub: 1,
+        end: () => `+=${scrollWidth}`,
+        invalidateOnRefresh: true
+      }
+    });
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="horizontal-scroll-section">
+      <div ref={scrollRef} className="horizontal-scroll-container">
+        {tools.map((tool, i) => (
+          <div key={i} className="tool-card-horizontal">
+            <img src={tool.icon} alt={tool.name} />
+            <h3>{tool.name}</h3>
+            <p>{tool.description}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
+```
+
+**Pinned Section with Scrolling Content:**
+```javascript
+// Stats section where number changes based on scroll position
+useEffect(() => {
+  gsap.to('.stat-number', {
+    scrollTrigger: {
+      trigger: '.stats-section',
+      start: 'top top',
+      end: '+=200%',
+      pin: true,
+      scrub: 1
+    },
+    textContent: (i, target) => {
+      const start = 0;
+      const end = parseFloat(target.dataset.value);
+      return gsap.utils.snap(1, gsap.utils.interpolate(start, end));
+    }
+  });
+}, []);
+```
+
+**Image Sequence Animation (like iPhone reveal):**
+```javascript
+// Scrub through image sequence on scroll
+const frameCount = 60;
+const images = [];
+
+// Preload all frames
+for (let i = 1; i <= frameCount; i++) {
+  const img = new Image();
+  img.src = `/images/sequence/frame-${String(i).padStart(4, '0')}.webp`;
+  images.push(img);
+}
+
+const canvas = document.querySelector('.sequence-canvas');
+const context = canvas.getContext('2d');
+
+gsap.to({ frame: 0 }, {
+  frame: frameCount - 1,
+  snap: 'frame',
+  ease: 'none',
+  scrollTrigger: {
+    trigger: '.sequence-section',
+    start: 'top top',
+    end: '+=300%',
+    pin: true,
+    scrub: 0.5
+  },
+  onUpdate: function() {
+    const frame = Math.round(this.targets()[0].frame);
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(images[frame], 0, 0, canvas.width, canvas.height);
+  }
+});
+```
+
+---
+
+## 26. PERFORMANCE BUDGETS & OPTIMIZATION STRATEGIES
+
+### Performance Budgets
+
+| Metric | Target | Maximum | Critical |
+|---|---|---|---|
+| **Initial Load** | < 1.5s | < 2.5s | < 3.5s |
+| **LCP** | < 1.8s | < 2.5s | < 4.0s |
+| **FID** | < 50ms | < 100ms | < 300ms |
+| **CLS** | < 0.05 | < 0.1 | < 0.25 |
+| **TTI** | < 2.5s | < 3.5s | < 5.0s |
+| **TBT** | < 150ms | < 300ms | < 600ms |
+| **Initial JS** | < 120KB | < 170KB | < 250KB |
+| **Initial CSS** | < 30KB | < 50KB | < 75KB |
+| **Total Page Weight** | < 800KB | < 1.5MB | < 2.5MB |
+| **Requests** | < 25 | < 40 | < 60 |
+
+### Code Splitting Strategy
+
+```javascript
+// vite.config.js
+export default {
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // React core
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+
+          // Animation libraries (lazy load)
+          'vendor-animations': ['gsap', 'framer-motion', '@studio-freight/lenis'],
+
+          // Three.js (lazy load, desktop only)
+          'vendor-three': ['three', '@react-three/fiber', '@react-three/drei'],
+
+          // Charts (lazy load)
+          'vendor-charts': ['recharts', 'chart.js'],
+
+          // Utils
+          'vendor-utils': ['date-fns', 'axios', 'lodash-es']
+        }
+      }
+    },
+
+    // Enable compression
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
+  }
+};
+```
+
+**Lazy Loading Strategy:**
+```javascript
+// App.jsx - Lazy load below-fold sections
+import { lazy, Suspense } from 'react';
+
+// Above-fold (loaded immediately)
+import Navbar from './components/layout/Navbar';
+import HeroSection from './components/sections/HeroSection';
+import TrustBar from './components/sections/TrustBar';
+
+// Below-fold (lazy loaded)
+const StatsSection = lazy(() => import('./components/sections/StatsSection'));
+const FeaturesSection = lazy(() => import('./components/sections/FeaturesSection'));
+const ResultsPreview = lazy(() => import('./components/sections/ResultsPreview'));
+const ToolsShowcase = lazy(() => import('./components/sections/ToolsShowcase'));
+const IndiaMapSection = lazy(() => import('./components/sections/IndiaMapSection'));
+const NewsPreview = lazy(() => import('./components/sections/NewsPreview'));
+const TestimonialsSection = lazy(() => import('./components/sections/TestimonialsSection'));
+const FAQSection = lazy(() => import('./components/sections/FAQSection'));
+const Footer = lazy(() => import('./components/layout/Footer'));
+
+// Three.js (desktop only, lazy loaded)
+const HeroCanvas = lazy(() => import('./components/sections/HeroSection/HeroCanvas'));
+
+function App() {
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const isLowEnd = useDevicePerformance();
+
+  return (
+    <>
+      <Navbar />
+      <HeroSection>
+        {isDesktop && !isLowEnd && (
+          <Suspense fallback={null}>
+            <HeroCanvas />
+          </Suspense>
+        )}
+      </HeroSection>
+      <TrustBar />
+
+      <Suspense fallback={<SectionSkeleton />}>
+        <StatsSection />
+        <FeaturesSection />
+        <ResultsPreview />
+        <ToolsShowcase />
+        <IndiaMapSection />
+        <NewsPreview />
+        <TestimonialsSection />
+        <FAQSection />
+        <Footer />
+      </Suspense>
+    </>
+  );
+}
+```
+
+### Image Optimization Strategy
+
+**Responsive Images with srcset:**
+```jsx
+<picture>
+  <source
+    media="(min-width: 1024px)"
+    srcSet="/images/hero-desktop-sm.webp 1920w, /images/hero-desktop-lg.webp 2560w"
+    sizes="100vw"
+    type="image/webp"
+  />
+  <source
+    media="(min-width: 768px)"
+    srcSet="/images/hero-tablet.webp 1536w"
+    type="image/webp"
+  />
+  <source
+    media="(max-width: 767px)"
+    srcSet="/images/hero-mobile-sm.webp 640w, /images/hero-mobile-lg.webp 828w"
+    sizes="100vw"
+    type="image/webp"
+  />
+  <img
+    src="/images/hero-mobile-sm.jpg"
+    alt="India students platform"
+    width="1920"
+    height="1080"
+    loading="eager"
+    fetchpriority="high"
+  />
+</picture>
+```
+
+**Lazy Load Images with IntersectionObserver:**
+```javascript
+// hooks/useLazyImage.js
+import { useEffect, useRef, useState } from 'react';
+
+export const useLazyImage = (lowQuality, highQuality) => {
+  const [src, setSrc] = useState(lowQuality);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const imgRef = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const img = new Image();
+          img.src = highQuality;
+          img.onload = () => {
+            setSrc(highQuality);
+            setIsLoaded(true);
+          };
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '200px' } // Start loading 200px before visible
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [highQuality]);
+
+  return { src, isLoaded, imgRef };
+};
+```
+
+### Font Loading Optimization
+
+**FOIT/FOUT Prevention:**
+```html
+<!-- index.html -->
+<head>
+  <!-- Preconnect to font CDN -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Preload critical fonts -->
+  <link
+    rel="preload"
+    href="/fonts/ClashDisplay-Bold.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+  <link
+    rel="preload"
+    href="/fonts/Satoshi-Regular.woff2"
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+</head>
+```
+
+**Font Display Strategy:**
+```css
+@font-face {
+  font-family: 'Clash Display';
+  src: url('/fonts/ClashDisplay-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap; /* Show fallback immediately, swap when loaded */
+  font-stretch: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+```
+
+### JavaScript Performance
+
+**Debouncing & Throttling:**
+```javascript
+// utils/performance.js
+
+// Debounce (execute after quiet period)
+export const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+};
+
+// Throttle (execute at most once per interval)
+export const throttle = (func, limit) => {
+  let inThrottle;
+  return function(...args) {
+    if (!inThrottle) {
+      func.apply(this, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  };
+};
+
+// Usage:
+const handleScroll = throttle(() => {
+  // Expensive scroll operation
+}, 100);
+
+const handleSearch = debounce((query) => {
+  // API call
+}, 300);
+```
+
+**RequestAnimationFrame for Animations:**
+```javascript
+// Use RAF instead of setInterval for smooth animations
+class SmoothAnimation {
+  constructor() {
+    this.isRunning = false;
+  }
+
+  start() {
+    this.isRunning = true;
+    this.animate();
+  }
+
+  animate = () => {
+    if (!this.isRunning) return;
+
+    // Your animation logic here
+    this.update();
+
+    requestAnimationFrame(this.animate);
+  };
+
+  stop() {
+    this.isRunning = false;
+  }
+}
+```
+
+---
+
+## 27. ADVANCED SEO & STRUCTURED DATA
+
+### Enhanced JSON-LD Schemas
+
+**Complete Homepage Structured Data:**
+```html
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://ishu.fun/#website",
+      "url": "https://ishu.fun",
+      "name": "ishu.fun - India's #1 Platform for Sarkari Results & Govt Jobs",
+      "description": "Get instant exam results, government job alerts, free PDF tools, and education news. Trusted by 5 million+ Indian students.",
+      "publisher": {
+        "@id": "https://ishu.fun/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://ishu.fun/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "en-IN"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://ishu.fun/#organization",
+      "name": "ishu.fun",
+      "url": "https://ishu.fun",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ishu.fun/images/logo-512x512.png",
+        "width": 512,
+        "height": 512
+      },
+      "sameAs": [
+        "https://twitter.com/ishufun",
+        "https://instagram.com/ishu.fun",
+        "https://t.me/ishufun",
+        "https://youtube.com/@ishufun"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "ishukryk@gmail.com",
+        "contactType": "Customer Service",
+        "areaServed": "IN",
+        "availableLanguage": ["English", "Hindi"]
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ishu.fun/#webpage",
+      "url": "https://ishu.fun",
+      "name": "ishu.fun - Sarkari Result, Govt Jobs, Free PDF Tools",
+      "isPartOf": {
+        "@id": "https://ishu.fun/#website"
+      },
+      "about": {
+        "@id": "https://ishu.fun/#organization"
+      },
+      "description": "India's fastest platform for sarkari results, government job vacancies, free PDF tools, and education news. Join 50 lakh+ students.",
+      "breadcrumb": {
+        "@id": "https://ishu.fun/#breadcrumb"
+      },
+      "inLanguage": "en-IN"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ishu.fun/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://ishu.fun"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is ishu.fun completely free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! ishu.fun is 100% free. Results, news, job alerts, and PDF tools are all completely free with no hidden charges, no premium plans, and no credit card required."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast do you publish exam results?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We typically publish results within 5–10 minutes of official declaration. Our automated systems monitor official websites 24/7 and instantly update our database."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "ishu.fun",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web, Android, iOS",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "INR"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "ratingCount": "500000",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    }
+  ]
+}
+</script>
+```
+
+### Advanced Meta Tags
+
+```html
+<!-- index.html -->
+<head>
+  <!-- Primary Meta Tags -->
+  <title>ishu.fun - Sarkari Result, Govt Jobs, Free PDF Tools | India's #1 Student Platform</title>
+  <meta name="title" content="ishu.fun - Sarkari Result, Govt Jobs, Free PDF Tools" />
+  <meta name="description" content="Get instant sarkari results, government job alerts, free PDF tools, and education news. Trusted by 5 million+ Indian students. 100% free, no login required." />
+  <meta name="keywords" content="sarkari result, govt jobs, sarkari naukri, free pdf tools, jee result, neet result, upsc vacancy, ssc result, railway vacancy, education news india" />
+  <meta name="author" content="ishu.fun" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://ishu.fun" />
+
+  <!-- Language & Region -->
+  <meta http-equiv="content-language" content="en-IN" />
+  <link rel="alternate" hreflang="en-IN" href="https://ishu.fun" />
+  <link rel="alternate" hreflang="hi-IN" href="https://ishu.fun?lang=hi" />
+  <link rel="alternate" hreflang="x-default" href="https://ishu.fun" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ishu.fun" />
+  <meta property="og:title" content="ishu.fun - India's #1 Platform for Sarkari Results & Govt Jobs" />
+  <meta property="og:description" content="Get instant exam results, government job alerts, free PDF tools. Trusted by 5 million+ students across India. 100% free forever." />
+  <meta property="og:image" content="https://ishu.fun/images/og-image-1200x630.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="ishu.fun - India's #1 Student Platform" />
+  <meta property="og:site_name" content="ishu.fun" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:locale:alternate" content="hi_IN" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://ishu.fun" />
+  <meta name="twitter:title" content="ishu.fun - Sarkari Result & Govt Jobs Platform" />
+  <meta name="twitter:description" content="India's fastest platform for exam results, job alerts, and free PDF tools. Join 5 million+ students." />
+  <meta name="twitter:image" content="https://ishu.fun/images/twitter-card-1500x500.jpg" />
+  <meta name="twitter:creator" content="@ishufun" />
+
+  <!-- Apple -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="ishu.fun" />
+
+  <!-- PWA -->
+  <meta name="theme-color" content="#080810" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <link rel="manifest" href="/manifest.json" />
+
+  <!-- Performance -->
+  <link rel="dns-prefetch" href="https://api.ishu.fun" />
+  <link rel="preconnect" href="https://api.ishu.fun" crossorigin />
+
+  <!-- Security -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- Verification -->
+  <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" />
+  <meta name="msvalidate.01" content="YOUR_BING_VERIFICATION" />
+</head>
+```
+
+### Local Business Schema (if applicable)
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "ishu.fun",
+  "image": "https://ishu.fun/images/logo-512x512.png",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "",
+    "longitude": ""
+  },
+  "url": "https://ishu.fun",
+  "telephone": "+918986985813",
+  "priceRange": "Free",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": [
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
+    ],
+    "opens": "00:00",
+    "closes": "23:59"
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "India"
+  }
+}
+```
+
+---
+
+## 28. MOBILE-FIRST RESPONSIVENESS PATTERNS
+
+### Breakpoint System Enhancement
+
+```javascript
+// constants/breakpoints.js
+export const BREAKPOINTS = {
+  xs: 0,      // 0-374px   - Very small phones (iPhone SE 1st gen)
+  sm: 375,    // 375-639px - Standard phones (iPhone 14, Pixel 7)
+  md: 640,    // 640-767px - Large phones (iPhone 14 Pro Max)
+  lg: 768,    // 768-1023px - Tablets (iPad Mini, iPad Air)
+  xl: 1024,   // 1024-1279px - Small laptops
+  '2xl': 1280, // 1280-1535px - Desktops
+  '3xl': 1536, // 1536px+ - Large monitors
+  '4xl': 1920  // 1920px+ - Ultra-wide
+};
+
+export const DEVICE_TYPES = {
+  mobile: `(max-width: ${BREAKPOINTS.md - 1}px)`,
+  tablet: `(min-width: ${BREAKPOINTS.md}px) and (max-width: ${BREAKPOINTS.xl - 1}px)`,
+  desktop: `(min-width: ${BREAKPOINTS.xl}px)`
+};
+```
+
+**Responsive Hook:**
+```javascript
+// hooks/useResponsive.js
+import { useState, useEffect } from 'react';
+import { BREAKPOINTS, DEVICE_TYPES } from '@/constants/breakpoints';
+
+export const useResponsive = () => {
+  const [deviceType, setDeviceType] = useState('desktop');
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setWindowWidth(width);
+
+      if (width < BREAKPOINTS.md) setDeviceType('mobile');
+      else if (width < BREAKPOINTS.xl) setDeviceType('tablet');
+      else setDeviceType('desktop');
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return {
+    isMobile: deviceType === 'mobile',
+    isTablet: deviceType === 'tablet',
+    isDesktop: deviceType === 'desktop',
+    windowWidth,
+    breakpoint: Object.keys(BREAKPOINTS).find(key =>
+      windowWidth >= BREAKPOINTS[key]
+    )
+  };
+};
+
+// Usage:
+const { isMobile, isDesktop } = useResponsive();
+
+return (
+  <>
+    {isMobile && <MobileLayout />}
+    {isDesktop && <DesktopLayout />}
+  </>
+);
+```
+
+### Container Queries (Modern Approach)
+
+```css
+/* Use container queries instead of media queries for component-level responsive */
+.feature-card-container {
+  container-type: inline-size;
+  container-name: feature-card;
+}
+
+@container feature-card (max-width: 400px) {
+  .feature-card {
+    flex-direction: column;
+  }
+
+  .feature-icon {
+    margin-bottom: 1rem;
+  }
+}
+
+@container feature-card (min-width: 401px) {
+  .feature-card {
+    flex-direction: row;
+  }
+
+  .feature-icon {
+    margin-right: 1rem;
+  }
+}
+```
+
+### Touch-Friendly Interactions
+
+```css
+/* Minimum touch target size: 44x44px (WCAG 2.1 AA) */
+.btn, .link, .interactive {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.75rem 1.5rem;
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Touch-specific interactions */
+@media (hover: none) and (pointer: coarse) {
+  .card:active {
+    transform: scale(0.98);
+  }
+}
+
+/* Prevent double-tap zoom on iOS */
+button, a {
+  touch-action: manipulation;
+}
+
+/* Smooth scrolling on iOS */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+}
+```
+
+### Safe Area Insets (Notch Handling)
+
+```css
+/* Handle iPhone notch, Android navigation */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0);
+  --safe-area-right: env(safe-area-inset-right, 0);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0);
+  --safe-area-left: env(safe-area-inset-left, 0);
+}
+
+.navbar {
+  padding-top: calc(1rem + var(--safe-area-top));
+  padding-left: calc(1rem + var(--safe-area-left));
+  padding-right: calc(1rem + var(--safe-area-right));
+}
+
+.bottom-nav {
+  padding-bottom: calc(1rem + var(--safe-area-bottom));
+}
+```
+
+---
+
+## 29. ACCESSIBILITY ENHANCEMENTS
+
+### Keyboard Navigation
+
+**Focus Management:**
+```javascript
+// utils/focusTrap.js
+export class FocusTrap {
+  constructor(element) {
+    this.element = element;
+    this.focusableElements = null;
+    this.firstFocusable = null;
+    this.lastFocusable = null;
+  }
+
+  activate() {
+    this.focusableElements = this.element.querySelectorAll(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    );
+
+    this.firstFocusable = this.focusableElements[0];
+    this.lastFocusable = this.focusableElements[this.focusableElements.length - 1];
+
+    this.element.addEventListener('keydown', this.handleKeyDown);
+    this.firstFocusable?.focus();
+  }
+
+  deactivate() {
+    this.element.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  handleKeyDown = (e) => {
+    const isTabPressed = e.key === 'Tab';
+    if (!isTabPressed) return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === this.firstFocusable) {
+        this.lastFocusable.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === this.lastFocusable) {
+        this.firstFocusable.focus();
+        e.preventDefault();
+      }
+    }
+  };
+}
+
+// Usage in Modal:
+useEffect(() => {
+  if (isOpen) {
+    const trap = new FocusTrap(modalRef.current);
+    trap.activate();
+    return () => trap.deactivate();
+  }
+}, [isOpen]);
+```
+
+**Skip Links:**
+```jsx
+// components/layout/SkipLinks.jsx
+export const SkipLinks = () => (
+  <div className="skip-links">
+    <a href="#main-content" className="skip-link">
+      Skip to main content
+    </a>
+    <a href="#navigation" className="skip-link">
+      Skip to navigation
+    </a>
+    <a href="#footer" className="skip-link">
+      Skip to footer
+    </a>
+  </div>
+);
+
+// CSS
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent-violet);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+```
+
+### ARIA Labels & Live Regions
+
+```jsx
+// Proper ARIA usage examples
+
+// Button with icon only
+<button aria-label="Close menu" onClick={closeMenu}>
+  <XIcon />
+</button>
+
+// Loading state
+<div
+  role="status"
+  aria-live="polite"
+  aria-busy={isLoading}
+>
+  {isLoading ? 'Loading results...' : 'Results loaded'}
+</div>
+
+// Search with results announcement
+<div role="combobox" aria-expanded={showResults} aria-haspopup="listbox">
+  <input
+    type="search"
+    aria-label="Search results, jobs, and tools"
+    aria-controls="search-results"
+    aria-activedescendant={activeResult}
+  />
+  <ul id="search-results" role="listbox">
+    {results.map(result => (
+      <li key={result.id} role="option">
+        {result.title}
+      </li>
+    ))}
+  </ul>
+</div>
+
+// Accordion
+<div className="faq-item">
+  <button
+    aria-expanded={isOpen}
+    aria-controls={`faq-answer-${id}`}
+    id={`faq-question-${id}`}
+  >
+    {question}
+  </button>
+  <div
+    id={`faq-answer-${id}`}
+    role="region"
+    aria-labelledby={`faq-question-${id}`}
+    hidden={!isOpen}
+  >
+    {answer}
+  </div>
+</div>
+```
+
+### Color Contrast Checker
+
+```javascript
+// utils/colorContrast.js
+export const getContrastRatio = (color1, color2) => {
+  const getLuminance = (rgb) => {
+    const [r, g, b] = rgb.map(val => {
+      val /= 255;
+      return val <= 0.03928 ? val / 12.92 : Math.pow((val + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+
+  const l1 = getLuminance(color1);
+  const l2 = getLuminance(color2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+
+  return (lighter + 0.05) / (darker + 0.05);
+};
+
+// Check if combination meets WCAG AA (4.5:1 for normal text, 3:1 for large text)
+export const meetsWCAG = (color1, color2, isLargeText = false) => {
+  const ratio = getContrastRatio(color1, color2);
+  return isLargeText ? ratio >= 3 : ratio >= 4.5;
+};
+```
+
+### Reduced Motion Support
+
+```javascript
+// hooks/usePrefersReducedMotion.js
+export const usePrefersReducedMotion = () => {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  return prefersReducedMotion;
+};
+
+// Usage:
+const prefersReducedMotion = usePrefersReducedMotion();
+
+useEffect(() => {
+  if (prefersReducedMotion) {
+    // Disable all GSAP animations
+    gsap.globalTimeline.clear();
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+
+    // Disable Lenis smooth scroll
+    lenis.stop();
+  }
+}, [prefersReducedMotion]);
+```
+
+```css
+/* CSS: Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+```
+
+---
+
+## 30. ERROR STATES & EDGE CASES
+
+### Comprehensive Error Handling
+
+**API Error States:**
+```jsx
+// components/sections/ResultsPreview/ResultsPreview.jsx
+import { useState, useEffect } from 'react';
+
+export const ResultsPreview = () => {
+  const [state, setState] = useState({
+    data: null,
+    isLoading: true,
+    error: null
+  });
+
+  useEffect(() => {
+    fetchResults();
+  }, []);
+
+  const fetchResults = async () => {
+    try {
+      setState({ data: null, isLoading: true, error: null });
+
+      const response = await fetch('/api/v1/homepage/results');
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      setState({ data, isLoading: false, error: null });
+
+    } catch (error) {
+      console.error('Failed to fetch results:', error);
+
+      setState({
+        data: null,
+        isLoading: false,
+        error: {
+          message: error.message,
+          code: error.code || 'FETCH_ERROR'
+        }
+      });
+
+      // Fallback to static data
+      setState({
+        data: FALLBACK_RESULTS,
+        isLoading: false,
+        error: { message: 'Using cached data', code: 'FALLBACK' }
+      });
+    }
+  };
+
+  // Loading state
+  if (state.isLoading) {
+    return <ResultsSkeleton />;
+  }
+
+  // Error state with retry
+  if (state.error && !state.data) {
+    return (
+      <ErrorState
+        title="Failed to load results"
+        message={state.error.message}
+        onRetry={fetchResults}
+      />
+    );
+  }
+
+  // Empty state
+  if (!state.data || state.data.length === 0) {
+    return (
+      <EmptyState
+        title="No results available"
+        message="Check back soon for the latest exam results"
+      />
+    );
+  }
+
+  // Success state
+  return (
+    <div className="results-grid">
+      {state.data.map(result => (
+        <ResultCard key={result.id} {...result} />
+      ))}
+    </div>
+  );
+};
+```
+
+**Error State Components:**
+```jsx
+// components/ui/ErrorState.jsx
+export const ErrorState = ({ title, message, onRetry }) => (
+  <div className="error-state">
+    <div className="error-icon">
+      <AlertCircle size={48} />
+    </div>
+    <h3>{title}</h3>
+    <p>{message}</p>
+    {onRetry && (
+      <button onClick={onRetry} className="btn-primary">
+        <RefreshCw size={16} />
+        Try Again
+      </button>
+    )}
+  </div>
+);
+
+// components/ui/EmptyState.jsx
+export const EmptyState = ({ title, message, action }) => (
+  <div className="empty-state">
+    <div className="empty-icon">
+      <Inbox size={64} />
+    </div>
+    <h3>{title}</h3>
+    <p>{message}</p>
+    {action && action}
+  </div>
+);
+```
+
+### Network Status Monitoring
+
+```jsx
+// components/ui/OfflineBanner.jsx
+import { useState, useEffect } from 'react';
+
+export const OfflineBanner = () => {
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  if (isOnline) return null;
+
+  return (
+    <div className="offline-banner" role="alert">
+      <WifiOff size={20} />
+      <span>You're offline. Some features may not work.</span>
+    </div>
+  );
+};
+```
+
+---
+
+*End of V5.5 Ultra Enhancements. Total specification now exceeds 5000+ lines with comprehensive coverage of modern web development best practices.*
 
 *Other pages (Results, Tools, News, Blog, About, Contact, Auth, Admin, Test) are handled by their own separate specification documents.*
 
