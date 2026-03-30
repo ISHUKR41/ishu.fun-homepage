@@ -1,20 +1,42 @@
-// ParticlesBackground.jsx — tsParticles Background Effect
+// ParticlesBackground.jsx — Advanced tsParticles Background with Enhanced Effects
 import { useCallback } from 'react';
 import Particles from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 
-export default function ParticlesBackground({ density = 'medium' }) {
+export default function ParticlesBackground({ density = 'medium', theme = 'default' }) {
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
 
   const densityConfig = {
-    low: 30,
-    medium: 80,
-    high: 150,
+    low: 40,
+    medium: 100,
+    high: 200,
   };
 
   const particleCount = densityConfig[density] || densityConfig.medium;
+
+  // Theme configurations for different visual styles
+  const themeColors = {
+    default: {
+      particles: ['#6C63FF', '#00D2FF', '#00C896', '#FF6B35', '#9D4EDD'],
+      links: '#6C63FF',
+    },
+    cosmic: {
+      particles: ['#FF006E', '#8338EC', '#3A86FF', '#FFBE0B', '#FB5607'],
+      links: '#8338EC',
+    },
+    ocean: {
+      particles: ['#06FFA5', '#00D4FF', '#0096FF', '#7209B7', '#560BAD'],
+      links: '#00D4FF',
+    },
+    sunset: {
+      particles: ['#FF6D00', '#FF9100', '#FFAB00', '#FFC400', '#FFD600'],
+      links: '#FF9100',
+    },
+  };
+
+  const colors = themeColors[theme] || themeColors.default;
 
   const particlesConfig = {
     autoPlay: true,
@@ -25,49 +47,90 @@ export default function ParticlesBackground({ density = 'medium' }) {
     },
     fpsLimit: 120,
     interactivity: {
+      detectsOn: 'window',
       events: {
         onClick: {
           enable: true,
-          mode: 'push',
+          mode: ['push', 'bubble'],
         },
         onHover: {
           enable: true,
-          mode: 'grab',
+          mode: ['grab', 'repulse'],
+          parallax: {
+            enable: true,
+            force: 60,
+            smooth: 10,
+          },
         },
         resize: true,
       },
       modes: {
         push: {
-          quantity: 2,
+          quantity: 3,
+        },
+        bubble: {
+          distance: 200,
+          size: 8,
+          duration: 0.3,
+          opacity: 0.8,
         },
         grab: {
-          distance: 200,
+          distance: 250,
           links: {
-            opacity: 0.5,
+            blink: true,
+            consent: false,
+            opacity: 0.6,
           },
+        },
+        repulse: {
+          distance: 150,
+          duration: 0.4,
         },
       },
     },
     particles: {
       color: {
-        value: ['#6C63FF', '#00D2FF', '#00C896', '#FF6B35'],
+        value: colors.particles,
+        animation: {
+          enable: true,
+          speed: 20,
+          sync: false,
+        },
       },
       links: {
-        color: '#6C63FF',
-        distance: 150,
+        color: colors.links,
+        distance: 180,
         enable: true,
-        opacity: 0.15,
-        width: 1,
+        opacity: 0.2,
+        width: 1.5,
+        triangles: {
+          enable: true,
+          opacity: 0.05,
+        },
+        shadow: {
+          enable: true,
+          color: colors.links,
+          blur: 5,
+        },
       },
       move: {
         direction: 'none',
         enable: true,
         outModes: {
-          default: 'bounce',
+          default: 'out',
+          bottom: 'out',
+          left: 'out',
+          right: 'out',
+          top: 'out',
         },
         random: true,
-        speed: 1,
+        speed: { min: 0.5, max: 1.5 },
         straight: false,
+        attract: {
+          enable: true,
+          rotateX: 600,
+          rotateY: 1200,
+        },
       },
       number: {
         density: {
@@ -77,33 +140,90 @@ export default function ParticlesBackground({ density = 'medium' }) {
         value: particleCount,
       },
       opacity: {
-        value: { min: 0.1, max: 0.5 },
+        value: { min: 0.1, max: 0.6 },
         animation: {
           enable: true,
-          speed: 0.5,
+          speed: 0.8,
           minimumValue: 0.1,
+          sync: false,
         },
       },
       shape: {
-        type: ['circle', 'triangle'],
+        type: ['circle', 'triangle', 'polygon', 'star'],
+        options: {
+          polygon: {
+            sides: 6,
+          },
+          star: {
+            sides: 5,
+          },
+        },
       },
       size: {
-        value: { min: 1, max: 4 },
+        value: { min: 1, max: 5 },
         animation: {
           enable: true,
-          speed: 2,
+          speed: 3,
           minimumValue: 0.5,
+          sync: false,
+        },
+      },
+      stroke: {
+        width: 0.5,
+        color: {
+          value: '#ffffff',
+          animation: {
+            enable: true,
+            speed: 50,
+            sync: false,
+          },
         },
       },
       twinkle: {
         particles: {
           enable: true,
-          frequency: 0.05,
+          frequency: 0.08,
           opacity: 1,
+        },
+        lines: {
+          enable: true,
+          frequency: 0.05,
+          opacity: 0.8,
+        },
+      },
+      life: {
+        duration: {
+          value: 0,
+        },
+        count: 0,
+      },
+      rotate: {
+        value: 0,
+        random: true,
+        direction: 'clockwise',
+        animation: {
+          enable: true,
+          speed: 3,
+          sync: false,
+        },
+      },
+      shadow: {
+        enable: true,
+        blur: 10,
+        color: {
+          value: colors.particles,
+        },
+        offset: {
+          x: 0,
+          y: 0,
         },
       },
     },
     detectRetina: true,
+    smooth: true,
+    style: {
+      filter: 'blur(0.3px)',
+    },
   };
 
   return (
