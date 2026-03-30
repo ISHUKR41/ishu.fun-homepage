@@ -5,6 +5,8 @@
 import { Suspense, useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars, Sphere, MeshDistortMaterial, Float, PerspectiveCamera } from '@react-three/drei';
+import { EffectComposer, Bloom, ChromaticAberration, Vignette } from '@react-three/postprocessing';
+import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
 // Animated particles system
@@ -192,6 +194,25 @@ function Scene() {
       <OrbitingNodes />
       <TorusRings />
       <Particles count={800} />
+
+      {/* Post-processing Effects */}
+      <EffectComposer>
+        <Bloom
+          intensity={1.5}
+          luminanceThreshold={0.2}
+          luminanceSmoothing={0.9}
+          mipmapBlur
+        />
+        <ChromaticAberration
+          offset={[0.0002, 0.0002]}
+        />
+        <Vignette
+          offset={0.3}
+          darkness={0.5}
+          eskil={false}
+          blendFunction={BlendFunction.NORMAL}
+        />
+      </EffectComposer>
     </>
   );
 }

@@ -22,6 +22,10 @@
   animation-play-state: paused;
 }
 
+.track.paused {
+  animation-play-state: paused;
+}
+
 .item {
   display: inline-flex;
   align-items: center;
@@ -53,11 +57,36 @@
   margin: 0 var(--space-2);
 }
 
-.dismiss {
+.controls {
   position: absolute;
   right: var(--space-4);
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+.pauseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+}
+
+.pauseButton:hover {
+  color: var(--accent-cyan);
+  background: var(--glass-hover);
+}
+
+.dismiss {
   display: flex;
   align-items: center;
   justify-content: center;
