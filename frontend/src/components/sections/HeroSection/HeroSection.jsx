@@ -2,6 +2,8 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { MagnifyingGlass, ArrowRight, WhatsappLogo, CaretDown } from '@phosphor-icons/react';
+import SplitType from 'split-type';
+import { gsap } from 'gsap';
 import GradientText from '../../ui/GradientText/GradientText';
 import MagneticButton from '../../ui/Button/MagneticButton';
 import ParticlesBackground from '../../ui/ParticlesBackground/ParticlesBackground';
@@ -54,7 +56,39 @@ export default function HeroSection() {
   const isDesktop = useIsDesktop();
   const devicePerformance = useDevicePerformance();
   const use3D = isDesktop && devicePerformance === 'high';
-  const words = "India's Fastest Platform for Sarkari Results & Government Job Alerts".split(' ');
+  const headlineRef = useRef(null);
+  const subheadlineRef = useRef(null);
+
+  useEffect(() => {
+    // SplitType animation for headline
+    if (headlineRef.current) {
+      const split = new SplitType(headlineRef.current, { types: 'chars,words' });
+
+      gsap.from(split.chars, {
+        opacity: 0,
+        y: 50,
+        rotateX: -90,
+        stagger: 0.03,
+        duration: 0.8,
+        delay: 2.0,
+        ease: 'back.out(1.7)',
+      });
+    }
+
+    // SplitType animation for subheadline
+    if (subheadlineRef.current) {
+      const split = new SplitType(subheadlineRef.current, { types: 'chars' });
+
+      gsap.from(split.chars, {
+        opacity: 0,
+        y: 20,
+        stagger: 0.01,
+        duration: 0.4,
+        delay: 2.8,
+        ease: 'power2.out',
+      });
+    }
+  }, []);
 
   return (
     <section className={styles.hero} id="hero">
@@ -84,37 +118,16 @@ export default function HeroSection() {
             ✦ India's #1 Student Platform
           </motion.div>
 
-          {/* Headline */}
-          <h1 className={styles.headline}>
-            {words.map((word, i) => (
-              <motion.span
-                key={i}
-                className={styles.word}
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{
-                  delay: 2.0 + i * 0.06,
-                  duration: 0.6,
-                  ease: [0.16, 1, 0.3, 1]
-                }}
-              >
-                {(word === 'Sarkari' || word === 'Results' || word === 'Government' || word === 'Job') ? (
-                  <GradientText animate={false}>{word}</GradientText>
-                ) : word}{' '}
-              </motion.span>
-            ))}
+          {/* Headline with SplitType */}
+          <h1 className={styles.headline} ref={headlineRef}>
+            India's Fastest Platform for <GradientText animate={false}>Sarkari Results</GradientText> & <GradientText animate={false}>Government Job</GradientText> Alerts
           </h1>
 
-          {/* Subheadline */}
-          <motion.p
-            className={styles.subheadline}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 2.8, duration: 0.5 }}
-          >
+          {/* Subheadline with SplitType */}
+          <p className={styles.subheadline} ref={subheadlineRef}>
             Results · Jobs · Free PDF Tools · News — all in one place.
-            <br />Built for India's 50 lakh+ competitive exam aspirants.
-          </motion.p>
+            Built for India's 50 lakh+ competitive exam aspirants.
+          </p>
 
           {/* Typewriter */}
           <motion.div

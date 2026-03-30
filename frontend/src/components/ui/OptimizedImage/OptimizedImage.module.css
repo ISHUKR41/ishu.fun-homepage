@@ -1,0 +1,67 @@
+/* OptimizedImage.module.css */
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.blurPlaceholder {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(108, 99, 255, 0.1) 0%,
+    rgba(0, 217, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(20px);
+  z-index: 1;
+}
+
+.shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 26, 46, 0.6);
+  border: 2px dashed rgba(108, 99, 255, 0.3);
+  border-radius: 12px;
+  color: var(--text-secondary, #A0A0C0);
+  gap: 0.5rem;
+}
+
+.placeholderIcon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.placeholderText {
+  font-size: 0.875rem;
+  opacity: 0.7;
+}

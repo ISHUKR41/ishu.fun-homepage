@@ -1,0 +1,117 @@
+/* IndiaMapSVG.module.css */
+.mapContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.mapSvg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 40px rgba(108, 99, 255, 0.2));
+}
+
+.statePath {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.statePath:hover {
+  filter: drop-shadow(0 4px 16px rgba(108, 99, 255, 0.6));
+  stroke-width: 3;
+}
+
+.tooltip {
+  position: fixed;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  min-width: 250px;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translateX(-50%);
+}
+
+.tooltipTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary, #F0F0FF);
+  margin-bottom: 0.75rem;
+  background: linear-gradient(135deg, #6C63FF 0%, #00D9FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tooltipStats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: rgba(108, 99, 255, 0.1);
+  border-radius: 8px;
+}
+
+.tooltipLabel {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #A0A0C0);
+}
+
+.tooltipValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary, #F0F0FF);
+  background: linear-gradient(135deg, #FFC107 0%, #FF5722 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tooltipButton {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #6C63FF 0%, #00D9FF 100%);
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
+}
+
+.tooltipButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(108, 99, 255, 0.4);
+}
+
+.tooltipButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mapContainer {
+    padding: 1rem;
+  }
+
+  .tooltip {
+    min-width: 200px;
+    padding: 1rem;
+  }
+
+  .tooltipTitle {
+    font-size: 1rem;
+  }
+
+  .tooltipValue {
+    font-size: 1.25rem;
+  }
+}
