@@ -1,22 +1,40 @@
-/* ToolsShowcase.module.css — PDF Tools Grid with 3D Tilt */
+/* ToolsShowcase.module.css — Premium Tools Grid */
+
 .section {
-  padding: var(--space-24) 0;
   position: relative;
+  padding: var(--space-24) 0;
+  overflow: hidden;
+}
+
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: var(--grad-glow-cyan);
+  filter: blur(120px);
+  opacity: 0.25;
+  pointer-events: none;
 }
 
 .header {
   text-align: center;
-  margin-bottom: var(--space-12);
+  margin-bottom: var(--space-16);
+  position: relative;
+  z-index: 1;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--space-4);
-  margin-bottom: var(--space-8);
+  position: relative;
+  z-index: 1;
 }
 
-.toolCard {
+/* ── Tool Card ── */
+.card {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,26 +47,40 @@
   text-decoration: none;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   overflow: hidden;
+  cursor: pointer;
+  transform-style: preserve-3d;
 }
 
-.toolCard::before {
+.card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 0%, var(--tool-color, var(--accent-violet)), transparent 70%);
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 0%, var(--tool-color, #6C63FF) 0%, transparent 60%);
   opacity: 0;
-  transition: opacity 0.4s;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
-.toolCard:hover::before {
+.card:hover {
+  border-color: var(--tool-color);
+  box-shadow: 0 0 30px rgba(108, 99, 255, 0.1), 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card:hover::before {
   opacity: 0.06;
 }
 
-.toolCard:hover {
-  border-color: var(--tool-color, var(--accent-violet));
-  box-shadow: 0 0 24px color-mix(in srgb, var(--tool-color, var(--accent-violet)) 25%, transparent);
+.card:hover .iconWrap {
+  transform: scale(1.1) translateY(-2px);
 }
 
+.card:hover .tryLabel {
+  opacity: 1;
+  color: var(--tool-color);
+}
+
+/* ── Popular Badge ── */
 .popularBadge {
   position: absolute;
   top: var(--space-2);
@@ -56,56 +88,55 @@
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  font-family: var(--font-body);
   font-size: 9px;
   font-weight: 700;
+  color: var(--accent-gold);
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
   padding: 2px 8px;
   border-radius: var(--radius-full);
-  background: rgba(255, 215, 0, 0.12);
-  color: var(--accent-gold);
-  letter-spacing: var(--tracking-wide);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
-.toolIcon {
+/* ── Icon ── */
+.iconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
-  transition: transform 0.3s ease;
-  position: relative;
+  transition: all 0.3s ease;
 }
 
-.toolCard:hover .toolIcon {
-  transform: scale(1.1) translateY(-2px);
-}
-
+/* ── Text ── */
 .toolName {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-primary);
   text-align: center;
-  position: relative;
 }
 
-.tryFree {
-  font-size: var(--text-xs);
+.tryLabel {
+  font-family: var(--font-body);
+  font-size: 11px;
   color: var(--text-muted);
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+/* ── CTA ── */
+.cta {
+  text-align: center;
+  margin-top: var(--space-12);
   position: relative;
-  transition: color 0.2s;
+  z-index: 1;
 }
 
-.toolCard:hover .tryFree {
-  color: var(--tool-color, var(--accent-violet));
-}
-
-.ctaRow {
-  display: flex;
-  justify-content: center;
-}
-
-.allToolsBtn {
+.ctaBtn {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -117,30 +148,46 @@
   padding: var(--space-4) var(--space-8);
   border-radius: var(--radius-full);
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
-.allToolsBtn:hover {
+.ctaBtn:hover {
   transform: scale(1.04);
   box-shadow: var(--shadow-glow-violet);
 }
 
+/* ── Responsive ── */
 @media (max-width: 1023px) {
-  .grid { grid-template-columns: repeat(3, 1fr); }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 639px) {
-  .section { padding: var(--space-16) 0; }
-  .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
-  .toolCard { padding: var(--space-4) var(--space-3); }
-  .toolIcon { width: 44px; height: 44px; }
-  .allToolsBtn { width: 100%; justify-content: center; }
+  .section {
+    padding: var(--space-16) 0;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+  }
+  .card {
+    padding: var(--space-4) var(--space-3);
+  }
+  .iconWrap {
+    width: 40px;
+    height: 40px;
+  }
+  .tryLabel {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 374px) {
-  .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
-  .toolCard { padding: var(--space-3) var(--space-2); }
-  .toolName { font-size: var(--text-xs); }
-  .toolIcon { width: 38px; height: 38px; }
-  .popularBadge { font-size: 8px; padding: 1px 5px; }
+  .toolName {
+    font-size: var(--text-xs);
+  }
+  .card {
+    padding: var(--space-3) var(--space-2);
+  }
 }

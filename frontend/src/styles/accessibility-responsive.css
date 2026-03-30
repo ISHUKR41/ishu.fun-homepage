@@ -1,34 +1,164 @@
-/* Accessibility Styles */
+/* === accessibility-responsive.css === */
+/* ishu.fun — Comprehensive Responsive & Accessibility Styles */
 
-/* Focus styles for keyboard navigation */
-body:not(.using-mouse) *:focus {
-  outline: 3px solid var(--accent-violet);
-  outline-offset: 2px;
+/* ══════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   xs:  0–374px     → Very small phones (iPhone SE old)
+   sm:  375px–639px → Standard phones (iPhone 14, Pixel)
+   md:  640px–767px → Large phones / small tablets
+   lg:  768px–1023px → Tablets (iPad)
+   xl:  1024px–1279px → Laptops
+   2xl: 1280px–1535px → Desktops
+   3xl: 1536px+      → Large monitors
+   ══════════════════════════════════════════════ */
+
+/* ── 3XL: LARGE MONITORS (1536px+) ─────────── */
+@media (min-width: 1536px) {
+  .section-title {
+    font-size: clamp(3rem, 4vw, 4rem);
+  }
+  .section-subtitle {
+    max-width: 720px;
+  }
 }
 
-body.using-mouse *:focus {
-  outline: none;
+/* ── XL: LAPTOPS (1024px–1279px) ───────────── */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    padding: 0 var(--space-8);
+  }
 }
 
-/* Skip link */
-.skip-link {
-  position: absolute;
-  top: -40px;
-  left: 0;
-  background: var(--accent-violet);
-  color: white;
-  padding: 8px 16px;
-  text-decoration: none;
-  border-radius: 0 0 4px 0;
-  z-index: 1000;
-  font-weight: 600;
+/* ── LG: TABLETS (768px–1023px) ────────────── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .section-title {
+    font-size: var(--text-4xl);
+  }
+  .section-subtitle {
+    font-size: var(--text-base);
+  }
 }
 
-.skip-link:focus {
-  top: 0;
+/* ── MD: LARGE PHONES (640px–767px) ────────── */
+@media (min-width: 640px) and (max-width: 767px) {
+  .section-title {
+    font-size: var(--text-3xl);
+  }
 }
 
-/* Reduced motion support */
+/* ── SM: STANDARD PHONES (375px–639px) ─────── */
+@media (max-width: 639px) {
+  .section-title {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.02em;
+  }
+  .section-subtitle {
+    font-size: var(--text-base);
+    max-width: 100%;
+  }
+  .overline {
+    font-size: 10px;
+  }
+}
+
+/* ── XS: VERY SMALL PHONES (0–374px) ──────── */
+@media (max-width: 374px) {
+  html {
+    font-size: 14px;
+  }
+  .section-title {
+    font-size: var(--text-2xl);
+    letter-spacing: -0.01em;
+  }
+  .section-subtitle {
+    font-size: var(--text-sm);
+  }
+  .overline {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* ── IPAD LANDSCAPE ───────────────────────── */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  .container {
+    max-width: 1100px;
+  }
+}
+
+/* ── IPAD PORTRAIT ────────────────────────── */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  .container {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* ── GALAXY FOLD (small screen) ────────────── */
+@media (max-width: 320px) {
+  html {
+    font-size: 13px;
+  }
+  .container {
+    padding: 0 var(--space-2);
+  }
+  .section-title {
+    font-size: var(--text-2xl);
+  }
+}
+
+/* ── SURFACE PRO (912px width) ──────────── */
+@media (min-width: 900px) and (max-width: 920px) {
+  .container {
+    padding: 0 var(--space-8);
+  }
+}
+
+/* ── TOUCH TARGETS (Mobile Accessibility) ──── */
+@media (pointer: coarse) {
+  button,
+  a,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  .clickable {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ── HIGH DPI SCREENS ──────────────────────── */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+  .glass-card-premium {
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+  }
+}
+
+/* ── PRINT STYLES ──────────────────────────── */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  .glass-card-premium,
+  .glass-card {
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  nav, footer, .scroll-progress, .back-to-top,
+  .bottom-nav, .custom-cursor, .particles {
+    display: none !important;
+  }
+}
+
+/* ══════════════════════════════════════════════
+   ACCESSIBILITY
+   ══════════════════════════════════════════════ */
+
+/* ── REDUCED MOTION ────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -38,159 +168,82 @@ body.using-mouse *:focus {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-body.reduce-motion *,
-body.reduce-motion *::before,
-body.reduce-motion *::after {
-  animation-duration: 0.01ms !important;
-  animation-iteration-count: 1 !important;
-  transition-duration: 0.01ms !important;
-}
-
-/* High contrast mode support */
-@media (prefers-contrast: high) {
-  :root {
-    --text-primary: #FFFFFF;
-    --text-secondary: #E0E0E0;
-    --bg-base: #000000;
-    --bg-surface: #1A1A1A;
-    --border-medium: rgba(255, 255, 255, 0.3);
+  .marquee-track,
+  .testimonial-track {
+    animation: none !important;
   }
-}
 
-/* Screen reader only content */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-/* Responsive Typography - Enhanced */
-@media (max-width: 374px) {
-  :root {
-    --text-hero: clamp(2.5rem, 10vw, 3.5rem);
-    --text-6xl: clamp(2.5rem, 8vw, 3.5rem);
-    --text-5xl: clamp(2rem, 6vw, 2.5rem);
-  }
-}
-
-@media (min-width: 375px) and (max-width: 639px) {
-  :root {
-    --text-hero: clamp(3rem, 10vw, 4.5rem);
-    --text-6xl: clamp(2.8rem, 8vw, 4rem);
-  }
-}
-
-@media (min-width: 640px) and (max-width: 767px) {
-  :root {
-    --text-hero: clamp(3.5rem, 10vw, 5.5rem);
-  }
-}
-
-/* Enhanced Mobile Responsiveness */
-@media (max-width: 639px) {
-  /* Mobile-specific utilities */
-  .hide-mobile {
+  .particles,
+  .hero-canvas,
+  .custom-cursor {
     display: none !important;
   }
+}
 
-  /* Touch-friendly sizing */
+/* ── FORCED COLORS (High Contrast) ─────────── */
+@media (forced-colors: active) {
+  .glass-card-premium,
+  .glass-card {
+    border: 2px solid CanvasText;
+    background: Canvas;
+  }
+  .gradient-text-static,
+  .gradient-text-animated {
+    -webkit-text-fill-color: CanvasText;
+    background: none;
+  }
   button,
   a {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  /* Mobile-optimized spacing */
-  .container {
-    padding-left: var(--space-4);
-    padding-right: var(--space-4);
+    border: 1px solid ButtonText;
   }
 }
 
-@media (min-width: 640px) {
-  .show-mobile-only {
-    display: none !important;
-  }
-}
-
-/* Tablet Responsiveness */
-@media (min-width: 640px) and (max-width: 1023px) {
-  .hide-tablet {
-    display: none !important;
-  }
-}
-
-/* Desktop Responsiveness */
-@media (min-width: 1024px) {
-  .hide-desktop {
-    display: none !important;
-  }
-}
-
-/* Safe area insets for notched devices */
-@supports (padding: max(0px)) {
-  body {
-    padding-left: max(0px, env(safe-area-inset-left));
-    padding-right: max(0px, env(safe-area-inset-right));
-  }
-
-  .container {
-    padding-left: max(var(--space-4), env(safe-area-inset-left));
-    padding-right: max(var(--space-4), env(safe-area-inset-right));
-  }
-}
-
-/* Print styles */
-@media print {
-  * {
-    background: white !important;
-    color: black !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  a[href]:after {
-    content: " (" attr(href) ")";
-  }
-
-  .no-print {
-    display: none !important;
-  }
-}
-
-/* Dark mode support (if system preference changes) */
+/* ── PREFERS COLOR SCHEME DARK ──────────────── */
 @media (prefers-color-scheme: light) {
-  /* Override for light mode if needed */
-  /* Currently always dark, but prepared for future toggle */
-}
-
-/* Landscape mobile optimization */
-@media (max-height: 500px) and (orientation: landscape) {
-  .hero {
-    min-height: auto !important;
-    padding-top: var(--space-8) !important;
-    padding-bottom: var(--space-8) !important;
+  /* Override for users who explicitly want light */
+  /* ishu.fun is dark-first, but we respect the setting */
+  :root {
+    color-scheme: dark;
   }
 }
 
-/* Extra large screens */
-@media (min-width: 1920px) {
-  .container {
-    max-width: 1680px;
+/* ── iOS SAFE AREAS ────────────────────────── */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .navbar {
+    padding-top: env(safe-area-inset-top);
+  }
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 }
 
-/* Ultra-wide screens */
-@media (min-width: 2560px) {
-  .container {
-    max-width: 1920px;
-  }
+/* ── KEYBOARD NAVIGATION INDICATOR ─────────── */
+body:not(.user-is-tabbing) *:focus {
+  outline: none;
+}
+
+body.user-is-tabbing *:focus-visible {
+  outline: 2px solid var(--accent-violet);
+  outline-offset: 3px;
+}
+
+/* ── ARIA LIVE REGIONS ─────────────────────── */
+[aria-live] {
+  contain: layout;
+}
+
+/* ── SKIP LINK ENHANCEMENT ─────────────────── */
+.skip-link:focus {
+  position: fixed;
+  top: var(--space-4);
+  left: var(--space-4);
+  z-index: 10000;
+  padding: var(--space-3) var(--space-6);
+  background: var(--accent-violet);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
 }

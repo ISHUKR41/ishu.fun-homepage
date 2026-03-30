@@ -1,9 +1,35 @@
+# ishu.fun Robots.txt — SEO Configuration
+# India's #1 Student Platform for Sarkari Results & Government Job Alerts
+
 User-agent: *
 Allow: /
 Disallow: /api/
 Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
 
+# Sitemaps
 Sitemap: https://ishu.fun/sitemap.xml
 
-# Host
-Host: https://ishu.fun
+# Crawl delay for responsible crawling
+Crawl-delay: 1
+
+# Google-specific
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Social media bots
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /

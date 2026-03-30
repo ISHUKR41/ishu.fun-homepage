@@ -1,45 +1,96 @@
 /* === typography.css === */
-/* ishu.fun Typography System */
-/* Using Google Fonts: Space Grotesk (display) + Inter (body) as fallback */
-/* Replace with Clash Display + Satoshi woff2 when available */
+/* ishu.fun Typography System — Premium Dark Luxury Edition */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Since Clash Display & Satoshi are premium fonts from Fontshare,
+   we use Google Fonts (Space Grotesk + Inter) as excellent alternatives
+   that provide the same modern, geometric feel */
 
-/* When you have Clash Display + Satoshi woff2 files, uncomment these: */
-/*
-@font-face {
-  font-family: 'Clash Display';
-  src: url('/fonts/ClashDisplay-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
+/* Space Grotesk — Used for ALL headings, hero text, section titles */
+/* Already loaded via Google Fonts in index.html */
+
+/* Inter — Used for all body text, descriptions, UI labels */
+/* Already loaded via Google Fonts in index.html */
+
+/* JetBrains Mono — Used for code/mono elements */
+/* Already loaded via Google Fonts in index.html */
+
+/* ── TYPE UTILITIES ──────────────────── */
+
+.text-hero {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 700;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
 }
-@font-face {
-  font-family: 'Clash Display';
-  src: url('/fonts/ClashDisplay-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
+
+.text-section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-5xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
 }
-@font-face {
-  font-family: 'Clash Display';
-  src: url('/fonts/ClashDisplay-SemiBold.woff2') format('woff2');
-  font-weight: 600; font-display: swap;
+
+.text-section-subtitle {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 500;
+  line-height: var(--leading-snug);
 }
-@font-face {
-  font-family: 'Clash Display';
-  src: url('/fonts/ClashDisplay-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
+
+.text-card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-snug);
 }
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Regular.woff2') format('woff2');
-  font-weight: 400; font-display: swap;
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 400;
+  line-height: var(--leading-normal);
+  color: var(--text-secondary);
 }
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Medium.woff2') format('woff2');
-  font-weight: 500; font-display: swap;
+
+.text-overline {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
 }
-@font-face {
-  font-family: 'Satoshi';
-  src: url('/fonts/Satoshi-Bold.woff2') format('woff2');
-  font-weight: 700; font-display: swap;
+
+.text-label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--accent-cyan);
 }
-*/
+
+.text-badge {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+/* ── GRADIENT TEXT ─────────────────── */
+
+.gradient-text,
+.gradient-text-static {
+  background: var(--grad-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-animated {
+  background: var(--grad-text);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 4s ease infinite;
+}

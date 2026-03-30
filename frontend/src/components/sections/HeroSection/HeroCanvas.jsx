@@ -1,189 +1,122 @@
-// HeroCanvas.jsx — Three.js 3D WebGL Scene for Hero Section
-import { useRef, useEffect, useMemo } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial, Float, Stars, useTexture } from '@react-three/drei';
-import * as THREE from 'three';
+// components/sections/HeroSection/HeroCanvas.jsx
+// Rich CSS-based animated India-themed visual with orbiting data nodes
+// No Three.js dependency — works on all devices, pure CSS/SVG animations
 
-// Animated 3D Globe Component
-function AnimatedGlobe() {
-  const meshRef = useRef();
-  const particlesRef = useRef();
+import { memo } from 'react';
+import { motion } from 'framer-motion';
+import styles from './HeroCanvas.module.css';
 
-  // Rotate the globe continuously
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.y += 0.002;
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
-    }
+const cities = [
+  { name: 'Delhi', angle: 0, delay: 0 },
+  { name: 'Mumbai', angle: 72, delay: 0.5 },
+  { name: 'Bengaluru', angle: 144, delay: 1.0 },
+  { name: 'Kolkata', angle: 216, delay: 1.5 },
+  { name: 'Chennai', angle: 288, delay: 2.0 },
+];
 
-    // Animate particles orbiting the globe
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y += 0.001;
-      particlesRef.current.rotation.x += 0.0005;
-    }
-  });
+const stats = [
+  { label: '50L+', sub: 'Students', color: '#6C63FF' },
+  { label: '2L+', sub: 'Results', color: '#00D2FF' },
+  { label: '99.9%', sub: 'Uptime', color: '#00C896' },
+];
 
-  // Create orbiting particles
-  const particles = useMemo(() => {
-    const temp = [];
-    for (let i = 0; i < 200; i++) {
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.random() * Math.PI;
-      const radius = 2.5 + Math.random() * 1;
-
-      const x = radius * Math.sin(phi) * Math.cos(theta);
-      const y = radius * Math.sin(phi) * Math.sin(theta);
-      const z = radius * Math.cos(phi);
-
-      temp.push({ position: [x, y, z], scale: Math.random() * 0.5 + 0.3 });
-    }
-    return temp;
-  }, []);
-
+const HeroCanvas = memo(function HeroCanvas() {
   return (
-    <group>
-      {/* Main Globe */}
-      <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
-        <Sphere ref={meshRef} args={[2, 64, 64]} scale={1}>
-          <MeshDistortMaterial
-            color="#6C63FF"
-            attach="material"
-            distort={0.3}
-            speed={2}
-            roughness={0.2}
-            metalness={0.8}
-          />
-        </Sphere>
-      </Float>
+    <div className={styles.canvas}>
+      {/* Animated glow orbs */}
+      <div className={`${styles.glowOrb} ${styles.glow1}`} />
+      <div className={`${styles.glowOrb} ${styles.glow2}`} />
+      <div className={`${styles.glowOrb} ${styles.glow3}`} />
 
-      {/* Orbiting Particles */}
-      <group ref={particlesRef}>
-        {particles.map((particle, i) => (
-          <mesh key={i} position={particle.position}>
-            <sphereGeometry args={[0.03, 8, 8]} />
-            <meshStandardMaterial
-              color={i % 3 === 0 ? '#00D2FF' : i % 3 === 1 ? '#00C896' : '#FF6B35'}
-              emissive={i % 3 === 0 ? '#00D2FF' : i % 3 === 1 ? '#00C896' : '#FF6B35'}
-              emissiveIntensity={0.5}
-            />
-          </mesh>
-        ))}
-      </group>
+      {/* Orbit rings */}
+      <div className={`${styles.ring} ${styles.ring1}`} />
+      <div className={`${styles.ring} ${styles.ring2}`} />
+      <div className={`${styles.ring} ${styles.ring3}`} />
 
-      {/* Ring around globe */}
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[2.8, 0.02, 16, 100]} />
-        <meshBasicMaterial color="#6C63FF" transparent opacity={0.4} />
-      </mesh>
+      {/* Connection lines (SVG) */}
+      <svg className={styles.connections} viewBox="0 0 500 500">
+        <defs>
+          <linearGradient id="lineGradHero" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#6C63FF" stopOpacity="0.4" />
+            <stop offset="50%" stopColor="#00D2FF" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#00C896" stopOpacity="0.3" />
+          </linearGradient>
+        </defs>
+        {/* Animated connection lines */}
+        <line x1="250" y1="250" x2="120" y2="100" stroke="url(#lineGradHero)" strokeWidth="0.5" className={styles.connectionLine} />
+        <line x1="250" y1="250" x2="380" y2="120" stroke="url(#lineGradHero)" strokeWidth="0.5" className={styles.connectionLine} style={{ animationDelay: '0.5s' }} />
+        <line x1="250" y1="250" x2="400" y2="350" stroke="url(#lineGradHero)" strokeWidth="0.5" className={styles.connectionLine} style={{ animationDelay: '1s' }} />
+        <line x1="250" y1="250" x2="100" y2="380" stroke="url(#lineGradHero)" strokeWidth="0.5" className={styles.connectionLine} style={{ animationDelay: '1.5s' }} />
+        <line x1="250" y1="250" x2="250" y2="80" stroke="url(#lineGradHero)" strokeWidth="0.5" className={styles.connectionLine} style={{ animationDelay: '2s' }} />
+      </svg>
 
-      {/* Second ring at angle */}
-      <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]}>
-        <torusGeometry args={[3, 0.015, 16, 100]} />
-        <meshBasicMaterial color="#00D2FF" transparent opacity={0.3} />
-      </mesh>
-    </group>
-  );
-}
-
-// Data Nodes floating around
-function DataNodes() {
-  const groupRef = useRef();
-
-  useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += 0.003;
-    }
-  });
-
-  const nodes = useMemo(() => {
-    return Array.from({ length: 12 }, (_, i) => {
-      const angle = (i / 12) * Math.PI * 2;
-      const radius = 4.5;
-      return {
-        position: [
-          Math.cos(angle) * radius,
-          (Math.random() - 0.5) * 3,
-          Math.sin(angle) * radius
-        ],
-        delay: i * 0.1
-      };
-    });
-  }, []);
-
-  return (
-    <group ref={groupRef}>
-      {nodes.map((node, i) => (
-        <Float
-          key={i}
-          speed={2 + Math.random()}
-          rotationIntensity={0.5}
-          floatIntensity={1}
-        >
-          <mesh position={node.position}>
-            <octahedronGeometry args={[0.15, 0]} />
-            <meshStandardMaterial
-              color="#00C896"
-              emissive="#00C896"
-              emissiveIntensity={0.5}
-              metalness={0.8}
-              roughness={0.2}
-            />
-          </mesh>
-        </Float>
-      ))}
-    </group>
-  );
-}
-
-// Main Canvas Component
-export default function HeroCanvas() {
-  return (
-    <div style={{
-      width: '100%',
-      height: '100%',
-      minHeight: '500px',
-      position: 'relative'
-    }}>
-      <Canvas
-        camera={{ position: [0, 0, 8], fov: 50 }}
-        dpr={[1, 2]}
-        performance={{ min: 0.5 }}
+      {/* Central globe */}
+      <motion.div
+        className={styles.globe}
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ delay: 2.5, duration: 0.8, ease: [0.34, 1.56, 0.64, 1] }}
       >
-        {/* Lighting */}
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={1} />
-        <pointLight position={[-10, -10, -10]} intensity={0.5} color="#00D2FF" />
-        <spotLight
-          position={[0, 10, 0]}
-          angle={0.3}
-          penumbra={1}
-          intensity={1}
-          castShadow
-        />
+        <div className={styles.globeInner}>
+          <span className={styles.globeEmoji}>🇮🇳</span>
+        </div>
+        <div className={styles.globePulse} />
+        <div className={styles.globePulse2} />
+      </motion.div>
 
-        {/* Background Stars */}
-        <Stars
-          radius={100}
-          depth={50}
-          count={5000}
-          factor={4}
-          saturation={0}
-          fade
-          speed={1}
-        />
+      {/* Orbiting city nodes */}
+      {cities.map((city, i) => (
+        <motion.div
+          key={city.name}
+          className={styles.cityNode}
+          style={{
+            '--angle': `${city.angle}deg`,
+            '--delay': `${i * 3}s`,
+          }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 3 + city.delay, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+        >
+          <div className={styles.nodeDot} />
+          <span className={styles.nodeLabel}>{city.name}</span>
+        </motion.div>
+      ))}
 
-        {/* 3D Objects */}
-        <AnimatedGlobe />
-        <DataNodes />
+      {/* Floating stat cards */}
+      {stats.map((stat, i) => (
+        <motion.div
+          key={stat.label}
+          className={styles.floatCard}
+          style={{
+            '--card-top': `${20 + i * 30}%`,
+            '--card-side': i % 2 === 0 ? '5%' : '75%',
+          }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 3.5 + i * 0.3, duration: 0.5 }}
+        >
+          <span className={styles.floatCardValue} style={{ color: stat.color }}>{stat.label}</span>
+          <span className={styles.floatCardLabel}>{stat.sub}</span>
+        </motion.div>
+      ))}
 
-        {/* Controls - disabled rotation for better UX */}
-        <OrbitControls
-          enableZoom={false}
-          enablePan={false}
-          enableRotate={false}
-          autoRotate={false}
+      {/* Floating particles */}
+      {Array.from({ length: 20 }).map((_, i) => (
+        <div
+          key={i}
+          className={styles.particle}
+          style={{
+            '--x': `${Math.random() * 100}%`,
+            '--y': `${Math.random() * 100}%`,
+            '--size': `${2 + Math.random() * 4}px`,
+            '--duration': `${3 + Math.random() * 4}s`,
+            '--delay': `${Math.random() * 3}s`,
+            '--opacity': `${0.15 + Math.random() * 0.35}`,
+          }}
         />
-      </Canvas>
+      ))}
     </div>
   );
-}
+});
+
+export default HeroCanvas;

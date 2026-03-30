@@ -1,5 +1,5 @@
 /* === animations.css === */
-/* ishu.fun Custom Keyframe Animations */
+/* ishu.fun Custom Keyframe Animations — Premium Edition */
 
 /* ── MARQUEE (Announcement Bar + Testimonials) ── */
 @keyframes marquee {
@@ -23,6 +23,11 @@
   50% { box-shadow: 0 0 0 8px rgba(0, 200, 150, 0); }
 }
 
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
 /* ── SHIMMER (Skeleton loading) ── */
 @keyframes shimmer {
   0% { background-position: -200% 0; }
@@ -38,6 +43,12 @@
 @keyframes float-slow {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0) scale(1); }
+  33% { transform: translateY(-15px) scale(1.02); }
+  66% { transform: translateY(-8px) scale(0.98); }
 }
 
 /* ── BOUNCE (Scroll indicator) ── */
@@ -58,6 +69,11 @@
   50% { border-color: rgba(108, 99, 255, 0.6); }
 }
 
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.4; filter: blur(80px); }
+  50% { opacity: 0.7; filter: blur(100px); }
+}
+
 /* ── GRADIENT SHIFT (Gradient text, buttons) ── */
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
@@ -65,10 +81,25 @@
   100% { background-position: 0% 50%; }
 }
 
-/* ── ROTATE (Loading spinner) ── */
+@keyframes gradient-rotate {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
+}
+
+/* ── ROTATE (Loading spinner, orbits) ── */
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateX(var(--orbit-radius, 180px)) rotate(0deg); }
+  100% { transform: rotate(360deg) translateX(var(--orbit-radius, 180px)) rotate(-360deg); }
 }
 
 /* ── FADE IN VARIANTS ── */
@@ -103,16 +134,27 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes scaleInBounce {
+  from { opacity: 0; transform: scale(0.5); }
+  50% { transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* ── SLIDE UP (Preloader exit) ── */
 @keyframes slideUp {
   from { transform: translateY(0); }
   to { transform: translateY(-100vh); }
 }
 
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* ── TYPEWRITER CURSOR ── */
 @keyframes blink-cursor {
-  0%, 50% { border-right-color: var(--accent-violet); }
-  51%, 100% { border-right-color: transparent; }
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* ── GRAIN TEXTURE ── */
@@ -145,4 +187,53 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+/* ── RIPPLE EFFECT ── */
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 0.5; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* ── DASH (SVG line draw) ── */
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ── COUNTER FLIP ── */
+@keyframes countUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ── SPARKLE ── */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+/* ── MORPHING BLOB ── */
+@keyframes morph {
+  0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  25% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+  50% { border-radius: 50% 60% 30% 60% / 30% 70% 60% 40%; }
+  75% { border-radius: 60% 30% 60% 40% / 70% 40% 50% 60%; }
+}
+
+/* ── SLIDE STAGGER (for lists/grids appearing) ── */
+@keyframes slideUpStagger {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── NOTIFICATION BELL SHAKE ── */
+@keyframes bell-shake {
+  0% { transform: rotate(0); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-14deg); }
+  45% { transform: rotate(10deg); }
+  60% { transform: rotate(-10deg); }
+  75% { transform: rotate(4deg); }
+  90% { transform: rotate(-2deg); }
+  100% { transform: rotate(0); }
 }

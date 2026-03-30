@@ -1,47 +1,89 @@
 {
-  "name": "ishu.fun — Sarkari Result & Govt Jobs",
+  "name": "ishu.fun — India's #1 Student Platform",
   "short_name": "ishu.fun",
-  "description": "India's #1 Student Platform for Sarkari Results, Free PDF Tools & Govt Jobs",
+  "description": "India's fastest platform for Sarkari Results, Government Job Alerts, Free PDF Tools, and Education News. 50 lakh+ students trust ishu.fun.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080810",
   "theme_color": "#6C63FF",
-  "orientation": "portrait",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en-IN",
+  "categories": ["education", "news", "utilities"],
   "icons": [
     {
-      "src": "/android-chrome-192x192.png",
+      "src": "/icons/icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384.png",
+      "sizes": "384x384",
       "type": "image/png"
     },
     {
-      "src": "/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "/maskable-icon-512x512.png",
+      "src": "/icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "productivity"],
-  "lang": "en-IN",
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "label": "ishu.fun Homepage"
+    }
+  ],
   "shortcuts": [
     {
-      "name": "Latest Results",
+      "name": "Results",
+      "short_name": "Results",
+      "description": "Check latest Sarkari Results",
       "url": "/results",
-      "description": "Check latest Sarkari exam results"
+      "icons": [{ "src": "/icons/results.png", "sizes": "96x96" }]
     },
     {
       "name": "PDF Tools",
+      "short_name": "Tools",
+      "description": "Free PDF Merge, Compress & More",
       "url": "/tools",
-      "description": "Free PDF merge, compress, convert tools"
+      "icons": [{ "src": "/icons/tools.png", "sizes": "96x96" }]
     },
     {
-      "name": "Education News",
+      "name": "News",
+      "short_name": "News",
+      "description": "Latest Education News",
       "url": "/news",
-      "description": "Latest education and govt job news"
+      "icons": [{ "src": "/icons/news.png", "sizes": "96x96" }]
     }
-  ]
+  ],
+  "prefer_related_applications": false
 }

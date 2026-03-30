@@ -5,6 +5,7 @@
 @import './typography.css';
 @import './animations.css';
 @import './utilities.css';
+@import './accessibility-responsive.css';
 
 /* ── RESET ─────────────────────────── */
 *, *::before, *::after {
