@@ -1,5 +1,5 @@
 /* === animations.css === */
-/* ishu.fun Custom Keyframe Animations — Premium Edition */
+/* ishu.fun Custom Keyframe Animations — V6 Premium Edition */
 
 /* ── MARQUEE (Announcement Bar + Testimonials) ── */
 @keyframes marquee {
@@ -60,8 +60,8 @@
 
 /* ── GLOW (Buttons, borders) ── */
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(108, 99, 255, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(108, 99, 255, 0.6); }
+  0%, 100% { opacity: 0.4; filter: blur(80px); transform: scale(1); }
+  50% { opacity: 0.7; filter: blur(100px); transform: scale(1.1); }
 }
 
 @keyframes glow-border {
@@ -220,7 +220,7 @@
   75% { border-radius: 60% 30% 60% 40% / 70% 40% 50% 60%; }
 }
 
-/* ── SLIDE STAGGER (for lists/grids appearing) ── */
+/* ── SLIDE STAGGER ── */
 @keyframes slideUpStagger {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
@@ -236,4 +236,61 @@
   75% { transform: rotate(4deg); }
   90% { transform: rotate(-2deg); }
   100% { transform: rotate(0); }
+}
+
+/* ── SCROLL MOUSE ── */
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(12px); opacity: 0; }
+  61% { transform: translateY(0); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ── TEXT BLUR IN ── */
+@keyframes blurIn {
+  from { opacity: 0; filter: blur(12px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+/* ── BORDER GLOW ROTATE ── */
+@keyframes border-rotate {
+  from { --angle: 0deg; }
+  to { --angle: 360deg; }
+}
+
+/* ── NUMBER TICK ── */
+@keyframes number-tick {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ── BADGE PULSE ── */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(108, 99, 255, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(108, 99, 255, 0); }
+}
+
+/* ── LIVE DOT ── */
+@keyframes live-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── GRADIENT BORDER ANIMATION ── */
+@keyframes gradientBorder {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ── SCAN LINE ── */
+@keyframes scan-line {
+  0% { top: 0%; opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* ── CARD HOVER LIFT ── */
+@keyframes card-lift {
+  0%, 100% { transform: translateY(0) rotateX(0deg); }
+  50% { transform: translateY(-8px) rotateX(2deg); }
 }

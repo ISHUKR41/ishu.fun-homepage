@@ -1,5 +1,4 @@
 // components/sections/TrustBar/TrustBar.jsx
-import SectionWrapper from '../../ui/SectionWrapper/SectionWrapper';
 import styles from './TrustBar.module.css';
 
 const trustOrgs = [

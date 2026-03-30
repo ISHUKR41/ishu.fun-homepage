@@ -10,19 +10,17 @@ export function useSmoothScroll() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // Skip on mobile for native feel
-    const isMobile = window.innerWidth < 1024;
-    if (isMobile) return;
-
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.4,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
       smoothTouch: false,
-      touchMultiplier: 2,
+      touchMultiplier: 1.8,
       infinite: false,
+      syncTouch: false,
     });
 
     lenisRef.current = lenis;
@@ -30,10 +28,15 @@ export function useSmoothScroll() {
 
     // Connect Lenis to GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+
+    const ticker = gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
     gsap.ticker.lagSmoothing(0);
 
     return () => {
+      gsap.ticker.remove(ticker);
       lenis.destroy();
       lenisInstance = null;
     };

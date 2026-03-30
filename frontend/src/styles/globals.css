@@ -1,5 +1,5 @@
 /* === globals.css === */
-/* ishu.fun Global Styles — Premium Dark Luxury Edition */
+/* ishu.fun Global Styles — V6 Premium Dark Luxury Edition */
 
 @import './variables.css';
 @import './typography.css';
@@ -20,9 +20,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* GPU acceleration for smooth animations */
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
+  font-size: 16px;
 }
 
 body {
@@ -33,12 +31,9 @@ body {
   background-color: var(--bg-base);
   overflow-x: hidden;
   min-height: 100vh;
-  /* Enable hardware acceleration */
-  transform: translate3d(0, 0, 0);
-  -webkit-transform: translate3d(0, 0, 0);
-  /* Optimize text rendering */
-  font-feature-settings: "kern" 1, "liga" 1;
+  /* Hardware acceleration */
   -webkit-font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
 
 /* ── SELECTION ─────────────────────── */
@@ -93,15 +88,15 @@ input, textarea, select {
 /* ── HEADINGS ──────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 700;
   line-height: var(--leading-tight);
   letter-spacing: var(--tracking-tight);
   color: var(--text-primary);
 }
 
-h1 { font-size: var(--text-hero); font-weight: 700; }
-h2 { font-size: var(--text-5xl); }
-h3 { font-size: var(--text-3xl); }
+h1 { font-size: var(--text-hero); font-weight: 800; }
+h2 { font-size: var(--text-5xl); font-weight: 800; }
+h3 { font-size: var(--text-3xl); font-weight: 700; }
 h4 { font-size: var(--text-2xl); }
 h5 { font-size: var(--text-xl); }
 h6 { font-size: var(--text-lg); }
@@ -115,6 +110,7 @@ p {
 :focus-visible {
   outline: 2px solid var(--accent-violet);
   outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* ── SKIP LINK ─────────────────────── */
@@ -148,7 +144,13 @@ p {
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 768px) {
+  .container {
+    padding: 0 var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
   .container {
     padding: 0 var(--space-4);
   }
@@ -215,6 +217,26 @@ p {
 
 .section-header-centered .section-subtitle {
   margin: 0 auto;
+}
+
+/* ── GPU ACCELERATION ──────────────── */
+.will-transform {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ── PERSPECTIVE WRAPPER ───────────── */
+.perspective {
+  perspective: 1000px;
+}
+
+/* ── HIDE SCROLLBAR ────────────────── */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* ── REDUCED MOTION ────────────────── */

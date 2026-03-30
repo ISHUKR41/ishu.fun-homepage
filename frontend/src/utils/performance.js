@@ -19,14 +19,15 @@ export function initWebVitals() {
     }
   };
 
-  // Dynamically import web-vitals
-  import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-    getCLS(reportWebVitals);
-    getFID(reportWebVitals);
-    getFCP(reportWebVitals);
-    getLCP(reportWebVitals);
-    getTTFB(reportWebVitals);
-  });
+  // Dynamically import web-vitals (v3+ API uses onCLS, onFID, etc.)
+  import('web-vitals').then((vitals) => {
+    const report = (fn) => fn && typeof fn === 'function' && fn(reportWebVitals);
+    report(vitals.onCLS || vitals.getCLS);
+    report(vitals.onFID || vitals.getFID);
+    report(vitals.onFCP || vitals.getFCP);
+    report(vitals.onLCP || vitals.getLCP);
+    report(vitals.onTTFB || vitals.getTTFB);
+  }).catch(() => {});
 }
 
 // Performance Observer for Long Tasks

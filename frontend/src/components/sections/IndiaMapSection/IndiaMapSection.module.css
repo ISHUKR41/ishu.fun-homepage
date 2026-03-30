@@ -1,146 +1,252 @@
-/* IndiaMapSection.module.css — All India Coverage */
+/* IndiaMapSection.module.css — SVG India Map */
 
 .section {
-  padding: var(--space-24) 0;
+  padding: 100px 0;
   position: relative;
   overflow: hidden;
 }
 
+.bgGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(ellipse, rgba(108, 99, 255, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 .header {
   text-align: center;
-  margin-bottom: var(--space-16);
+  margin-bottom: 60px;
 }
 
 .content {
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  gap: var(--space-10);
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
   align-items: start;
 }
 
-/* ── State Chips Grid ── */
-.stateGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-3);
-}
-
-.stateChip {
+/* SVG Map */
+.mapSide {
   display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-4) var(--space-5);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  text-decoration: none;
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  cursor: pointer;
+  justify-content: center;
 }
 
-.stateChip:hover {
-  background: var(--glass-hover);
-  border-color: rgba(255, 107, 53, 0.2);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+.svgMapWrap {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
 }
 
-.chipContent {
+.indiaSvg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 40px rgba(108, 99, 255, 0.15));
+}
+
+.mapTooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  background: rgba(14, 14, 26, 0.95);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px 16px;
+  pointer-events: none;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.tooltipName {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.tooltipStats {
+  font-size: 0.75rem;
+  color: var(--accent-violet);
+  margin-top: 2px;
+}
+
+/* Right Side */
+.rightSide {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 24px;
 }
 
-.chipName {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--text-primary);
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 
-.chipCount {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-/* ── Sidebar Stats ── */
-.sidebar {
-  background: var(--glass-bg);
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px;
+  background: var(--bg-surface);
   border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-6);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  border-radius: 14px;
+  text-align: center;
 }
 
-.sidebarTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-weight: 600;
+.statNum {
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--text-primary);
-  margin-bottom: var(--space-5);
+  font-family: var(--font-display);
+  line-height: 1;
 }
 
-.barRow {
+.statLabel {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.topStatesTitle {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.statesList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stateRow {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
 }
 
-.barLabel {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--text-secondary);
-  min-width: 80px;
+.stateRow:hover,
+.stateRowActive {
+  background: rgba(108, 99, 255, 0.08);
+  border-color: rgba(108, 99, 255, 0.25);
+}
+
+.stateRank {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 24px;
   flex-shrink: 0;
 }
 
-.barTrack {
+.stateInfo {
   flex: 1;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: var(--radius-full);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.stateName {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stateBar {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
   overflow: hidden;
 }
 
-.barFill {
+.stateBarFill {
   height: 100%;
-  background: var(--grad-button);
-  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent-violet), var(--accent-cyan));
+  border-radius: 2px;
 }
 
-.barValue {
-  font-family: var(--font-mono);
-  font-size: 11px;
+.stateCount {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.stateArrow {
   color: var(--text-muted);
-  min-width: 50px;
-  text-align: right;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
 }
 
-/* ── All States Scroll ── */
-.allStatesScroll {
+.stateRow:hover .stateArrow {
+  opacity: 1;
+}
+
+.viewAllBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-violet);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  width: fit-content;
+}
+
+.viewAllBtn:hover {
+  background: rgba(108, 99, 255, 0.08);
+  border-color: rgba(108, 99, 255, 0.5);
+  gap: 12px;
+}
+
+/* States Marquee */
+.statesMarquee {
+  margin-top: 50px;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+}
+
+.statesTrack {
   display: flex;
-  gap: var(--space-2);
-  overflow-x: auto;
-  padding: var(--space-8) 0 var(--space-4);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.allStatesScroll::-webkit-scrollbar {
-  display: none;
+  gap: 8px;
+  animation: marquee 40s linear infinite;
+  width: max-content;
 }
 
 .miniChip {
-  font-family: var(--font-body);
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: var(--space-2) var(--space-4);
-  background: var(--glass-bg);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: var(--text-secondary);
   text-decoration: none;
   white-space: nowrap;
   transition: all 0.2s ease;
@@ -148,25 +254,30 @@
 }
 
 .miniChip:hover {
-  color: var(--accent-saffron);
-  border-color: rgba(255, 107, 53, 0.3);
+  background: rgba(108, 99, 255, 0.1);
+  border-color: rgba(108, 99, 255, 0.25);
+  color: var(--accent-violet);
 }
 
-/* ── Responsive ── */
-@media (max-width: 1023px) {
+/* ─── RESPONSIVE ─────────────────── */
+@media (max-width: 900px) {
   .content {
     grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .svgMapWrap {
+    max-width: 320px;
+    margin: 0 auto;
   }
 }
 
-@media (max-width: 639px) {
-  .section {
-    padding: var(--space-16) 0;
-  }
-  .stateGrid {
-    grid-template-columns: 1fr;
-  }
-  .stateChip {
-    padding: var(--space-3) var(--space-4);
-  }
+@media (max-width: 640px) {
+  .section { padding: 70px 0; }
+  .statRow { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .statBox { padding: 12px 8px; }
+  .statNum { font-size: 1.1rem; }
+}
+
+@media (max-width: 380px) {
+  .statRow { grid-template-columns: 1fr; }
 }

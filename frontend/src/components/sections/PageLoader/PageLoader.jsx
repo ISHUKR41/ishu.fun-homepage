@@ -8,7 +8,7 @@ export default function PageLoader({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const minTime = 1200;
+    const minTime = 500;
     const start = Date.now();
 
     const interval = setInterval(() => {
@@ -17,7 +17,7 @@ export default function PageLoader({ onComplete }) {
         const naturalProgress = Math.min((elapsed / minTime) * 100, 95);
         return Math.max(prev, naturalProgress);
       });
-    }, 30);
+    }, 20);
 
     const handleLoad = () => {
       const elapsed = Date.now() - start;
@@ -28,7 +28,7 @@ export default function PageLoader({ onComplete }) {
         setTimeout(() => {
           setIsLoading(false);
           if (onComplete) onComplete();
-        }, 400);
+        }, 300);
       }, remaining);
     };
 
@@ -38,14 +38,14 @@ export default function PageLoader({ onComplete }) {
       window.addEventListener('load', handleLoad);
     }
 
-    // Guarantee exit after 4s max
+    // Guarantee exit after 2s max
     const maxTimeout = setTimeout(() => {
       setProgress(100);
       setTimeout(() => {
         setIsLoading(false);
         if (onComplete) onComplete();
-      }, 400);
-    }, 4000);
+      }, 300);
+    }, 2000);
 
     return () => {
       clearInterval(interval);

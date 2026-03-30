@@ -1,0 +1,107 @@
+.section {
+  position: relative;
+  padding: 50px 0;
+  overflow: hidden;
+}
+
+.fade {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  background: linear-gradient(90deg, var(--bg-base) 0%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fadeRight {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 200px;
+  background: linear-gradient(90deg, transparent 0%, var(--bg-base) 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.label {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+
+.marquees {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.trackWrap {
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+
+.trackReverse {
+  animation: marquee-reverse 35s linear infinite;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chip:hover {
+  border-color: var(--chip-color, var(--accent-violet));
+  background: rgba(108, 99, 255, 0.06);
+}
+
+.chipDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.chipContent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chipName {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.chipFull {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .section { padding: 40px 0; }
+  .fade, .fadeRight { width: 80px; }
+}

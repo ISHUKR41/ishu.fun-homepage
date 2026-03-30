@@ -1,7 +1,7 @@
-# India's #1 Student Platform
+# ishu.fun — India's #1 Student Platform
 
 ## Overview
-A high-performance React frontend for an Indian educational platform serving Sarkari Results, job alerts, exam calendars, and free PDF tools targeting competitive exam aspirants.
+An ultra-premium, Apple/Framer/Vercel-inspired React 19 frontend for India's top educational platform. Covers Sarkari Results, Government Jobs, Free PDF Tools, Exam Calendar, and Education News for competitive exam aspirants across India.
 
 ## Tech Stack
 - **Framework:** React 19 with Vite 8

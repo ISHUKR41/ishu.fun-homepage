@@ -10,7 +10,9 @@ import BackToTop from '../../components/ui/BackToTop/BackToTop';
 import BottomNav from '../../components/ui/BottomNav/BottomNav';
 
 // Lazy load all below-fold sections
+const MarqueeSection = lazy(() => import('../../components/sections/MarqueeSection/MarqueeSection'));
 const StatsSection = lazy(() => import('../../components/sections/StatsSection/StatsSection'));
+const HowItWorksSection = lazy(() => import('../../components/sections/HowItWorksSection/HowItWorksSection'));
 const FeaturesSection = lazy(() => import('../../components/sections/FeaturesSection/FeaturesSection'));
 const ResultsPreview = lazy(() => import('../../components/sections/ResultsPreview/ResultsPreview'));
 const ToolsShowcase = lazy(() => import('../../components/sections/ToolsShowcase/ToolsShowcase'));
@@ -31,12 +33,13 @@ function SectionLoader() {
     <div style={{
       display: 'flex',
       justifyContent: 'center',
+      alignItems: 'center',
       padding: '80px 0',
     }}>
       <div style={{
-        width: 32,
-        height: 32,
-        border: '3px solid var(--glass-border)',
+        width: 30,
+        height: 30,
+        border: '2px solid rgba(108,99,255,0.15)',
         borderTopColor: 'var(--accent-violet)',
         borderRadius: '50%',
         animation: 'spin 0.8s linear infinite',
@@ -60,58 +63,66 @@ export default function HomePage() {
           <Navbar />
 
           <main id="main-content">
-            {/* Section 04 — Hero (EAGER) */}
+            {/* Hero — EAGER */}
             <HeroSection />
 
-            {/* Section 05 — Trust Bar (EAGER) */}
+            {/* Trust Bar — EAGER */}
             <TrustBar />
 
-            {/* All below-fold sections — LAZY */}
+            {/* All below-fold — LAZY */}
             <Suspense fallback={<SectionLoader />}>
-              {/* Section 06 — Stats */}
+
+              {/* Exam boards marquee */}
+              <MarqueeSection />
+
+              {/* Stats */}
               <StatsSection />
 
-              {/* Section 07 — Features */}
+              {/* How it works — NEW */}
+              <HowItWorksSection />
+
+              {/* Features Bento Grid */}
               <FeaturesSection />
 
-              {/* Section 08 — Results Preview */}
+              {/* Results Preview */}
               <ResultsPreview />
 
-              {/* Section 09 — PDF Tools */}
+              {/* PDF Tools */}
               <ToolsShowcase />
 
-              {/* Section 10 — India Map */}
+              {/* India Map with SVG */}
               <IndiaMapSection />
 
-              {/* Section 11 — Exam Calendar */}
+              {/* Exam Calendar */}
               <ExamCalendar />
 
-              {/* Section 12 — Live Data */}
+              {/* Live Data */}
               <LiveDataSection />
 
-              {/* Section 13 — News Preview */}
+              {/* News Preview */}
               <NewsPreview />
 
-              {/* Section 14 — WhatsApp CTA */}
+              {/* WhatsApp CTA */}
               <WhatsAppCTA />
 
-              {/* Section 15 — Blog Preview */}
+              {/* Blog Preview */}
               <BlogPreview />
 
-              {/* Section 16 — Testimonials */}
+              {/* Testimonials */}
               <TestimonialsSection />
 
-              {/* Section 17 — Trust Badges */}
+              {/* Trust Badges */}
               <TrustBadges />
 
-              {/* Section 18 — FAQ */}
+              {/* FAQ */}
               <FAQSection />
 
-              {/* Section 19 — Final CTA */}
+              {/* Final CTA */}
               <FinalCTA />
 
-              {/* Section 20 — Footer */}
+              {/* Footer */}
               <Footer />
+
             </Suspense>
           </main>
 
