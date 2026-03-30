@@ -1,0 +1,196 @@
+/* Accessibility Styles */
+
+/* Focus styles for keyboard navigation */
+body:not(.using-mouse) *:focus {
+  outline: 3px solid var(--accent-violet);
+  outline-offset: 2px;
+}
+
+body.using-mouse *:focus {
+  outline: none;
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent-violet);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  z-index: 1000;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --text-primary: #FFFFFF;
+    --text-secondary: #E0E0E0;
+    --bg-base: #000000;
+    --bg-surface: #1A1A1A;
+    --border-medium: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Responsive Typography - Enhanced */
+@media (max-width: 374px) {
+  :root {
+    --text-hero: clamp(2.5rem, 10vw, 3.5rem);
+    --text-6xl: clamp(2.5rem, 8vw, 3.5rem);
+    --text-5xl: clamp(2rem, 6vw, 2.5rem);
+  }
+}
+
+@media (min-width: 375px) and (max-width: 639px) {
+  :root {
+    --text-hero: clamp(3rem, 10vw, 4.5rem);
+    --text-6xl: clamp(2.8rem, 8vw, 4rem);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  :root {
+    --text-hero: clamp(3.5rem, 10vw, 5.5rem);
+  }
+}
+
+/* Enhanced Mobile Responsiveness */
+@media (max-width: 639px) {
+  /* Mobile-specific utilities */
+  .hide-mobile {
+    display: none !important;
+  }
+
+  /* Touch-friendly sizing */
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Mobile-optimized spacing */
+  .container {
+    padding-left: var(--space-4);
+    padding-right: var(--space-4);
+  }
+}
+
+@media (min-width: 640px) {
+  .show-mobile-only {
+    display: none !important;
+  }
+}
+
+/* Tablet Responsiveness */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hide-tablet {
+    display: none !important;
+  }
+}
+
+/* Desktop Responsiveness */
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+  }
+
+  .container {
+    padding-left: max(var(--space-4), env(safe-area-inset-left));
+    padding-right: max(var(--space-4), env(safe-area-inset-right));
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Dark mode support (if system preference changes) */
+@media (prefers-color-scheme: light) {
+  /* Override for light mode if needed */
+  /* Currently always dark, but prepared for future toggle */
+}
+
+/* Landscape mobile optimization */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    min-height: auto !important;
+    padding-top: var(--space-8) !important;
+    padding-bottom: var(--space-8) !important;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1680px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 2560px) {
+  .container {
+    max-width: 1920px;
+  }
+}
