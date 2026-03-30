@@ -1,22 +1,13 @@
 // components/ui/ScrollProgress/ScrollProgress.jsx
-import { useState, useEffect } from 'react';
+import { useScrollProgress } from '../../../hooks/useScrollProgress';
 import styles from './ScrollProgress.module.css';
 
 export default function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const total = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(total > 0 ? (window.scrollY / total) * 100 : 0);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  const progress = useScrollProgress();
 
   return (
-    <div className={styles.bar}>
-      <div className={styles.fill} style={{ width: `${progress}%` }} />
+    <div className={styles.container} role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
+      <div className={styles.bar} style={{ width: `${progress}%` }} />
     </div>
   );
 }

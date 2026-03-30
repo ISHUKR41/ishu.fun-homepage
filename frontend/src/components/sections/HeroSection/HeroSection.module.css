@@ -424,4 +424,46 @@
   .scrollHint {
     display: none;
   }
+  .heroVisual {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 374px) {
+  .hero {
+    padding-top: 56px;
+  }
+  .left {
+    gap: var(--space-4);
+  }
+  .headline {
+    font-size: clamp(2.2rem, 8vw, 3rem);
+  }
+  .subheadline {
+    font-size: var(--text-base);
+  }
+  .searchBar {
+    padding: var(--space-1);
+    padding-left: var(--space-3);
+  }
+  .searchInput {
+    height: 40px;
+    font-size: var(--text-sm);
+  }
+  .searchBtn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
+  }
+  .primaryBtn, .whatsappBtn {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--text-sm);
+  }
+  .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 11px;
+  }
+  .heroVisual {
+    max-width: 240px;
+  }
 }

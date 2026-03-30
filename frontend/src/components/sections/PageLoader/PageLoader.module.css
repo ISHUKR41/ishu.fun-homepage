@@ -4,6 +4,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   background: var(--bg-base);
   display: flex;
   align-items: center;
@@ -26,6 +27,7 @@
   font-weight: 700;
   color: var(--text-primary);
   overflow: hidden;
+  filter: drop-shadow(0 0 40px rgba(108, 99, 255, 0.3));
 }
 
 .letter {
@@ -34,6 +36,7 @@
 
 .dot {
   color: var(--accent-violet);
+  animation: glow-pulse 2s ease-in-out infinite;
 }
 
 .fun {
@@ -44,15 +47,17 @@
 }
 
 .progressBar {
-  width: 200px;
-  height: 3px;
-  background: var(--glass-bg);
+  width: 240px;
+  height: 2px;
+  background: rgba(255,255,255,0.06);
   border-radius: var(--radius-full);
   overflow: hidden;
+  position: relative;
 }
 
 .progressFill {
   height: 100%;
   background: var(--grad-button);
   border-radius: var(--radius-full);
+  box-shadow: 0 0 12px rgba(108, 99, 255, 0.5);
 }

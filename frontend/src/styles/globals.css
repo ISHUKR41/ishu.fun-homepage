@@ -1,5 +1,5 @@
 /* === globals.css === */
-/* ishu.fun Global Styles */
+/* ishu.fun Global Styles — Premium Dark Luxury Edition */
 
 @import './variables.css';
 @import './typography.css';
@@ -142,6 +142,69 @@ p {
   .container {
     padding: 0 var(--space-4);
   }
+}
+
+@media (max-width: 374px) {
+  .container {
+    padding: 0 var(--space-3);
+  }
+}
+
+/* ── SECTION DIVIDERS ─────────────── */
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-medium), transparent);
+}
+
+/* ── GLASS CARD BASE ──────────────── */
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.glass-card:hover {
+  background: var(--glass-hover);
+  border-color: var(--border-medium);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── GRADIENT BORDER CARD ─────────── */
+.gradient-border {
+  position: relative;
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: var(--grad-hero);
+  opacity: 0.15;
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+.gradient-border:hover::before {
+  opacity: 0.3;
+}
+
+/* ── SECTION HEADER PATTERN ──────── */
+.section-header-centered {
+  text-align: center;
+  margin-bottom: var(--space-16);
+}
+
+.section-header-centered .overline {
+  justify-content: center;
+}
+
+.section-header-centered .section-subtitle {
+  margin: 0 auto;
 }
 
 /* ── REDUCED MOTION ────────────────── */

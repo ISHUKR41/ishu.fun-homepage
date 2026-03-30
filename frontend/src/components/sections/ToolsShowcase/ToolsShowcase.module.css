@@ -1,15 +1,146 @@
-.section { padding: var(--space-24) 0; }
-.header { text-align: center; margin-bottom: var(--space-12); }
-.grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: var(--space-4); }
-.toolCard { position: relative; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-xl); padding: var(--space-6) var(--space-4); display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; transition: all 0.3s ease; cursor: pointer; text-decoration: none; }
-.toolCard:hover { border-color: var(--tool-color, var(--accent-violet)); box-shadow: 0 0 20px color-mix(in srgb, var(--tool-color, var(--accent-violet)) 30%, transparent); }
-.popularBadge { position: absolute; top: var(--space-2); right: var(--space-2); font-family: var(--font-body); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-full); background: rgba(255, 215, 0, 0.15); color: var(--accent-gold); display: inline-flex; align-items: center; gap: 3px; }
-.toolIcon { width: 56px; height: 56px; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; }
-.toolName { font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500; color: var(--text-primary); }
-.tryFree { font-family: var(--font-body); font-size: 11px; color: var(--text-muted); transition: color 0.2s; }
-.toolCard:hover .tryFree { color: var(--tool-color, var(--accent-violet)); }
-.ctaRow { display: flex; justify-content: center; margin-top: var(--space-10); }
-.allToolsBtn { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-body); font-weight: 600; font-size: var(--text-base); color: white; background: var(--grad-button); padding: var(--space-4) var(--space-8); border-radius: var(--radius-full); transition: all 0.2s ease; }
-.allToolsBtn:hover { transform: scale(1.04); box-shadow: var(--shadow-glow-violet); }
-@media (max-width: 1023px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 639px) { .grid { grid-template-columns: repeat(2, 1fr); } .section { padding: var(--space-16) 0; } }
+/* ToolsShowcase.module.css — PDF Tools Grid with 3D Tilt */
+.section {
+  padding: var(--space-24) 0;
+  position: relative;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-12);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.toolCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden;
+}
+
+.toolCard::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, var(--tool-color, var(--accent-violet)), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.toolCard:hover::before {
+  opacity: 0.06;
+}
+
+.toolCard:hover {
+  border-color: var(--tool-color, var(--accent-violet));
+  box-shadow: 0 0 24px color-mix(in srgb, var(--tool-color, var(--accent-violet)) 25%, transparent);
+}
+
+.popularBadge {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 215, 0, 0.12);
+  color: var(--accent-gold);
+  letter-spacing: var(--tracking-wide);
+}
+
+.toolIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.toolCard:hover .toolIcon {
+  transform: scale(1.1) translateY(-2px);
+}
+
+.toolName {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  text-align: center;
+  position: relative;
+}
+
+.tryFree {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  position: relative;
+  transition: color 0.2s;
+}
+
+.toolCard:hover .tryFree {
+  color: var(--tool-color, var(--accent-violet));
+}
+
+.ctaRow {
+  display: flex;
+  justify-content: center;
+}
+
+.allToolsBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--grad-button);
+  color: white;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.allToolsBtn:hover {
+  transform: scale(1.04);
+  box-shadow: var(--shadow-glow-violet);
+}
+
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 639px) {
+  .section { padding: var(--space-16) 0; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
+  .toolCard { padding: var(--space-4) var(--space-3); }
+  .toolIcon { width: 44px; height: 44px; }
+  .allToolsBtn { width: 100%; justify-content: center; }
+}
+
+@media (max-width: 374px) {
+  .grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-2); }
+  .toolCard { padding: var(--space-3) var(--space-2); }
+  .toolName { font-size: var(--text-xs); }
+  .toolIcon { width: 38px; height: 38px; }
+  .popularBadge { font-size: 8px; padding: 1px 5px; }
+}

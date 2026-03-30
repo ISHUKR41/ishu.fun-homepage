@@ -1,0 +1,50 @@
+/* CustomCursor.module.css */
+.dot, .ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  border-radius: 50%;
+  will-change: transform;
+  mix-blend-mode: difference;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-violet);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+}
+
+.ring {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(108, 99, 255, 0.5);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s,
+              background 0.3s;
+}
+
+.dot.hovering {
+  width: 0px;
+  height: 0px;
+}
+
+.ring.hovering {
+  width: 56px;
+  height: 56px;
+  border-color: rgba(108, 99, 255, 0.8);
+  background: rgba(108, 99, 255, 0.08);
+}
+
+/* Hide default cursor globally when custom cursor is active */
+@media (pointer: fine) {
+  :global(body) {
+    cursor: none !important;
+  }
+  :global(a), :global(button), :global(input), :global(textarea), :global(select) {
+    cursor: none !important;
+  }
+}
