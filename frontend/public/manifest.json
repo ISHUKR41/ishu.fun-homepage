@@ -1,15 +1,25 @@
 {
-  "name": "ishu.fun — India's #1 Student Platform",
+  "name": "ishu.fun — India's #1 Student Platform | Sarkari Result & Govt Jobs",
   "short_name": "ishu.fun",
   "description": "India's fastest platform for Sarkari Results, Government Job Alerts, Free PDF Tools, and Education News. 50 lakh+ students trust ishu.fun.",
-  "start_url": "/",
+  "start_url": "/?utm_source=pwa",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "background_color": "#080810",
   "theme_color": "#6C63FF",
   "orientation": "portrait-primary",
   "scope": "/",
   "lang": "en-IN",
-  "categories": ["education", "news", "utilities"],
+  "dir": "ltr",
+  "categories": ["education", "news", "utilities", "productivity"],
+  "iarc_rating_id": "",
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "protocol_handlers": [],
+  "edge_side_panel": {},
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
   "icons": [
     {
       "src": "/icons/icon-72.png",
@@ -59,7 +69,15 @@
       "src": "/screenshots/home.png",
       "sizes": "1280x720",
       "type": "image/png",
-      "label": "ishu.fun Homepage"
+      "label": "ishu.fun Homepage",
+      "platform": "wide"
+    },
+    {
+      "src": "/screenshots/home-mobile.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "label": "ishu.fun Mobile View",
+      "platform": "narrow"
     }
   ],
   "shortcuts": [
@@ -67,23 +85,29 @@
       "name": "Results",
       "short_name": "Results",
       "description": "Check latest Sarkari Results",
-      "url": "/results",
+      "url": "/results?utm_source=pwa_shortcut",
       "icons": [{ "src": "/icons/results.png", "sizes": "96x96" }]
     },
     {
       "name": "PDF Tools",
       "short_name": "Tools",
       "description": "Free PDF Merge, Compress & More",
-      "url": "/tools",
+      "url": "/tools?utm_source=pwa_shortcut",
       "icons": [{ "src": "/icons/tools.png", "sizes": "96x96" }]
     },
     {
       "name": "News",
       "short_name": "News",
       "description": "Latest Education News",
-      "url": "/news",
+      "url": "/news?utm_source=pwa_shortcut",
       "icons": [{ "src": "/icons/news.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Jobs",
+      "short_name": "Jobs",
+      "description": "Latest Government Job Vacancies",
+      "url": "/jobs?utm_source=pwa_shortcut",
+      "icons": [{ "src": "/icons/jobs.png", "sizes": "96x96" }]
     }
-  ],
-  "prefer_related_applications": false
+  ]
 }
