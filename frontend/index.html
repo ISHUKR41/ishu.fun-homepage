@@ -57,10 +57,14 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <!-- Font Preloads -->
+  <!-- Font Preloads with Optimization -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet" />
+
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/spacegrotesk/v15/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-gOoraIAEj7oUXskPMBBSSJLm2E.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- DNS Prefetch for external resources -->
   <link rel="dns-prefetch" href="https://images.unsplash.com" />
@@ -72,9 +76,35 @@
     #root { min-height: 100vh; min-height: 100dvh; }
   </style>
 
-  <!-- hreflang -->
+  <!-- hreflang for multiple languages -->
   <link rel="alternate" hreflang="en-IN" href="https://ishu.fun/" />
+  <link rel="alternate" hreflang="hi-IN" href="https://ishu.fun/hi" />
+  <link rel="alternate" hreflang="bn-IN" href="https://ishu.fun/bn" />
+  <link rel="alternate" hreflang="ta-IN" href="https://ishu.fun/ta" />
+  <link rel="alternate" hreflang="te-IN" href="https://ishu.fun/te" />
+  <link rel="alternate" hreflang="mr-IN" href="https://ishu.fun/mr" />
   <link rel="alternate" hreflang="x-default" href="https://ishu.fun/" />
+
+  <!-- Additional SEO Meta Tags -->
+  <meta name="rating" content="General" />
+  <meta name="revisit-after" content="1 days" />
+  <meta name="distribution" content="global" />
+  <meta name="target" content="all" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="MobileOptimized" content="320" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
+
+  <!-- Page Classification -->
+  <meta name="classification" content="Education, Government Jobs, PDF Tools" />
+  <meta name="category" content="Education" />
+  <meta name="coverage" content="Worldwide" />
+  <meta name="target_country" content="IN" />
+
+  <!-- AI & Search Engine Optimization -->
+  <meta name="ai-content-declaration:version" content="1.0" />
+  <meta name="ai-content-declaration:level" content="none" />
+  <meta property="article:publisher" content="https://ishu.fun" />
 
   <!-- JSON-LD: WebSite Schema (enables Google Sitelinks Searchbox) -->
   <script type="application/ld+json">
@@ -242,6 +272,28 @@
       "bestRating": "5"
     }
   }
+  </script>
+
+  <!-- Google Analytics 4 (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', {
+      'anonymize_ip': true,
+      'allow_google_signals': false,
+      'allow_ad_personalization_signals': false
+    });
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "XXXXXXXXXX");
   </script>
 </head>
 <body>
