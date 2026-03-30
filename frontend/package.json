@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.10",
+    "@react-spring/web": "^10.0.3",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.5.0",
     "@tsparticles/react": "^3.0.0",
     "@tsparticles/slim": "^3.9.1",
+    "@use-gesture/react": "^10.3.1",
+    "animejs": "^4.3.6",
     "countup.js": "^2.10.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.38.0",
