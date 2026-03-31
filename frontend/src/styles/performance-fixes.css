@@ -1,0 +1,179 @@
+/* Performance Fixes & Anti-Lag CSS */
+/* Prevents text disappearing and ensures smooth animations */
+
+/* Fix text disappearing during transforms */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent text from disappearing during animations */
+h1, h2, h3, h4, h5, h6, p, span, a, button, div {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Optimize will-change for animated elements */
+[data-animate],
+[data-parallax],
+[data-magnetic] {
+  will-change: auto; /* Let browser decide */
+}
+
+/* Only apply will-change during active animations */
+[data-animate].animating,
+[data-parallax].scrolling {
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+[data-animate].animated {
+  will-change: auto;
+}
+
+/* GPU acceleration for transformed elements */
+.gpu-accelerated,
+[data-gpu] {
+  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+/* Prevent layout shifts during lazy loading */
+img[loading="lazy"],
+iframe[loading="lazy"] {
+  content-visibility: auto;
+}
+
+/* Optimize large sections */
+section {
+  contain: layout style paint;
+}
+
+/* Prevent repaints on scroll */
+.scroll-optimized {
+  will-change: scroll-position;
+  contain: layout;
+}
+
+/* Fix cursor lag */
+.cursor-element {
+  pointer-events: none;
+  position: fixed;
+  z-index: 10000;
+  contain: layout style size;
+  will-change: transform;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Disable heavy effects on mobile */
+  [data-parallax],
+  [data-animate="flip-3d"],
+  [data-animate="scale-rotate"] {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* Simplified animations */
+  * {
+    animation-duration: 0.3s !important;
+    transition-duration: 0.3s !important;
+  }
+
+  /* Disable blur effects on mobile */
+  [style*="blur"] {
+    filter: none !important;
+  }
+}
+
+/* Reduce motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-animate],
+  [data-parallax] {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Fix z-index issues */
+.text-content {
+  position: relative;
+  z-index: 2;
+}
+
+.bg-layer {
+  position: absolute;
+  z-index: 1;
+}
+
+/* Prevent text selection lag */
+.no-select {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth scrolling optimization */
+.smooth-scroll-container {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Fix sticky elements */
+.sticky-optimized {
+  position: -webkit-sticky;
+  position: sticky;
+  will-change: transform;
+  contain: layout;
+}
+
+/* Prevent flash of unstyled content */
+.fade-in-ready {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-in-ready.loaded {
+  opacity: 1;
+}
+
+/* Optimize video backgrounds */
+video {
+  object-fit: cover;
+  will-change: auto;
+}
+
+/* Grid optimization */
+.grid-optimized {
+  contain: layout;
+  content-visibility: auto;
+}
+
+/* Fix hover state lag */
+a, button {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+/* Prevent paint on hover */
+.hover-optimized {
+  contain: layout style;
+}
+
+.hover-optimized:hover {
+  contain: none;
+}
