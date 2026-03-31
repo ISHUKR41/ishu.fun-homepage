@@ -22,13 +22,13 @@ export function useSmoothScroll() {
     if (isMobile) return;
 
     const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 1.2,
+      easing: (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t), // Pure expo-out: snappy start, silky finish
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      smoothTouch: false,
+      wheelMultiplier: 1.0,  // Default multiplier — 0.9 felt sluggish
+      smoothTouch: false,    // Native touch on mobile is always better
       touchMultiplier: 2,
       infinite: false,
       syncTouch: false,

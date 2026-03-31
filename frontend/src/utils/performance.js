@@ -48,13 +48,22 @@ export function observeLongTasks() {
   observer.observe({ entryTypes: ['longtask'] });
 }
 
-// FPS Monitor
+// FPS Monitor — only runs when tab is visible to avoid false 0-FPS warnings
 export function createFPSMonitor() {
   let lastTime = performance.now();
   let frames = 0;
   let fps = 60;
+  let rafId;
 
   function calculateFPS() {
+    // Skip measurement when tab is hidden (RAF pauses, FPS would show 0 falsely)
+    if (document.hidden) {
+      lastTime = performance.now();
+      frames = 0;
+      rafId = requestAnimationFrame(calculateFPS);
+      return;
+    }
+
     const currentTime = performance.now();
     frames++;
 
@@ -63,18 +72,19 @@ export function createFPSMonitor() {
       frames = 0;
       lastTime = currentTime;
 
-      if (fps < 30) {
+      if (fps < 30 && fps > 0) {
         console.warn('[Performance] Low FPS detected:', fps);
       }
     }
 
-    requestAnimationFrame(calculateFPS);
+    rafId = requestAnimationFrame(calculateFPS);
   }
 
-  calculateFPS();
+  rafId = requestAnimationFrame(calculateFPS);
 
   return {
     getFPS: () => fps,
+    destroy: () => cancelAnimationFrame(rafId),
   };
 }
 

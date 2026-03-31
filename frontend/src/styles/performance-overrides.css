@@ -1,0 +1,81 @@
+/* === performance-overrides.css ===
+   Smart, targeted performance overrides.
+   Disables GPU-expensive properties on devices that can't handle them smoothly.
+   Import this LAST in globals.css so it wins specificity battles. */
+
+/* ── Mobile: disable backdrop-filter everywhere ──────────────────────────────
+   backdrop-filter: blur() is extremely expensive on mobile GPUs.
+   On mobile, solid backgrounds look equally good and have zero GPU cost. */
+@media (max-width: 767px) {
+  *,
+  *::before,
+  *::after {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ── Low-end devices: disable heavy filters but keep text visible ─────────── */
+/* NOTE: We intentionally do NOT blanket-remove filter here because drop-shadow
+   on logo/text is important for visual rendering. Only remove on specific
+   non-critical decorative elements. */
+
+/* ── contain: content on sections causes stacking context issues ─────────── */
+/* Override the blanket section rule from performance-fixes.css */
+section {
+  contain: layout style; /* NOT paint — paint containment blocks z-index and fixed elements */
+}
+
+/* ── Scrollbar styling ───────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 99, 255, 0.4);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 99, 255, 0.7);
+}
+
+/* ── Fix text disappearing during GPU-accelerated animations ─────────────── */
+/* Only apply to elements actually being animated — not everything */
+.framer-motion-will-change {
+  will-change: transform, opacity;
+}
+
+/* spin keyframe is already in animations.css — no duplicate needed */
+
+/* ── Smooth scroll hint for anchor links ─────────────────────────────────── */
+html {
+  scroll-padding-top: 80px; /* Account for fixed navbar */
+}
+
+/* ── Prevent layout shift for images ─────────────────────────────────────── */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Better focus styles ──────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-violet, #6C63FF);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Disable animations during page transition ────────────────────────────── */
+.page-transitioning * {
+  animation-play-state: paused !important;
+}
+
+/* ── High refresh rate displays: smoother animations ─────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    animation-timing-function: linear;
+  }
+}

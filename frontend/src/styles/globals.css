@@ -8,6 +8,7 @@
 @import './accessibility-responsive.css';
 @import './performance-fixes.css';
 @import './mobile-optimizations.css';
+@import './performance-overrides.css';
 
 /* ── RESET ─────────────────────────── */
 *, *::before, *::after {
