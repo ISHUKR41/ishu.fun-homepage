@@ -50,6 +50,8 @@
   gap: 12px;
   width: max-content;
   animation: marquee 40s linear infinite;
+  will-change: transform; /* GPU acceleration for smooth animation */
+  backface-visibility: hidden; /* Prevent flickering */
 }
 
 .trackReverse {
@@ -67,6 +69,8 @@
   flex-shrink: 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  transform: translateZ(0); /* GPU acceleration */
+  -webkit-font-smoothing: antialiased; /* Better text rendering */
 }
 
 .chip:hover {
