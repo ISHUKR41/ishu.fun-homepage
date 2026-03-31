@@ -1,0 +1,120 @@
+.hoverGlow {
+  transition: box-shadow 0.3s ease;
+}
+
+.magneticButton {
+  position: relative;
+  cursor: pointer;
+  will-change: transform;
+}
+
+.tiltCard {
+  will-change: transform;
+  transition: transform 0.3s ease;
+}
+
+.rippleContainer {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple-animation 0.6s ease-out;
+  pointer-events: none;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+@keyframes ripple-animation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+.floating {
+  will-change: transform;
+}
+
+.borderRevealContainer {
+  position: relative;
+}
+
+.borderReveal {
+  position: absolute;
+  pointer-events: none;
+}
+
+.borderReveal.top,
+.borderReveal.bottom {
+  height: 2px;
+  width: 100%;
+  left: 0;
+  transform-origin: left;
+}
+
+.borderReveal.left,
+.borderReveal.right {
+  width: 2px;
+  height: 100%;
+  top: 0;
+  transform-origin: top;
+}
+
+.borderReveal.top {
+  top: 0;
+}
+
+.borderReveal.bottom {
+  bottom: 0;
+}
+
+.borderReveal.left {
+  left: 0;
+}
+
+.borderReveal.right {
+  right: 0;
+}
+
+.textRevealContainer {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.originalText,
+.revealText {
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.revealText {
+  position: absolute;
+  inset: 0;
+  transform: translateY(100%);
+}
+
+/* Disable on mobile for performance */
+@media (hover: none) and (pointer: coarse) {
+  .magneticButton,
+  .tiltCard {
+    transform: none !important;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .ripple,
+  .floating,
+  *[class*='Animation'] {
+    animation: none !important;
+    transition: none !important;
+  }
+}
