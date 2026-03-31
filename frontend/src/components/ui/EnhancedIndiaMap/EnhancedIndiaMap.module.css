@@ -1,0 +1,217 @@
+/* components/ui/EnhancedIndiaMap/EnhancedIndiaMap.module.css */
+.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, rgba(12, 12, 24, 0.9), rgba(20, 20, 40, 0.9));
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mapWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.map {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 60px rgba(108, 99, 255, 0.3));
+}
+
+.map path {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.map path:hover {
+  stroke-width: 3;
+  filter: drop-shadow(0 0 20px currentColor);
+}
+
+.active-state {
+  filter: drop-shadow(0 0 30px currentColor) !important;
+}
+
+.cityDot {
+  transition: all 0.3s ease;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.cityDot:hover {
+  r: 6;
+  filter: drop-shadow(0 0 10px #FFC107);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.cityLabel {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  pointer-events: none;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(12, 12, 24, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(108, 99, 255, 0.3);
+  border-radius: 16px;
+  padding: 1.5rem;
+  min-width: 250px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.tooltip h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  background: linear-gradient(135deg, #6C63FF, #00D2FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #E0E0FF;
+}
+
+.stat span {
+  font-weight: 600;
+  color: #A0A0C0;
+}
+
+.cities {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(108, 99, 255, 0.2);
+  font-size: 0.9rem;
+  color: #C0C0D0;
+}
+
+.stateList {
+  width: 100%;
+}
+
+.stateList h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #6C63FF, #00D2FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.states {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.stateCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(20, 20, 40, 0.6);
+  border: 1px solid rgba(108, 99, 255, 0.2);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.stateCard:hover {
+  background: rgba(30, 30, 50, 0.8);
+  border-color: rgba(108, 99, 255, 0.5);
+  transform: translateX(8px);
+}
+
+.stateCard.active {
+  background: rgba(108, 99, 255, 0.2);
+  border-color: #6C63FF;
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.3);
+}
+
+.stateColor {
+  width: 12px;
+  height: 40px;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.stateInfo h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  color: #F0F0FF;
+}
+
+.stateInfo p {
+  font-size: 0.9rem;
+  margin: 0;
+  color: #A0A0C0;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .states {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .states {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .container {
+    padding: 2rem 1rem;
+  }
+
+  .tooltip {
+    min-width: 200px;
+    padding: 1rem;
+  }
+
+  .stateList h3 {
+    font-size: 1.5rem;
+  }
+}

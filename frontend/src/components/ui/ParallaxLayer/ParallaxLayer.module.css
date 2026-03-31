@@ -1,0 +1,13 @@
+/* components/ui/ParallaxLayer/ParallaxLayer.module.css */
+.layer {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduce parallax on mobile for performance */
+@media (max-width: 768px) {
+  .layer {
+    transform: none !important;
+  }
+}

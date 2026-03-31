@@ -1,6 +1,7 @@
 // pages/HomePage/index.jsx
 import { lazy, Suspense, useState } from 'react';
 import PageLoader from '../../components/sections/PageLoader/PageLoader';
+import AnnouncementBar from '../../components/sections/AnnouncementBar/AnnouncementBar';
 import Navbar from '../../components/layout/Navbar/Navbar';
 import HeroSection from '../../components/sections/HeroSection/HeroSection';
 import TrustBar from '../../components/sections/TrustBar/TrustBar';
@@ -58,6 +59,7 @@ export default function HomePage() {
         <>
           <a href="#main-content" className="skip-link">Skip to main content</a>
           <ScrollProgress />
+          <AnnouncementBar />
           <Navbar />
 
           <main id="main-content">

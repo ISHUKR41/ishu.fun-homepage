@@ -36,13 +36,15 @@
   font-weight: 500;
 }
 
-.segment:has(.value:contains("LIVE")) {
+/* Removed :contains() as it's not standard CSS */
+/* Use data attributes or classes for "LIVE" state instead */
+.segment[data-live="true"] {
   background: rgba(0, 200, 150, 0.1);
   border-color: rgba(0, 200, 150, 0.3);
   animation: pulse 2s ease-in-out infinite;
 }
 
-.segment:has(.value:contains("LIVE")) .value {
+.segment[data-live="true"] .value {
   color: var(--accent-emerald);
   font-size: 1rem;
 }
