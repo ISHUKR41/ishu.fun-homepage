@@ -8,6 +8,7 @@ import './animations/gsap/gsap.init.js';
 import App from './App.jsx';
 import './styles/globals.css';
 import './styles/accessibility-responsive.css';
+import './styles/responsive-fixes.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

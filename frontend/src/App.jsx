@@ -8,7 +8,7 @@ import { initPerformanceMonitoring } from './utils/performance';
 import { initScrollAnimations } from './animations/gsap/scrollAnimations';
 import { initAdvancedEffects } from './animations/gsap/advancedEffects';
 
-const CustomCursor = lazy(() => import('./components/ui/CustomCursor/CustomCursor'));
+const CustomCursor = lazy(() => import('./components/ui/Cursor/EnhancedMagneticCursor'));
 
 function App() {
   useSmoothScroll();

@@ -1,0 +1,19 @@
+.parallaxContainer {
+  position: relative;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Performance optimizations */
+@media (prefers-reduced-motion: reduce) {
+  .parallaxContainer {
+    transform: none !important;
+  }
+}
+
+/* Disable on mobile for performance */
+@media (max-width: 768px) {
+  .parallaxContainer {
+    transform: none !important;
+  }
+}
