@@ -93,8 +93,8 @@ const searchSuggestions = ['JEE Mains Result 2026', 'SSC CGL 2026', 'UPSC Prelim
 
 export default function HeroSection() {
   const isDesktop = useIsDesktop();
-  const devicePerformance = useDevicePerformance();
-  const use3D = isDesktop && devicePerformance === 'high';
+  const { isLowEnd } = useDevicePerformance();
+  const use3D = isDesktop && !isLowEnd; // Enable 3D for high-performance devices
   const heroRef = useRef(null);
   const headlineRef = useRef(null);
   const [searchFocused, setSearchFocused] = useState(false);
