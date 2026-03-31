@@ -8,7 +8,7 @@ export default function PageLoader({ onComplete }) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const minTime = 500;
+    const minTime = 800;
     const start = Date.now();
 
     const interval = setInterval(() => {
@@ -17,40 +17,37 @@ export default function PageLoader({ onComplete }) {
         const naturalProgress = Math.min((elapsed / minTime) * 100, 95);
         return Math.max(prev, naturalProgress);
       });
-    }, 20);
+    }, 16);
 
-    const handleLoad = () => {
-      const elapsed = Date.now() - start;
-      const remaining = Math.max(minTime - elapsed, 0);
-
-      setTimeout(() => {
-        setProgress(100);
-        setTimeout(() => {
-          setIsLoading(false);
-          if (onComplete) onComplete();
-        }, 300);
-      }, remaining);
-    };
-
-    if (document.readyState === 'complete') {
-      handleLoad();
-    } else {
-      window.addEventListener('load', handleLoad);
-    }
-
-    // Guarantee exit after 2s max
-    const maxTimeout = setTimeout(() => {
+    const complete = () => {
       setProgress(100);
       setTimeout(() => {
         setIsLoading(false);
         if (onComplete) onComplete();
-      }, 300);
-    }, 2000);
+      }, 250);
+    };
+
+    // Use interactive state instead of full load — much faster
+    const handleReady = () => {
+      const elapsed = Date.now() - start;
+      const remaining = Math.max(minTime - elapsed, 0);
+      setTimeout(complete, remaining);
+    };
+
+    // Check if DOM is ready (don't wait for all network resources)
+    if (document.readyState !== 'loading') {
+      handleReady();
+    } else {
+      document.addEventListener('DOMContentLoaded', handleReady, { once: true });
+    }
+
+    // Hard cap at 1.2s — never wait for slow external scripts
+    const maxTimeout = setTimeout(complete, 1200);
 
     return () => {
       clearInterval(interval);
       clearTimeout(maxTimeout);
-      window.removeEventListener('load', handleLoad);
+      document.removeEventListener('DOMContentLoaded', handleReady);
     };
   }, []);
 

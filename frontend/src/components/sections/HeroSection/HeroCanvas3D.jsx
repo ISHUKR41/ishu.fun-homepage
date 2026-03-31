@@ -10,7 +10,7 @@ import { BlendFunction } from 'postprocessing';
 import * as THREE from 'three';
 
 // Animated particles system
-function Particles({ count = 1000 }) {
+function Particles({ count = 200 }) {
   const mesh = useRef();
   const light = useRef();
 
@@ -81,7 +81,7 @@ function IndiaGlobe() {
 
   return (
     <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-      <Sphere ref={mesh} args={[2.5, 64, 64]} position={[0, 0, 0]}>
+      <Sphere ref={mesh} args={[2.5, 32, 32]} position={[0, 0, 0]}>
         <MeshDistortMaterial
           color="#080810"
           attach="material"
@@ -139,7 +139,7 @@ function TorusRings() {
     <>
       <Float speed={1} rotationIntensity={0.3} floatIntensity={0.2}>
         <mesh rotation={[Math.PI / 4, 0, 0]} position={[0, 0, 0]}>
-          <torusGeometry args={[5, 0.02, 16, 100]} />
+          <torusGeometry args={[5, 0.02, 8, 64]} />
           <meshStandardMaterial
             color="#6C63FF"
             emissive="#6C63FF"
@@ -152,7 +152,7 @@ function TorusRings() {
 
       <Float speed={0.8} rotationIntensity={0.2} floatIntensity={0.15}>
         <mesh rotation={[Math.PI / 3, Math.PI / 4, 0]} position={[0, 0, 0]}>
-          <torusGeometry args={[7, 0.015, 16, 100]} />
+          <torusGeometry args={[7, 0.015, 8, 64]} />
           <meshStandardMaterial
             color="#00D2FF"
             emissive="#00D2FF"
@@ -187,13 +187,13 @@ function Scene() {
       <spotLight position={[0, 15, 0]} angle={0.3} penumbra={1} intensity={2} castShadow color="#FFFFFF" />
 
       {/* Background stars */}
-      <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+      <Stars radius={100} depth={50} count={2000} factor={4} saturation={0} fade speed={0.5} />
 
       {/* Main elements */}
       <IndiaGlobe />
       <OrbitingNodes />
       <TorusRings />
-      <Particles count={800} />
+      <Particles count={200} />
 
       {/* Post-processing Effects */}
       <EffectComposer>
@@ -243,13 +243,15 @@ export default function HeroCanvas3D() {
   return (
     <div style={{ width: '100%', height: '100%', position: 'absolute', inset: 0 }}>
       <Canvas
-        dpr={[1, 2]}
-        performance={{ min: 0.5 }}
+        dpr={[1, 1.5]}
+        performance={{ min: 0.5, max: 1, debounce: 200 }}
         gl={{
-          antialias: true,
+          antialias: false,
           alpha: true,
           powerPreference: 'high-performance',
+          preserveDrawingBuffer: false,
         }}
+        frameloop="always"
       >
         <Suspense fallback={null}>
           <Scene />

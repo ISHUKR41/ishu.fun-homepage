@@ -1,107 +1,93 @@
-.cursorDot,
-.cursorRing {
+/* Custom cursor elements */
+.dot,
+.ring {
   position: fixed;
-  top: -4px;
-  left: -4px;
+  top: 0;
+  left: 0;
   pointer-events: none;
   z-index: 10000;
-  mix-blend-mode: difference;
   will-change: transform;
-  transform-origin: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.cursorDot {
+.dot {
   width: 8px;
   height: 8px;
   background: var(--accent-violet, #6C63FF);
   border-radius: 50%;
-  transition: opacity 0.3s, background-color 0.3s;
+  box-shadow: 0 0 8px rgba(108, 99, 255, 0.6);
 }
 
-.cursorRing {
+.ring {
   width: 32px;
   height: 32px;
-  border: 2px solid rgba(108, 99, 255, 0.5);
+  border: 1.5px solid rgba(108, 99, 255, 0.5);
   border-radius: 50%;
-  transition: border-color 0.3s;
+  transition: transform 0.05s linear, width 0.25s ease, height 0.25s ease,
+    border-color 0.25s ease, opacity 0.3s ease;
 }
 
-/* Cursor modes */
-.cursorDot.hover {
-  background: transparent;
+/* Hover state — no React re-render needed */
+.dot.hovering {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: width 0.2s ease, height 0.2s ease, opacity 0.2s ease;
 }
 
-.cursorRing.hover {
+.ring.hovering {
+  width: 48px;
+  height: 48px;
   border-color: var(--accent-violet, #6C63FF);
   border-width: 2px;
+  background: rgba(108, 99, 255, 0.06);
 }
 
-.cursorDot.click,
-.cursorRing.click {
-  transform: scale(0.8);
+/* Click state */
+.dot.clicking {
+  transform: translate3d(var(--tx, 0), var(--ty, 0), 0) scale(0.7) !important;
 }
 
-/* Ripple effect */
-.ripple {
-  position: fixed;
-  width: 50px;
-  height: 50px;
-  margin-left: -25px;
-  margin-top: -25px;
-  border-radius: 50%;
-  border: 2px solid var(--accent-violet, #6C63FF);
-  pointer-events: none;
-  z-index: 9999;
+.ring.clicking {
+  width: 24px;
+  height: 24px;
+  background: rgba(108, 99, 255, 0.1);
+  border-color: var(--accent-violet, #6C63FF);
 }
 
-/* Trail particles */
-.trail {
-  position: fixed;
-  width: 4px;
-  height: 4px;
-  margin-left: -2px;
-  margin-top: -2px;
-  background: var(--accent-violet, #6C63FF);
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.6;
-}
-
-/* Hide default cursor */
-body {
-  cursor: none;
-}
-
-a, button, input, textarea, select, [data-cursor-hover] {
+/* Hide native cursor only when custom cursor is active (class added by JS) */
+:global(body.custom-cursor-active) {
   cursor: none !important;
 }
 
-/* Hide on mobile/touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .cursorDot,
-  .cursorRing,
-  .ripple,
-  .trail {
+:global(body.custom-cursor-active) a,
+:global(body.custom-cursor-active) button,
+:global(body.custom-cursor-active) input,
+:global(body.custom-cursor-active) textarea,
+:global(body.custom-cursor-active) select,
+:global(body.custom-cursor-active) label,
+:global(body.custom-cursor-active) [data-cursor-hover] {
+  cursor: none !important;
+}
+
+/* Touch / coarse pointer — never hide cursor */
+@media (hover: none), (pointer: coarse) {
+  .dot,
+  .ring {
     display: none !important;
   }
-
-  body,
-  a,
-  button {
+  :global(body.custom-cursor-active) {
     cursor: auto !important;
   }
 }
 
-/* Accessibility - respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .cursorDot,
-  .cursorRing {
-    transition: none !important;
-  }
-
-  .ripple,
-  .trail {
+  .dot,
+  .ring {
     display: none !important;
+  }
+  :global(body.custom-cursor-active) {
+    cursor: auto !important;
   }
 }

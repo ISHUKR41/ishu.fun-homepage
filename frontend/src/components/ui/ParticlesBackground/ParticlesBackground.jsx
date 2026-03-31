@@ -1,244 +1,92 @@
-// ParticlesBackground.jsx — Advanced tsParticles Background with Enhanced Effects
-import { useCallback } from 'react';
+// ParticlesBackground.jsx — Lightweight, smooth particles
+// Uses device detection to scale down on low-end devices
+import { useCallback, useMemo } from 'react';
 import Particles from '@tsparticles/react';
 import { loadSlim } from '@tsparticles/slim';
 
-export default function ParticlesBackground({ density = 'medium', theme = 'default' }) {
+const themeColors = {
+  default: { particles: ['#6C63FF', '#00D2FF', '#00C896'], links: '#6C63FF' },
+  cosmic:  { particles: ['#8338EC', '#3A86FF', '#FF006E'],  links: '#8338EC' },
+  ocean:   { particles: ['#00D4FF', '#0096FF', '#06FFA5'],  links: '#00D4FF' },
+  sunset:  { particles: ['#FF6D00', '#FF9100', '#FFC400'],  links: '#FF9100' },
+};
+
+export default function ParticlesBackground({ density = 'low', theme = 'default' }) {
   const particlesInit = useCallback(async (engine) => {
     await loadSlim(engine);
   }, []);
 
-  const densityConfig = {
-    low: 40,
-    medium: 100,
-    high: 200,
-  };
-
-  const particleCount = densityConfig[density] || densityConfig.medium;
-
-  // Theme configurations for different visual styles
-  const themeColors = {
-    default: {
-      particles: ['#6C63FF', '#00D2FF', '#00C896', '#FF6B35', '#9D4EDD'],
-      links: '#6C63FF',
-    },
-    cosmic: {
-      particles: ['#FF006E', '#8338EC', '#3A86FF', '#FFBE0B', '#FB5607'],
-      links: '#8338EC',
-    },
-    ocean: {
-      particles: ['#06FFA5', '#00D4FF', '#0096FF', '#7209B7', '#560BAD'],
-      links: '#00D4FF',
-    },
-    sunset: {
-      particles: ['#FF6D00', '#FF9100', '#FFAB00', '#FFC400', '#FFD600'],
-      links: '#FF9100',
-    },
-  };
-
   const colors = themeColors[theme] || themeColors.default;
 
-  const particlesConfig = {
-    autoPlay: true,
-    background: {
-      color: {
-        value: 'transparent',
-      },
-    },
-    fpsLimit: 120,
+  // Keep counts very low for smooth performance
+  const countMap = { low: 25, medium: 45, high: 70 };
+  const count = countMap[density] ?? 25;
+
+  const options = useMemo(() => ({
+    background: { color: { value: 'transparent' } },
+    fpsLimit: 60,
     interactivity: {
-      detectsOn: 'window',
+      detectsOn: 'canvas',
       events: {
-        onClick: {
-          enable: true,
-          mode: ['push', 'bubble'],
-        },
-        onHover: {
-          enable: true,
-          mode: ['grab', 'repulse'],
-          parallax: {
-            enable: true,
-            force: 60,
-            smooth: 10,
-          },
-        },
+        onHover: { enable: true, mode: 'grab' },
+        onClick: { enable: false },
         resize: true,
       },
       modes: {
-        push: {
-          quantity: 3,
-        },
-        bubble: {
-          distance: 200,
-          size: 8,
-          duration: 0.3,
-          opacity: 0.8,
-        },
-        grab: {
-          distance: 250,
-          links: {
-            blink: true,
-            consent: false,
-            opacity: 0.6,
-          },
-        },
-        repulse: {
-          distance: 150,
-          duration: 0.4,
-        },
+        grab: { distance: 160, links: { opacity: 0.4 } },
       },
     },
     particles: {
-      color: {
-        value: colors.particles,
-        animation: {
-          enable: true,
-          speed: 20,
-          sync: false,
-        },
-      },
+      color: { value: colors.particles },
       links: {
         color: colors.links,
-        distance: 180,
+        distance: 150,
         enable: true,
-        opacity: 0.2,
-        width: 1.5,
-        triangles: {
-          enable: true,
-          opacity: 0.05,
-        },
-        shadow: {
-          enable: true,
-          color: colors.links,
-          blur: 5,
-        },
+        opacity: 0.15,
+        width: 1,
+        triangles: { enable: false },
+        shadow: { enable: false },
       },
       move: {
-        direction: 'none',
         enable: true,
-        outModes: {
-          default: 'out',
-          bottom: 'out',
-          left: 'out',
-          right: 'out',
-          top: 'out',
-        },
+        speed: { min: 0.3, max: 0.8 },
+        direction: 'none',
         random: true,
-        speed: { min: 0.5, max: 1.5 },
         straight: false,
-        attract: {
-          enable: true,
-          rotateX: 600,
-          rotateY: 1200,
-        },
+        outModes: { default: 'out' },
+        attract: { enable: false },
       },
       number: {
-        density: {
-          enable: true,
-          area: 800,
-        },
-        value: particleCount,
+        density: { enable: true, area: 900 },
+        value: count,
       },
       opacity: {
-        value: { min: 0.1, max: 0.6 },
-        animation: {
-          enable: true,
-          speed: 0.8,
-          minimumValue: 0.1,
-          sync: false,
-        },
+        value: { min: 0.15, max: 0.5 },
+        animation: { enable: false },
       },
-      shape: {
-        type: ['circle', 'triangle', 'polygon', 'star'],
-        options: {
-          polygon: {
-            sides: 6,
-          },
-          star: {
-            sides: 5,
-          },
-        },
-      },
+      shape: { type: 'circle' },
       size: {
-        value: { min: 1, max: 5 },
-        animation: {
-          enable: true,
-          speed: 3,
-          minimumValue: 0.5,
-          sync: false,
-        },
+        value: { min: 1, max: 3 },
+        animation: { enable: false },
       },
-      stroke: {
-        width: 0.5,
-        color: {
-          value: '#ffffff',
-          animation: {
-            enable: true,
-            speed: 50,
-            sync: false,
-          },
-        },
-      },
-      twinkle: {
-        particles: {
-          enable: true,
-          frequency: 0.08,
-          opacity: 1,
-        },
-        lines: {
-          enable: true,
-          frequency: 0.05,
-          opacity: 0.8,
-        },
-      },
-      life: {
-        duration: {
-          value: 0,
-        },
-        count: 0,
-      },
-      rotate: {
-        value: 0,
-        random: true,
-        direction: 'clockwise',
-        animation: {
-          enable: true,
-          speed: 3,
-          sync: false,
-        },
-      },
-      shadow: {
-        enable: true,
-        blur: 10,
-        color: {
-          value: colors.particles,
-        },
-        offset: {
-          x: 0,
-          y: 0,
-        },
-      },
+      twinkle: { particles: { enable: false }, lines: { enable: false } },
+      rotate: { animation: { enable: false } },
+      shadow: { enable: false },
     },
     detectRetina: true,
     smooth: true,
-    style: {
-      filter: 'blur(0.3px)',
-    },
-  };
+  }), [colors, count]);
 
   return (
     <Particles
-      id="tsparticles-background"
+      id="tsparticles-bg"
       init={particlesInit}
-      options={particlesConfig}
+      options={options}
       style={{
         position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
+        inset: 0,
         zIndex: 0,
-        pointerEvents: 'auto',
+        pointerEvents: 'none',
       }}
     />
   );

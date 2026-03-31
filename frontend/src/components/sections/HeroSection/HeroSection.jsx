@@ -133,28 +133,39 @@ export default function HeroSection() {
     return () => ctx.revert();
   }, []);
 
-  // Parallax on hero bg orbs
+  // Parallax on hero bg orbs — throttled for smooth performance
   useEffect(() => {
     if (!heroRef.current || !isDesktop) return;
     const orbs = heroRef.current.querySelectorAll('.' + styles.glowOrb);
+    let rafId = null;
+    let targetX = 0, targetY = 0;
 
     const handleMouseMove = (e) => {
-      const { clientX, clientY } = e;
-      const x = (clientX / window.innerWidth - 0.5) * 30;
-      const y = (clientY / window.innerHeight - 0.5) * 20;
-      orbs.forEach((orb, i) => {
-        const factor = (i + 1) * 0.4;
-        gsap.to(orb, {
-          x: x * factor,
-          y: y * factor,
-          duration: 1.5,
-          ease: 'power1.out',
-        });
-      });
+      targetX = (e.clientX / window.innerWidth - 0.5) * 28;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 18;
     };
 
+    // Smooth orb movement via RAF — not per-mousemove gsap.to call
+    const animateOrbs = () => {
+      orbs.forEach((orb, i) => {
+        const factor = (i + 1) * 0.35;
+        const cx = parseFloat(orb.dataset.cx || 0);
+        const cy = parseFloat(orb.dataset.cy || 0);
+        const nx = cx + (targetX * factor - cx) * 0.04;
+        const ny = cy + (targetY * factor - cy) * 0.04;
+        orb.dataset.cx = nx;
+        orb.dataset.cy = ny;
+        orb.style.transform = `translate3d(${nx}px, ${ny}px, 0)`;
+      });
+      rafId = requestAnimationFrame(animateOrbs);
+    };
+
+    rafId = requestAnimationFrame(animateOrbs);
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
   }, [isDesktop]);
 
   const headlineWords = ["India's", 'Fastest', 'Platform', 'for'];

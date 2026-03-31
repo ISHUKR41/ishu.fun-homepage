@@ -364,27 +364,9 @@
   }
   </script>
 
-  <!-- Google Analytics 4 (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX', {
-      'anonymize_ip': true,
-      'allow_google_signals': false,
-      'allow_ad_personalization_signals': false
-    });
-  </script>
-
-  <!-- Microsoft Clarity -->
-  <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "XXXXXXXXXX");
-  </script>
+  <!-- Analytics: Add your real GA4 ID and Clarity ID here when deploying to production -->
+  <!-- Google Analytics 4: replace G-XXXXXXXXXX with your real Measurement ID -->
+  <!-- Microsoft Clarity: replace XXXXXXXXXX with your real Clarity project ID -->
 </head>
 <body>
   <div id="root"></div>

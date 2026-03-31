@@ -17,7 +17,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior handled by Lenis — do NOT set here */
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -33,14 +33,8 @@ body {
   background-color: var(--bg-base);
   overflow-x: hidden;
   min-height: 100vh;
-  /* Hardware acceleration */
   -webkit-font-feature-settings: "kern" 1, "liga" 1;
   font-feature-settings: "kern" 1, "liga" 1;
-  /* Performance optimizations */
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-perspective: 1000px;
-  perspective: 1000px;
 }
 
 /* ── SELECTION ─────────────────────── */
