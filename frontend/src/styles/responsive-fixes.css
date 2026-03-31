@@ -1,0 +1,432 @@
+// styles/responsive-fixes.css
+// Responsive fixes for text overflow and mobile responsiveness
+
+/* Prevent text from disappearing - Global utility classes */
+
+/* Safe text overflow handling */
+.text-safe {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-truncate-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Responsive container utilities */
+.container-safe {
+  max-width: 100%;
+  padding-left: clamp(16px, 5vw, 40px);
+  padding-right: clamp(16px, 5vw, 40px);
+  margin: 0 auto;
+}
+
+/* Prevent horizontal overflow on small screens */
+.no-horizontal-overflow {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Responsive text sizing */
+.heading-responsive-xl {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+.heading-responsive-lg {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  line-height: 1.2;
+}
+
+.heading-responsive-md {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.3;
+}
+
+.heading-responsive-sm {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  line-height: 1.4;
+}
+
+.text-responsive {
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 768px) {
+  /* Ensure text doesn't disappear on mobile */
+  [class*='headline'],
+  [class*='title'],
+  [class*='heading'] {
+    white-space: normal !important;
+    overflow: visible !important;
+    max-width: 100%;
+  }
+
+  /* Safe marquee on mobile */
+  [class*='marquee'] {
+    animation-play-state: running;
+    will-change: transform;
+  }
+
+  /* Prevent text cutoff in cards */
+  [class*='card'] {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  [class*='card'] h1,
+  [class*='card'] h2,
+  [class*='card'] h3,
+  [class*='card'] h4,
+  [class*='card'] h5,
+  [class*='card'] h6,
+  [class*='card'] p {
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+
+  /* Fix grid layouts */
+  [class*='grid'] {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  /* Fix flex layouts */
+  [class*='flex'] {
+    flex-wrap: wrap;
+  }
+}
+
+/* Tablet-specific fixes */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .heading-responsive-xl {
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .heading-responsive-lg {
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+  }
+
+  [class*='grid-cols-'] {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 375px) {
+  /* Extra small screens - iPhone SE, etc. */
+  .heading-responsive-xl {
+    font-size: 1.875rem;
+  }
+
+  .heading-responsive-lg {
+    font-size: 1.5rem;
+  }
+
+  .heading-responsive-md {
+    font-size: 1.25rem;
+  }
+
+  .container-safe {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+/* Large desktop */
+@media (min-width: 1920px) {
+  .container-safe {
+    max-width: 1800px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 2560px) {
+  .container-safe {
+    max-width: 2200px;
+  }
+
+  .heading-responsive-xl {
+    font-size: 5rem;
+  }
+}
+
+/* Accessibility - Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [class*='parallax'] {
+    transform: none !important;
+  }
+
+  [class*='animate'] {
+    animation: none !important;
+  }
+
+  [class*='marquee'] {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  * {
+    border-width: 2px !important;
+  }
+
+  .glass-card,
+  .glass-navbar {
+    background: rgba(8, 8, 16, 0.95) !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Dark mode preference (in case auto-detect needed) */
+@media (prefers-color-scheme: dark) {
+  /* Already dark by default, but can adjust if needed */
+}
+
+/* Print styles */
+@media print {
+  .navbar,
+  .footer,
+  [class*='loader'],
+  [class*='cursor'],
+  [class*='scroll-progress'],
+  [class*='back-to-top'] {
+    display: none !important;
+  }
+
+  * {
+    background: white !important;
+    color: black !important;
+  }
+
+  a {
+    text-decoration: underline !important;
+  }
+}
+
+/* Landscape mobile fix */
+@media (max-width: 896px) and (orientation: landscape) {
+  [class*='hero'] {
+    min-height: auto;
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .min-h-screen,
+  .min-h-dvh {
+    min-height: auto !important;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari fixes */
+  input,
+  textarea,
+  select {
+    font-size: 16px !important; /* Prevent zoom on focus */
+  }
+
+  .hero {
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* Android specific fixes */
+@supports not (-webkit-touch-callout: none) {
+  /* Android Chrome fixes */
+}
+
+/* Safe area insets for notched devices */
+@supports (padding: max(0px)) {
+  .safe-area-inset-top {
+    padding-top: max(env(safe-area-inset-top), 0px);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 0px);
+  }
+
+  .safe-area-inset-left {
+    padding-left: max(env(safe-area-inset-left), 0px);
+  }
+
+  .safe-area-inset-right {
+    padding-right: max(env(safe-area-inset-right), 0px);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  button,
+  a,
+  [role='button'] {
+    min-height: 44px; /* Apple's recommended tap target size */
+    min-width: 44px;
+  }
+
+  /* Disable hover effects on touch */
+  *:hover {
+    /* Remove problematic hover states */
+  }
+
+  /* Larger tap targets */
+  .clickable {
+    padding: 12px;
+  }
+}
+
+/* Mouse device optimizations */
+@media (hover: hover) and (pointer: fine) {
+  /* Desktop with mouse */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Foldable device support */
+@media (horizontal-viewport-segments: 2) {
+  .container-safe {
+    max-width: 100%;
+  }
+}
+
+/* Screen reader only content */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus visible for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--accent-violet, #6C63FF);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--accent-violet, #6C63FF);
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 0 0 4px 0;
+  z-index: 10000;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Performance optimizations */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Prevent layout shift */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* Text rendering optimization */
+.optimize-text {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Image loading states */
+.img-loading {
+  background: linear-gradient(
+    90deg,
+    rgba(108, 99, 255, 0.1) 0%,
+    rgba(108, 99, 255, 0.2) 50%,
+    rgba(108, 99, 255, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
