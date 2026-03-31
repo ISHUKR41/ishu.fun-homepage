@@ -6,6 +6,8 @@
 @import './animations.css';
 @import './utilities.css';
 @import './accessibility-responsive.css';
+@import './performance-fixes.css';
+@import './mobile-optimizations.css';
 
 /* ── RESET ─────────────────────────── */
 *, *::before, *::after {
@@ -34,6 +36,11 @@ body {
   /* Hardware acceleration */
   -webkit-font-feature-settings: "kern" 1, "liga" 1;
   font-feature-settings: "kern" 1, "liga" 1;
+  /* Performance optimizations */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
 }
 
 /* ── SELECTION ─────────────────────── */

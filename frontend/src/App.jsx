@@ -5,9 +5,6 @@ import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { useIsDesktop } from './hooks/useMediaQuery';
 import { initAccessibility } from './utils/accessibility';
 import { initPerformanceMonitoring } from './utils/performance';
-import { initScrollAnimations } from './animations/gsap/scrollAnimations';
-import { initAdvancedEffects } from './animations/gsap/advancedEffects';
-import { initAdvancedScrollAnimations } from './animations/gsap/advancedScrollAnimations';
 
 const CustomCursor = lazy(() => import('./components/ui/Cursor/EnhancedMagneticCursor'));
 
@@ -17,23 +14,15 @@ function App() {
 
   useEffect(() => {
     // Initialize accessibility features
-    const a11y = initAccessibility();
+    initAccessibility();
 
     // Initialize performance monitoring
     const perf = initPerformanceMonitoring();
     console.log('[App] Performance settings:', perf.adaptiveSettings);
 
-    // Initialize all animations after component mount
-    setTimeout(() => {
-      initScrollAnimations();
-      initAdvancedEffects();
-      initAdvancedScrollAnimations();
-      console.log('[App] All animations initialized');
-    }, 100);
-
     // Cleanup
     return () => {
-      // Clean up scroll animations if needed
+      // Clean up on unmount
     };
   }, []);
 

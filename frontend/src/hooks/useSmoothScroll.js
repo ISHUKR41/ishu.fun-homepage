@@ -10,25 +10,29 @@ export function useSmoothScroll() {
   const lenisRef = useRef(null);
 
   useEffect(() => {
-    // Ultra-smooth, lag-free scroll configuration
+    // Check if user prefers reduced motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Detect device performance
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const cores = navigator.hardwareConcurrency || 2;
+    const memory = navigator.deviceMemory || 4;
+    const isLowEnd = cores <= 2 || memory < 4;
+
+    // Optimized configuration based on device
     const lenis = new Lenis({
-      duration: 1.0, // Faster for snappy, responsive feel
-      easing: (t) => {
-        // Custom easing for ultra-smooth experience
-        return t < 0.5
-          ? 4 * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      },
+      duration: prefersReducedMotion ? 0 : (isLowEnd || isMobile ? 0.8 : 1.2),
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Optimized easing
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.2, // Enhanced wheel responsiveness
-      smoothTouch: false, // Disabled for native mobile scroll performance
-      touchMultiplier: 2.5, // Improved touch sensitivity
+      smoothWheel: !isMobile && !isLowEnd, // Disable on mobile and low-end for native performance
+      wheelMultiplier: 1.0,
+      smoothTouch: false, // Always false for native mobile performance
+      touchMultiplier: 2.0,
       infinite: false,
       syncTouch: false,
-      touchInertiaMultiplier: 40, // Enhanced momentum on mobile
-      lerp: 0.08, // Very smooth interpolation (lower = smoother)
+      touchInertiaMultiplier: 35,
+      lerp: isLowEnd ? 0.15 : 0.1, // Faster lerp on low-end devices
       autoResize: true,
     });
 
@@ -38,14 +42,13 @@ export function useSmoothScroll() {
     // Sync with GSAP ScrollTrigger for perfectly timed animations
     lenis.on('scroll', ScrollTrigger.update);
 
-    // High-performance RAF loop
+    // High-performance RAF loop with optimizations
+    gsap.ticker.lagSmoothing(1000, 16); // Allow small lag spikes without correction
+    gsap.ticker.fps(-1); // Use browser's native refresh rate
+
     const ticker = gsap.ticker.add((time) => {
       lenis.raf(time * 1000);
     });
-
-    // Optimize for consistent 60fps
-    gsap.ticker.lagSmoothing(0);
-    gsap.ticker.fps(60);
 
     // Handle anchor links smoothly
     const handleAnchorClick = (e) => {

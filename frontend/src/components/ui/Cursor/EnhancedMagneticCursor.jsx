@@ -22,9 +22,13 @@ export default function EnhancedMagneticCursor() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if device supports mouse input
+    // Check if device supports mouse input and has good performance
     const hasMouseInput = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (!hasMouseInput) return;
+    const cores = navigator.hardwareConcurrency || 2;
+    const memory = navigator.deviceMemory || 4;
+    const isLowEnd = cores <= 2 || memory < 4;
+
+    if (!hasMouseInput || isLowEnd) return;
 
     setIsVisible(true);
 
@@ -37,34 +41,33 @@ export default function EnhancedMagneticCursor() {
     let mouseY = 0;
     let currentX = 0;
     let currentY = 0;
+    let rafId = null;
 
-    // Smooth cursor following using GSAP
+    // Optimized cursor following with RAF throttling
     const updateCursor = () => {
-      currentX += (mouseX - currentX) * 0.2;
-      currentY += (mouseY - currentY) * 0.2;
+      currentX += (mouseX - currentX) * 0.15; // Reduced from 0.2 for smoother but still responsive
+      currentY += (mouseY - currentY) * 0.15;
 
-      gsap.set(dot, {
-        x: currentX,
-        y: currentY,
-      });
+      // Use transforms for better performance
+      dot.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+      ring.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
 
-      gsap.set(ring, {
-        x: currentX,
-        y: currentY,
-      });
-
-      requestAnimationFrame(updateCursor);
+      rafId = requestAnimationFrame(updateCursor);
     };
 
-    updateCursor();
+    rafId = requestAnimationFrame(updateCursor);
 
-    // Mouse move handler
+    // Mouse move handler - throttled for performance
+    let mouseMoveThrottle = null;
     const handleMouseMove = (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
 
-      // Add trail effect
-      createTrail(e.clientX, e.clientY);
+      // Minimal trail effect with throttling
+      if (mouseMoveThrottle) return;
+      mouseMoveThrottle = setTimeout(() => {
+        mouseMoveThrottle = null;
+      }, 100);
     };
 
     // Mouse down handler
@@ -210,6 +213,7 @@ export default function EnhancedMagneticCursor() {
       window.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mouseenter', handleHoverEnter, true);
       document.removeEventListener('mouseleave', handleHoverLeave, true);
+      if (rafId) cancelAnimationFrame(rafId);
     };
   }, []);
 
