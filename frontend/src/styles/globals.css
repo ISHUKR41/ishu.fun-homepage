@@ -7,6 +7,7 @@
 @import './utilities.css';
 @import './accessibility-responsive.css';
 @import './performance-fixes.css';
+@import './mobile-optimizations.css';
 
 /* ── RESET ─────────────────────────── */
 *, *::before, *::after {

@@ -1,0 +1,327 @@
+/* Mobile-Specific Performance & UX Optimizations */
+
+/* iOS Safe Area Support */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .navbar {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
+/* Prevent text resize on orientation change (iOS) */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Better touch targets (minimum 44x44px) */
+button,
+a,
+input,
+select,
+textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Remove tap highlight on mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+/* Improve mobile scrolling */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* Fix 300ms tap delay on mobile */
+a, button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Mobile-friendly form inputs */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+
+  /* Stack navigation on mobile */
+  .nav-links {
+    flex-direction: column;
+  }
+
+  /* Full-width buttons on mobile */
+  .btn-mobile-full {
+    width: 100%;
+    display: block;
+  }
+
+  /* Larger padding for mobile */
+  .section {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  /* Simplified grids on mobile */
+  .grid,
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-md);
+  }
+
+  /* Hide complex animations on mobile */
+  .hide-mobile-animation {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* Reduce modal sizes on mobile */
+  .modal {
+    width: calc(100vw - 2rem);
+    max-height: calc(100vh - 4rem);
+    border-radius: 1rem;
+  }
+
+  /* Better spacing for cards */
+  .card {
+    margin-bottom: var(--space-md);
+  }
+
+  /* Horizontal scroll for tables */
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+}
+
+/* Small phones (< 375px) */
+@media (max-width: 374px) {
+  body {
+    font-size: 14px;
+  }
+
+  h1 { font-size: 1.75rem !important; }
+  h2 { font-size: 1.5rem !important; }
+  h3 { font-size: 1.25rem !important; }
+
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Smaller buttons */
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+
+/* Landscape mode optimizations */
+@media (orientation: landscape) and (max-height: 500px) {
+  /* Reduce vertical spacing in landscape */
+  section {
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  .hero-section {
+    min-height: 100vh;
+  }
+
+  /* Collapse navbar */
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+}
+
+/* Tablet-specific (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .grid-tablet-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-tablet-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hide-tablet {
+    display: none !important;
+  }
+
+  .show-tablet {
+    display: block !important;
+  }
+}
+
+/* Large tablets and small laptops */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+/* Desktop optimizations */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1200px;
+  }
+
+  /* Enable advanced effects on desktop only */
+  .desktop-only-effect {
+    display: block;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1440px;
+  }
+
+  /* Larger font sizes for 4K */
+  :root {
+    font-size: 18px;
+  }
+}
+
+/* Print styles */
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .no-print,
+  .navbar,
+  .footer,
+  button,
+  .cursor-element {
+    display: none !important;
+  }
+
+  body {
+    color: #000;
+    background: #fff;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Light mode support */
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+  }
+
+  /* Override dark theme if user prefers light */
+  .respect-system-theme body {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  * {
+    border-width: 2px !important;
+  }
+
+  button,
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* Reduced transparency */
+@media (prefers-reduced-transparency: reduce) {
+  * {
+    backdrop-filter: none !important;
+    background-color: solid !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  button,
+  a,
+  input {
+    min-height: 48px;
+    min-width: 48px;
+    padding: 0.75rem 1.5rem;
+  }
+
+  /* Remove hover states on touch devices */
+  .hover-effect:hover {
+    transform: none;
+  }
+
+  /* Disable tooltips on touch */
+  .tooltip {
+    display: none;
+  }
+}
+
+/* Mouse/trackpad optimizations */
+@media (hover: hover) and (pointer: fine) {
+  /* Enable hover effects */
+  .hover-enabled:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Show tooltips on hover */
+  .tooltip {
+    display: block;
+  }
+}
+
+/* Foldable device support */
+@media (horizontal-viewport-segments: 2) {
+  .content {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .segment {
+    width: env(viewport-segment-width 0 0);
+  }
+}
+
+/* Notch support (iPhone X and newer) */
+@supports (padding: constant(safe-area-inset-top)) {
+  .navbar {
+    padding-top: constant(safe-area-inset-top);
+  }
+}

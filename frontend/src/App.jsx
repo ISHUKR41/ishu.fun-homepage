@@ -14,7 +14,7 @@ function App() {
 
   useEffect(() => {
     // Initialize accessibility features
-    const a11y = initAccessibility();
+    initAccessibility();
 
     // Initialize performance monitoring
     const perf = initPerformanceMonitoring();
