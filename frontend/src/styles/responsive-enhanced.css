@@ -1,0 +1,256 @@
+// styles/responsive.css
+/* Enhanced Responsive Design System */
+/* Mobile-first approach with comprehensive breakpoints */
+
+:root {
+  /* Breakpoints */
+  --bp-xs: 320px;   /* Small phones */
+  --bp-sm: 375px;   /* Standard phones */
+  --bp-md: 640px;   /* Large phones */
+  --bp-lg: 768px;   /* Tablets */
+  --bp-xl: 1024px;  /* Laptops */
+  --bp-2xl: 1280px; /* Desktops */
+  --bp-3xl: 1536px; /* Large screens */
+  --bp-4xl: 1920px; /* Extra large */
+
+  /* Fluid spacing */
+  --space-xs: clamp(0.25rem, 0.5vw, 0.5rem);
+  --space-sm: clamp(0.5rem, 1vw, 1rem);
+  --space-md: clamp(1rem, 2vw, 2rem);
+  --space-lg: clamp(1.5rem, 3vw, 3rem);
+  --space-xl: clamp(2rem, 4vw, 4rem);
+  --space-2xl: clamp(3rem, 6vw, 6rem);
+  --space-3xl: clamp(4rem, 8vw, 8rem);
+
+  /* Fluid typography */
+  --text-xs: clamp(0.75rem, 0.85vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 1vw, 1rem);
+  --text-base: clamp(1rem, 1.15vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1.35vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 2vw, 2rem);
+  --text-3xl: clamp(1.875rem, 2.5vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 3.5vw, 3.5rem);
+  --text-5xl: clamp(2.5rem, 5vw, 5rem);
+  --text-6xl: clamp(3rem, 7vw, 7rem);
+  --text-7xl: clamp(3.5rem, 9vw, 9rem);
+}
+
+/* Extra small devices (320px and up) */
+@media (min-width: 320px) {
+  .container {
+    padding-left: var(--space-sm);
+    padding-right: var(--space-sm);
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  h1 { font-size: var(--text-4xl); }
+  h2 { font-size: var(--text-3xl); }
+  h3 { font-size: var(--text-2xl); }
+}
+
+/* Small devices (375px and up) */
+@media (min-width: 375px) {
+  .container {
+    padding-left: var(--space-md);
+    padding-right: var(--space-md);
+  }
+
+  h1 { font-size: var(--text-5xl); }
+}
+
+/* Medium devices (640px and up) - Large phones */
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .grid-md-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1 { font-size: var(--text-6xl); }
+}
+
+/* Large devices (768px and up) - Tablets */
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-left: var(--space-lg);
+    padding-right: var(--space-lg);
+  }
+
+  .grid-lg-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hide-mobile {
+    display: block;
+  }
+
+  .show-mobile {
+    display: none;
+  }
+}
+
+/* Extra large devices (1024px and up) - Laptops */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+
+  .grid-xl-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Enable 3D effects on desktop */
+  .enable-3d-desktop {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+}
+
+/* 2XL devices (1280px and up) - Desktops */
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+
+  h1 { font-size: var(--text-7xl); }
+}
+
+/* 3XL devices (1536px and up) - Large screens */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1440px;
+  }
+}
+
+/* 4XL devices (1920px and up) - Extra large */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1760px;
+  }
+}
+
+/* Landscape orientation */
+@media (orientation: landscape) and (max-height: 600px) {
+  .vh-100 {
+    min-height: auto;
+  }
+
+  .hero-section {
+    min-height: auto;
+    padding: var(--space-lg) 0;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Disable hover effects on touch devices */
+  .hover-effect:hover {
+    transform: none;
+  }
+
+  /* Larger tap targets for touch */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Disable parallax on touch devices */
+  [data-parallax] {
+    transform: none !important;
+  }
+}
+
+/* High resolution displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Use higher quality images */
+  .hero-bg {
+    background-image: url('/images/hero-bg@2x.webp');
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Dark mode (system preference) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #080810;
+    --text-primary: #F0F0FF;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+}
+
+/* Utility classes for responsive display */
+.mobile-only {
+  display: block;
+}
+
+.tablet-up {
+  display: none;
+}
+
+.desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none;
+  }
+
+  .tablet-up {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .desktop-only {
+    display: block;
+  }
+}
+
+/* Container queries support */
+@container (min-width: 400px) {
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@container (min-width: 800px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

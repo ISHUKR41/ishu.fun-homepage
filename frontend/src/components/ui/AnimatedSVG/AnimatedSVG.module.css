@@ -1,0 +1,17 @@
+/* components/ui/AnimatedSVG/AnimatedSVG.module.css */
+.container {
+  display: inline-block;
+  line-height: 0;
+}
+
+.container svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* Ensure smooth rendering */
+.container svg * {
+  vector-effect: non-scaling-stroke;
+}

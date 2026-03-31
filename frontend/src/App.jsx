@@ -7,6 +7,7 @@ import { initAccessibility } from './utils/accessibility';
 import { initPerformanceMonitoring } from './utils/performance';
 import { initScrollAnimations } from './animations/gsap/scrollAnimations';
 import { initAdvancedEffects } from './animations/gsap/advancedEffects';
+import { initAdvancedScrollAnimations } from './animations/gsap/advancedScrollAnimations';
 
 const CustomCursor = lazy(() => import('./components/ui/Cursor/EnhancedMagneticCursor'));
 
@@ -22,10 +23,12 @@ function App() {
     const perf = initPerformanceMonitoring();
     console.log('[App] Performance settings:', perf.adaptiveSettings);
 
-    // Initialize scroll animations after component mount
+    // Initialize all animations after component mount
     setTimeout(() => {
       initScrollAnimations();
       initAdvancedEffects();
+      initAdvancedScrollAnimations();
+      console.log('[App] All animations initialized');
     }, 100);
 
     // Cleanup
